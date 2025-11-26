@@ -9,6 +9,11 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Product</h3>
             <ul className="space-y-2">
               <li>
+                <Link href="/playground" className="text-gray-400 hover:text-white transition-colors">
+                  Playground
+                </Link>
+              </li>
+              <li>
                 <Link href="/docs" className="text-gray-400 hover:text-white transition-colors">
                   Documentation
                 </Link>
@@ -85,9 +90,20 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center">
+          <div className="mt-8 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+            <img 
+              src="/logo.png" 
+              alt="OpenRedaction" 
+              className="w-6 h-6"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const fallback = target.nextElementSibling as HTMLElement;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center hidden">
               <span className="text-black font-bold text-xs">OR</span>
             </div>
             <span className="text-gray-400 text-sm">© 2024 OpenRedaction. All rights reserved.</span>

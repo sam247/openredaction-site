@@ -13,7 +13,19 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <img 
+                src="/logo.png" 
+                alt="OpenRedaction" 
+                className="w-8 h-8"
+                onError={(e) => {
+                  // Fallback if logo doesn't exist
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const fallback = target.nextElementSibling as HTMLElement;
+                  if (fallback) fallback.style.display = 'flex';
+                }}
+              />
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center hidden">
                 <span className="text-black font-bold text-sm">OR</span>
               </div>
               <span className="text-white font-semibold text-xl">OpenRedaction</span>
@@ -22,6 +34,9 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link href="/playground" className="text-gray-300 hover:text-white transition-colors">
+              Playground
+            </Link>
             <Link href="/docs" className="text-gray-300 hover:text-white transition-colors">
               Docs
             </Link>
@@ -53,6 +68,13 @@ export default function Header() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden pb-4 space-y-4">
+            <Link
+              href="/playground"
+              className="block text-gray-300 hover:text-white transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Playground
+            </Link>
             <Link
               href="/docs"
               className="block text-gray-300 hover:text-white transition-colors"

@@ -44,16 +44,16 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
               <Link
-                href="/dashboard"
+                href="/playground"
                 className="bg-white text-black px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-colors w-full sm:w-auto"
               >
-                Get Started
+                Try Playground
               </Link>
               <Link
-                href="/docs"
+                href="/dashboard"
                 className="bg-gray-900 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-800 transition-colors border border-gray-800 w-full sm:w-auto"
               >
-                Read Documentation
+                Get Started
               </Link>
             </div>
 
@@ -72,6 +72,14 @@ export default function Home() {
                     &quot;Hi, my name is [REDACTED] and my email is [REDACTED]. 
                     My SSN is [REDACTED].&quot;
                   </div>
+                </div>
+                <div className="mt-6 text-center">
+                  <Link
+                    href="/playground"
+                    className="inline-block bg-white text-black px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors"
+                  >
+                    Open Playground →
+                  </Link>
                 </div>
               </div>
             </div>
@@ -148,6 +156,95 @@ export default function Home() {
                 Protect student privacy in educational records
               </p>
             </Link>
+          </div>
+        </div>
+
+        {/* One-Line Integration Section */}
+        <div className="mt-32 bg-gray-900 py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">One-Line Integration</h2>
+              <p className="text-xl text-gray-300 mb-8">
+                Start detecting and redacting PII in minutes, not days
+              </p>
+              <div className="bg-black rounded-lg p-6 border border-gray-800 text-left">
+                <div className="text-gray-400 text-sm mb-2">JavaScript / TypeScript</div>
+                <pre className="text-green-400 font-mono text-sm overflow-x-auto">
+{`const response = await fetch('https://openredaction-api.onrender.com/v1/redact', {
+  method: 'POST',
+  headers: {
+    'x-api-key': 'your-api-key',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ text: 'Your text here' })
+});`}
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Security & Compliance Section */}
+        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Secure PII Detection That Passes Audits
+            </h2>
+            <p className="text-xl text-gray-300">
+              Enterprise-grade security with zero data retention
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <div className="text-3xl mb-4">🔐</div>
+              <h3 className="text-xl font-semibold mb-2">Zero-Trust Security</h3>
+              <p className="text-gray-400">
+                All data is encrypted in transit. No data is stored or logged. 
+                100% compliant with GDPR, HIPAA, and SOC 2.
+              </p>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <div className="text-3xl mb-4">⚡</div>
+              <h3 className="text-xl font-semibold mb-2">Deploy Anywhere</h3>
+              <p className="text-gray-400">
+                RESTful API that works with any language or framework. 
+                Deploy in minutes, scale to millions of requests.
+              </p>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <div className="text-3xl mb-4">📊</div>
+              <h3 className="text-xl font-semibold mb-2">Full Audit Trail</h3>
+              <p className="text-gray-400">
+                Complete detection logs with entity types, positions, and timestamps. 
+                Perfect for compliance reporting.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Final CTA */}
+        <div className="mt-32 bg-gradient-to-r from-gray-900 to-black py-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Protect Privacy. Automate Compliance.
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Start redacting PII in seconds with our powerful API
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/playground"
+                className="bg-white text-black px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-colors w-full sm:w-auto"
+              >
+                Try Playground
+              </Link>
+              <Link
+                href="/dashboard"
+                className="bg-gray-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-700 transition-colors border border-gray-700 w-full sm:w-auto"
+              >
+                Get Started
+              </Link>
+            </div>
           </div>
         </div>
       </main>
