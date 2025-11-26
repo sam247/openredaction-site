@@ -98,7 +98,24 @@ export default function Playground() {
       }
 
       const data = await response.json();
-      setOutput(data);
+      
+      // Transform API response to match expected format
+      if (!data.redacted && !data.redacted_text) {
+        throw new Error('Invalid API response: missing redacted text');
+      }
+      
+      const transformedData: RedactResponse = {
+        redacted_text: data.redacted || data.redacted_text || '',
+        detections: (data.detections || []).map((det: any) => ({
+          type: det.type || '',
+          text: det.value || det.text || '',
+          start: Array.isArray(det.position) ? det.position[0] : (det.start || 0),
+          end: Array.isArray(det.position) ? det.position[1] : (det.end || 0),
+          severity: det.severity,
+        })),
+      };
+      
+      setOutput(transformedData);
     } catch (err: any) {
       setError(err.message || 'An error occurred while redacting text');
     } finally {
