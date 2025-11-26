@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Logo from './Logo';
 
 export default function Footer() {
   return (
@@ -92,8 +91,7 @@ export default function Footer() {
         </div>
 
           <div className="mt-8 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <Logo size={24} />
+          <div className="mb-4 md:mb-0">
             <span className="text-gray-400 text-sm">© 2024 OpenRedaction. All rights reserved.</span>
           </div>
           <div className="flex space-x-6">
