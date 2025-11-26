@@ -64,13 +64,13 @@ export default function Home() {
                 <div className="bg-black rounded-lg p-4 border border-gray-800 font-mono text-sm">
                   <div className="text-gray-400 mb-2">Input:</div>
                   <div className="text-white mb-4">
-                    "Hi, my name is John Doe and my email is john@example.com. 
-                    My SSN is 123-45-6789."
+                    &quot;Hi, my name is John Doe and my email is john@example.com. 
+                    My SSN is 123-45-6789.&quot;
                   </div>
                   <div className="text-gray-400 mb-2">Output:</div>
                   <div className="text-green-400">
-                    "Hi, my name is [REDACTED] and my email is [REDACTED]. 
-                    My SSN is [REDACTED]."
+                    &quot;Hi, my name is [REDACTED] and my email is [REDACTED]. 
+                    My SSN is [REDACTED].&quot;
                   </div>
                 </div>
               </div>

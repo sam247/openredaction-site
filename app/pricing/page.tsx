@@ -124,7 +124,7 @@ export default function Pricing() {
               <h2 className="text-2xl font-bold mb-4">Enterprise</h2>
               <p className="text-gray-300 mb-6">
                 Need custom limits, dedicated support, or on-premise deployment? 
-                Let's talk.
+                Let&apos;s talk.
               </p>
               <Link
                 href="/contact"
@@ -157,14 +157,14 @@ export default function Pricing() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">What happens if I exceed my limit?</h3>
                 <p className="text-gray-400">
-                  You'll receive a 429 Too Many Requests error. You can either wait for the 
+                  You&apos;ll receive a 429 Too Many Requests error. You can either wait for the 
                   limit to reset or upgrade to the Pro plan for higher limits.
                 </p>
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">Is my data stored?</h3>
                 <p className="text-gray-400">
-                  No. We process your text in real-time and don't store any of your data. 
+                  No. We process your text in real-time and don&apos;t store any of your data. 
                   We only track usage metrics for billing purposes.
                 </p>
               </div>
