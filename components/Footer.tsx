@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Logo from './Logo';
 
 export default function Footer() {
   return (
@@ -92,20 +93,7 @@ export default function Footer() {
 
           <div className="mt-8 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <img 
-              src="/logo.png" 
-              alt="OpenRedaction" 
-              className="w-6 h-6"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const fallback = target.nextElementSibling as HTMLElement;
-                if (fallback) fallback.style.display = 'flex';
-              }}
-            />
-            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center hidden">
-              <span className="text-black font-bold text-xs">OR</span>
-            </div>
+            <Logo size={24} />
             <span className="text-gray-400 text-sm">© 2024 OpenRedaction. All rights reserved.</span>
           </div>
           <div className="flex space-x-6">

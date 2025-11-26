@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import Logo from './Logo';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,21 +14,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <img 
-                src="/logo.png" 
-                alt="OpenRedaction" 
-                className="w-8 h-8"
-                onError={(e) => {
-                  // Fallback if logo doesn't exist
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const fallback = target.nextElementSibling as HTMLElement;
-                  if (fallback) fallback.style.display = 'flex';
-                }}
-              />
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center hidden">
-                <span className="text-black font-bold text-sm">OR</span>
-              </div>
+              <Logo size={32} />
               <span className="text-white font-semibold text-xl">OpenRedaction</span>
             </Link>
           </div>
