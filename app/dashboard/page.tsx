@@ -14,7 +14,7 @@ function DashboardContent() {
   const [usage, setUsage] = useState({
     today: 0,
     limit: 100,
-    tier: 'free' as 'free' | 'paid',
+    tier: 'free' as 'free' | 'pro' | 'enterprise',
   });
   const [loading, setLoading] = useState(true);
   const [testing, setTesting] = useState(false);
@@ -24,13 +24,21 @@ function DashboardContent() {
     // Check for Stripe session callback
     const sessionId = searchParams.get('session_id');
     if (sessionId) {
-      // Upgrade to paid tier
+      // Upgrade tier based on plan
       const storedKey = localStorage.getItem('openredaction_api_key');
+      const plan = searchParams.get('plan');
       if (storedKey && storedKey.startsWith('free_')) {
-        const paidKey = storedKey.replace('free_', 'paid_');
-        setApiKey(paidKey);
-        localStorage.setItem('openredaction_api_key', paidKey);
-        setUsage(prev => ({ ...prev, tier: 'paid', limit: 10000 }));
+        if (plan === 'pro') {
+          const proKey = storedKey.replace('free_', 'pro_');
+          setApiKey(proKey);
+          localStorage.setItem('openredaction_api_key', proKey);
+          setUsage(prev => ({ ...prev, tier: 'pro', limit: 1000 }));
+        } else if (plan === 'enterprise') {
+          const paidKey = storedKey.replace('free_', 'paid_');
+          setApiKey(paidKey);
+          localStorage.setItem('openredaction_api_key', paidKey);
+          setUsage(prev => ({ ...prev, tier: 'enterprise', limit: 10000 }));
+        }
       }
     }
 
@@ -39,8 +47,16 @@ function DashboardContent() {
     if (storedKey) {
       setApiKey(storedKey);
       // Determine tier from key prefix
-      const tier = storedKey.startsWith('paid_') ? 'paid' : 'free';
-      setUsage(prev => ({ ...prev, tier, limit: tier === 'paid' ? 10000 : 100 }));
+      let tier: 'free' | 'pro' | 'enterprise' = 'free';
+      let limit = 100;
+      if (storedKey.startsWith('paid_')) {
+        tier = 'enterprise';
+        limit = 10000;
+      } else if (storedKey.startsWith('pro_')) {
+        tier = 'pro';
+        limit = 1000;
+      }
+      setUsage(prev => ({ ...prev, tier, limit }));
     } else {
       // Generate a new free tier key
       const newKey = `free_${Math.random().toString(36).substring(2, 15)}-${Math.random().toString(36).substring(2, 15)}`;
@@ -60,8 +76,10 @@ function DashboardContent() {
 
   const handleRegenerate = () => {
     if (confirm('Are you sure you want to regenerate your API key? The old key will stop working.')) {
-      const tier = apiKey?.startsWith('paid_') ? 'paid' : 'free';
-      const newKey = `${tier}_${Math.random().toString(36).substring(2, 15)}-${Math.random().toString(36).substring(2, 15)}`;
+      let prefix = 'free_';
+      if (apiKey?.startsWith('paid_')) prefix = 'paid_';
+      else if (apiKey?.startsWith('pro_')) prefix = 'pro_';
+      const newKey = `${prefix}${Math.random().toString(36).substring(2, 15)}-${Math.random().toString(36).substring(2, 15)}`;
       setApiKey(newKey);
       localStorage.setItem('openredaction_api_key', newKey);
     }
@@ -101,7 +119,7 @@ function DashboardContent() {
       // Update usage from headers
       const remaining = response.headers.get('x-ratelimit-remaining');
       if (remaining) {
-        const limit = usage.tier === 'paid' ? 10000 : 100;
+        const limit = usage.tier === 'enterprise' ? 10000 : usage.tier === 'pro' ? 1000 : 100;
         setUsage(prev => ({ ...prev, today: limit - parseInt(remaining) }));
       }
 
@@ -142,11 +160,13 @@ function DashboardContent() {
               <h2 className="text-2xl font-semibold">API Key</h2>
               <div className="flex items-center space-x-2">
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  usage.tier === 'paid' 
+                  usage.tier === 'enterprise' 
+                    ? 'bg-purple-900 text-purple-300'
+                    : usage.tier === 'pro'
                     ? 'bg-green-900 text-green-300' 
                     : 'bg-gray-800 text-gray-300'
                 }`}>
-                  {usage.tier === 'paid' ? 'Pro' : 'Free'}
+                  {usage.tier === 'enterprise' ? 'Enterprise' : usage.tier === 'pro' ? 'Pro' : 'Free'}
                 </span>
               </div>
             </div>
@@ -218,10 +238,10 @@ function DashboardContent() {
               <div className="space-y-3">
                 <div>
                   <p className="text-2xl font-bold mb-1">
-                    {usage.tier === 'paid' ? 'Pro' : 'Free'}
+                    {usage.tier === 'enterprise' ? 'Enterprise' : usage.tier === 'pro' ? 'Pro' : 'Free'}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {usage.tier === 'paid' ? '$99/month' : '$0/month'}
+                    {usage.tier === 'enterprise' ? '$99/month' : usage.tier === 'pro' ? '$29/month' : '$0/month'}
                   </p>
                 </div>
                 {usage.tier === 'free' && (
@@ -230,6 +250,14 @@ function DashboardContent() {
                     className="inline-block bg-white text-black px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-100 transition-colors"
                   >
                     Upgrade to Pro
+                  </a>
+                )}
+                {usage.tier === 'pro' && (
+                  <a
+                    href="/pricing"
+                    className="inline-block bg-white text-black px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-100 transition-colors"
+                  >
+                    Upgrade to Enterprise
                   </a>
                 )}
               </div>

@@ -84,15 +84,8 @@ export default function Playground() {
     setOutput(null);
 
     try {
-      // Get API key from state or localStorage
-      const keyToUse = apiKey || localStorage.getItem('openredaction_api_key');
-      
-      if (!keyToUse) {
-        setError('Please enter an API key. Get one from the Dashboard.');
-        setShowApiKeyInput(true);
-        setLoading(false);
-        return;
-      }
+      // Get API key from state or localStorage, fallback to demo key
+      const keyToUse = apiKey || localStorage.getItem('openredaction_api_key') || 'free_demo-playground';
       
       const response = await fetch('https://openredaction-api.onrender.com/v1/redact', {
         method: 'POST',
