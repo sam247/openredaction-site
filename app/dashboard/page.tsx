@@ -273,11 +273,11 @@ function DashboardContent() {
                   </div>
                 )}
                 <div className="bg-black rounded-lg p-4 border border-gray-800 font-mono text-sm overflow-x-auto mt-4">
-                  <code className="text-gray-300">
-                    curl -X POST https://openredaction-api.onrender.com/v1/redact \<br />
-                    &nbsp;&nbsp;-H "x-api-key: {apiKey?.substring(0, 20)}..." \<br />
-                    &nbsp;&nbsp;-H "Content-Type: application/json" \<br />
-                    &nbsp;&nbsp;-d '{"text": "My email is john@example.com"}'
+                  <code className="text-gray-300 whitespace-pre">
+{`curl -X POST https://openredaction-api.onrender.com/v1/redact \\
+  -H "x-api-key: ${apiKey?.substring(0, 20)}..." \\
+  -H "Content-Type: application/json" \\
+  -d '{"text": "My email is john@example.com"}'`}
                   </code>
                 </div>
               </div>
