@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Loader2, Copy, Check, Settings } from 'lucide-react';
@@ -26,6 +26,8 @@ export default function Playground() {
   const [activeTab, setActiveTab] = useState<'redacted' | 'entities' | 'json'>('redacted');
   const [copied, setCopied] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [apiKey, setApiKey] = useState<string>('');
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
   
   // Settings
   const [entityTypes, setEntityTypes] = useState({
@@ -59,6 +61,14 @@ export default function Playground() {
     }, null, 2),
   };
 
+  useEffect(() => {
+    // Load API key from localStorage
+    const storedKey = localStorage.getItem('openredaction_api_key');
+    if (storedKey) {
+      setApiKey(storedKey);
+    }
+  }, []);
+
   const handlePreset = (presetName: string) => {
     setInputText(presets[presetName as keyof typeof presets]);
   };
@@ -74,14 +84,20 @@ export default function Playground() {
     setOutput(null);
 
     try {
-      // For MVP, we'll use a demo API key or allow users to paste their own
-      // In production, this would use the user's API key from their session
-      const apiKey = localStorage.getItem('openredaction_api_key') || 'free_demo-key';
+      // Get API key from state or localStorage
+      const keyToUse = apiKey || localStorage.getItem('openredaction_api_key');
+      
+      if (!keyToUse) {
+        setError('Please enter an API key. Get one from the Dashboard.');
+        setShowApiKeyInput(true);
+        setLoading(false);
+        return;
+      }
       
       const response = await fetch('https://openredaction-api.onrender.com/v1/redact', {
         method: 'POST',
         headers: {
-          'x-api-key': apiKey,
+          'x-api-key': keyToUse,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -90,8 +106,11 @@ export default function Playground() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to redact text');
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        if (response.status === 401 || response.status === 403) {
+          throw new Error('Unauthorized: Invalid API key. Please check your API key in settings.');
+        }
+        throw new Error(errorData.error || `Failed to redact text (${response.status})`);
       }
 
       const data = await response.json();
@@ -132,14 +151,67 @@ export default function Playground() {
                   Nothing is logged or stored.
                 </p>
               </div>
-              <button
-                onClick={() => setShowSettings(!showSettings)}
-                className="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
-              >
-                <Settings size={16} />
-                <span className="text-sm">Settings</span>
-              </button>
+              <div className="flex items-center space-x-2">
+                {!apiKey && (
+                  <button
+                    onClick={() => setShowApiKeyInput(!showApiKeyInput)}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-medium transition-colors"
+                  >
+                    Add API Key
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowSettings(!showSettings)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
+                >
+                  <Settings size={16} />
+                  <span className="text-sm">Settings</span>
+                </button>
+              </div>
             </div>
+            {showApiKeyInput && (
+              <div className="mt-4 p-4 bg-gray-800 rounded-lg border border-gray-700">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="text"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="Enter your API key (free_xxx or paid_xxx)"
+                    className="flex-1 bg-black border border-gray-700 rounded-md px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        if (apiKey) {
+                          localStorage.setItem('openredaction_api_key', apiKey);
+                          setShowApiKeyInput(false);
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      if (apiKey) {
+                        localStorage.setItem('openredaction_api_key', apiKey);
+                        setShowApiKeyInput(false);
+                      }
+                    }}
+                    className="px-4 py-2 bg-white text-black rounded-md text-sm font-medium hover:bg-gray-100 transition-colors"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => {
+                      window.open('/dashboard', '_blank');
+                    }}
+                    className="px-4 py-2 bg-gray-700 text-white rounded-md text-sm font-medium hover:bg-gray-600 transition-colors"
+                  >
+                    Get API Key
+                  </button>
+                </div>
+                <p className="text-xs text-gray-400 mt-2">
+                  Don&apos;t have an API key? <a href="/dashboard" className="text-blue-400 hover:text-blue-300 underline">Get one from the Dashboard</a>
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
