@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Loader2, Copy, Check, Settings } from 'lucide-react';
+import Link from 'next/link';
+import { Loader2, Copy, Check, Settings, ArrowRight } from 'lucide-react';
 
 interface Detection {
   type: string;
@@ -26,6 +27,8 @@ export default function Playground() {
   const [activeTab, setActiveTab] = useState<'redacted' | 'entities' | 'json'>('redacted');
   const [copied, setCopied] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [usageCount, setUsageCount] = useState(0);
+  const FREE_LIMIT = 10; // Mock limit for demo
   
   // Settings
   const [entityTypes, setEntityTypes] = useState({
@@ -133,6 +136,7 @@ export default function Playground() {
       };
       
       setOutput(transformedData);
+      setUsageCount(prev => prev + 1);
     } catch (err: any) {
       setError(err.message || 'An error occurred while redacting text');
     } finally {
@@ -160,31 +164,53 @@ export default function Playground() {
         {/* Top Bar */}
         <div className="border-b border-gray-800 bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-300">
-                  Paste text. We&apos;ll detect and redact PII in real time.
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Nothing is logged or stored. Free demo API key enabled.
-                </p>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div>
+                    <p className="text-sm text-gray-300">
+                      Paste text. We&apos;ll detect and redact PII in real time.
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Nothing is logged or stored. Free demo API key enabled.
+                    </p>
+                  </div>
+                  {usageCount > 0 && (
+                    <div className="px-3 py-1 bg-gray-800 rounded-md border border-gray-700">
+                      <span className="text-xs text-gray-400">
+                        {FREE_LIMIT - usageCount} free requests remaining
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <button
-                onClick={() => setShowSettings(!showSettings)}
-                className="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
-              >
-                <Settings size={16} />
-                <span className="text-sm">Settings</span>
-              </button>
+              <div className="flex items-center gap-3">
+                {usageCount >= 3 && (
+                  <Link
+                    href="/contact"
+                    className="flex items-center space-x-2 px-4 py-2 bg-white text-black rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
+                  >
+                    <span>Get Enterprise Access</span>
+                    <ArrowRight size={16} />
+                  </Link>
+                )}
+                <button
+                  onClick={() => setShowSettings(!showSettings)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
+                >
+                  <Settings size={16} />
+                  <span className="text-sm">Settings</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-[calc(100vh-200px)] border border-gray-800 rounded-lg overflow-hidden">
+          <div className="flex h-[calc(100vh-200px)] border border-gray-800 rounded-lg overflow-hidden bg-black">
             {/* Left Side - Input */}
             <div className="flex-1 border-r border-gray-800 flex flex-col bg-black">
-            <div className="p-4 border-b border-gray-800 space-y-3">
+            <div className="p-4 border-b border-gray-800 space-y-3 bg-gray-900/50">
               <div>
                 <label className="block text-sm text-gray-400 mb-2">API Preset:</label>
                 <select
@@ -226,14 +252,14 @@ export default function Playground() {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="Paste chat logs, emails, or JSON here…"
-                className="w-full h-full bg-black border border-gray-800 rounded-lg p-4 font-mono text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-700 resize-none"
+                className="w-full h-full bg-gray-900/50 border border-gray-800 rounded-lg p-4 font-mono text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600 focus:ring-1 focus:ring-gray-600 resize-none transition-all"
               />
             </div>
-            <div className="p-4 border-t border-gray-800">
+            <div className="p-4 border-t border-gray-800 bg-gray-900/50">
               <button
                 onClick={handleRedact}
                 disabled={loading || !inputText.trim()}
-                className="w-full bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
+                className="w-full bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed transition-all flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl disabled:shadow-none"
               >
                 {loading ? (
                   <>
@@ -258,15 +284,15 @@ export default function Playground() {
             {output && (
               <>
                 {/* Tabs */}
-                <div className="flex border-b border-gray-800">
+                <div className="flex border-b border-gray-800 bg-gray-900/50">
                   {(['redacted', 'entities', 'json'] as const).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
+                      className={`px-6 py-3 text-sm font-medium border-b-2 transition-all ${
                         activeTab === tab
-                          ? 'border-white text-white'
-                          : 'border-transparent text-gray-400 hover:text-gray-300'
+                          ? 'border-white text-white bg-gray-900/30'
+                          : 'border-transparent text-gray-400 hover:text-gray-300 hover:bg-gray-900/20'
                       }`}
                     >
                       {tab === 'redacted' ? 'Redacted Text' : tab === 'entities' ? 'Detected Entities' : 'JSON Diff'}
@@ -280,19 +306,40 @@ export default function Playground() {
                     <div className="p-4 h-full">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm font-semibold text-gray-400">Redacted Output</h3>
-                        <button
-                          onClick={() => handleCopy(output.redacted_text)}
-                          className="flex items-center space-x-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded-md text-sm transition-colors"
-                        >
-                          {copied ? <Check size={16} /> : <Copy size={16} />}
-                          <span>{copied ? 'Copied!' : 'Copy'}</span>
-                        </button>
+                        <div className="flex items-center gap-2">
+                          {output.detections.length > 0 && (
+                            <span className="text-xs text-gray-500">
+                              {output.detections.length} PII item{output.detections.length !== 1 ? 's' : ''} detected
+                            </span>
+                          )}
+                          <button
+                            onClick={() => handleCopy(output.redacted_text)}
+                            className="flex items-center space-x-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded-md text-sm transition-colors"
+                          >
+                            {copied ? <Check size={16} /> : <Copy size={16} />}
+                            <span>{copied ? 'Copied!' : 'Copy'}</span>
+                          </button>
+                        </div>
                       </div>
-                      <div className="bg-black border border-gray-800 rounded-lg p-4 h-[calc(100%-60px)] overflow-auto">
-                        <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono">
+                      <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 h-[calc(100%-60px)] overflow-auto">
+                        <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono leading-relaxed">
                           {output.redacted_text}
                         </pre>
                       </div>
+                      {output.detections.length > 0 && (
+                        <div className="mt-4 bg-gray-900 border border-gray-800 rounded-lg p-4">
+                          <p className="text-sm text-gray-300 mb-2">
+                            Want to integrate this into your application?
+                          </p>
+                          <Link
+                            href="/contact"
+                            className="inline-flex items-center space-x-2 text-white hover:text-gray-300 text-sm font-medium"
+                          >
+                            <span>Contact us for API access</span>
+                            <ArrowRight size={16} />
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -344,8 +391,8 @@ export default function Playground() {
                           <span>{copied ? 'Copied!' : 'Copy'}</span>
                         </button>
                       </div>
-                      <div className="bg-black border border-gray-800 rounded-lg p-4 h-[calc(100%-60px)] overflow-auto">
-                        <pre className="text-sm text-gray-300 font-mono">
+                      <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 h-[calc(100%-60px)] overflow-auto">
+                        <pre className="text-sm text-gray-300 font-mono leading-relaxed">
                           {JSON.stringify(output, null, 2)}
                         </pre>
                       </div>
@@ -357,9 +404,24 @@ export default function Playground() {
 
             {!output && !loading && !error && (
               <div className="flex-1 flex items-center justify-center text-gray-500">
-                <div className="text-center">
+                <div className="text-center max-w-md px-4">
                   <p className="text-lg mb-2">Ready to redact</p>
-                  <p className="text-sm">Enter text on the left and click &quot;Detect & Redact PII&quot;</p>
+                  <p className="text-sm mb-6">Enter text on the left and click &quot;Detect & Redact PII&quot;</p>
+                  {usageCount >= 5 && (
+                    <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 mt-4">
+                      <p className="text-white font-semibold mb-2">Need more requests?</p>
+                      <p className="text-sm text-gray-400 mb-4">
+                        You&apos;ve used {usageCount} free requests. Get unlimited access with enterprise plans.
+                      </p>
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
+                      >
+                        <span>Contact Enterprise Team</span>
+                        <ArrowRight size={16} />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

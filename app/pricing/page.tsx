@@ -1,198 +1,193 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import StripeCheckoutButton from '@/components/StripeCheckoutButton';
-import { Check } from 'lucide-react';
+import ContactForm from '@/components/ContactForm';
+import { Check, Shield, Zap, Headphones, Server, Lock } from 'lucide-react';
 
 export default function Pricing() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      <main className="pt-32 pb-20">
+      <main className="pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Simple, Transparent Pricing
+              Enterprise Solutions
             </h1>
             <p className="text-xl text-gray-300">
-              Choose the plan that fits your needs. Upgrade or downgrade at any time.
+              Custom pricing and solutions tailored to your organization&apos;s needs. 
+              Get enterprise-grade PII detection with dedicated support.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* Free Tier */}
-            <div className="bg-gray-900 rounded-lg p-8 border border-gray-800">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-2">Free</h2>
-                <div className="flex items-baseline">
-                  <span className="text-4xl font-bold">$0</span>
-                  <span className="text-gray-400 ml-2">/month</span>
-                </div>
-                <p className="text-gray-400 mt-2">Perfect for testing and development</p>
-              </div>
-
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>100 requests/day</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>All PII detection types</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>API access</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>Community support</span>
-                </li>
-              </ul>
-
+          {/* Free Tier Info */}
+          <div className="max-w-2xl mx-auto mb-16">
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 text-center">
+              <h2 className="text-2xl font-bold mb-2">Try it Free First</h2>
+              <p className="text-gray-300 mb-4">
+                Test OpenRedaction with our free playground. No credit card required.
+              </p>
               <Link
-                href="/dashboard"
-                className="block w-full bg-gray-800 text-white text-center px-6 py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors"
+                href="/playground"
+                className="inline-block bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
               >
-                Get Started Free
-              </Link>
-            </div>
-
-            {/* Pro Tier */}
-            <div className="bg-white text-black rounded-lg p-8 border-2 border-white relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-white text-black px-4 py-1 rounded-full text-sm font-semibold">
-                  Most Popular
-                </span>
-              </div>
-              
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-2">Pro</h2>
-                <div className="flex items-baseline">
-                  <span className="text-4xl font-bold">$29</span>
-                  <span className="text-gray-600 ml-2">/month</span>
-                </div>
-                <p className="text-gray-600 mt-2">For growing applications</p>
-              </div>
-
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <Check className="text-green-600 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>1,000 requests/day</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-600 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>All PII detection types</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-600 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>Priority API access</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-600 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>Email support</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-600 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>Usage analytics</span>
-                </li>
-              </ul>
-
-              {process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && process.env.NEXT_PUBLIC_STRIPE_PRICE_ID ? (
-                <StripeCheckoutButton 
-                  priceId={process.env.NEXT_PUBLIC_STRIPE_PRICE_ID} 
-                />
-              ) : (
-                <a
-                  href="/dashboard?plan=pro"
-                  className="block w-full bg-black text-white text-center px-6 py-3 rounded-md font-semibold hover:bg-gray-900 transition-colors"
-                >
-                  Start Pro Trial
-                </a>
-              )}
-            </div>
-
-            {/* Enterprise/Unlimited Tier */}
-            <div className="bg-gray-900 rounded-lg p-8 border border-gray-800">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-2">Enterprise</h2>
-                <div className="flex items-baseline">
-                  <span className="text-4xl font-bold">$99</span>
-                  <span className="text-gray-400 ml-2">/month</span>
-                </div>
-                <p className="text-gray-400 mt-2">For production at scale</p>
-              </div>
-
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>10,000 requests/day</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>All PII detection types</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>Priority API access</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>Priority support</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>Advanced analytics</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span>SLA guarantee</span>
-                </li>
-              </ul>
-
-              <Link
-                href="/contact"
-                className="block w-full bg-white text-black text-center px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Contact Sales
+                Try Playground Free
               </Link>
             </div>
           </div>
 
+          {/* Enterprise Benefits */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <Shield className="text-white mb-4" size={32} />
+              <h3 className="text-xl font-semibold mb-2">SLA Guarantee</h3>
+              <p className="text-gray-400">
+                99.9% uptime guarantee with dedicated infrastructure and monitoring
+              </p>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <Headphones className="text-white mb-4" size={32} />
+              <h3 className="text-xl font-semibold mb-2">Priority Support</h3>
+              <p className="text-gray-400">
+                Dedicated support team with guaranteed response times and direct access
+              </p>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <Server className="text-white mb-4" size={32} />
+              <h3 className="text-xl font-semibold mb-2">Custom Deployment</h3>
+              <p className="text-gray-400">
+                Self-hosted options, custom integrations, and tailored configurations
+              </p>
+            </div>
+          </div>
+
+          {/* Enterprise Features */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold text-center mb-8">Enterprise Features</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start space-x-3">
+                <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
+                <div>
+                  <h4 className="font-semibold mb-1">Unlimited Requests</h4>
+                  <p className="text-gray-400 text-sm">Scale to millions of requests per day</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
+                <div>
+                  <h4 className="font-semibold mb-1">Custom PII Types</h4>
+                  <p className="text-gray-400 text-sm">Train models for your specific data patterns</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
+                <div>
+                  <h4 className="font-semibold mb-1">Compliance Certifications</h4>
+                  <p className="text-gray-400 text-sm">GDPR, HIPAA, SOC 2, and ISO 27001 ready</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
+                <div>
+                  <h4 className="font-semibold mb-1">Dedicated Infrastructure</h4>
+                  <p className="text-gray-400 text-sm">Isolated environments for maximum security</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
+                <div>
+                  <h4 className="font-semibold mb-1">Advanced Analytics</h4>
+                  <p className="text-gray-400 text-sm">Detailed usage reports and audit trails</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
+                <div>
+                  <h4 className="font-semibold mb-1">On-Premise Options</h4>
+                  <p className="text-gray-400 text-sm">Deploy on your own infrastructure</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="max-w-3xl mx-auto mb-16">
+            <div className="bg-gray-900 rounded-lg p-8 md:p-12 border border-gray-800">
+              <h2 className="text-3xl font-bold text-center mb-4">Get Custom Pricing</h2>
+              <p className="text-gray-300 text-center mb-8">
+                Tell us about your needs and we&apos;ll provide a tailored solution
+              </p>
+              <ContactForm />
+            </div>
+          </div>
+
+          {/* Disclosurely Cross-sell */}
+          <div className="max-w-4xl mx-auto bg-gradient-to-r from-gray-900 to-black rounded-lg p-8 md:p-12 border border-gray-800">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-bold mb-4">Need Secure Reporting?</h2>
+              <p className="text-xl text-gray-300 mb-6">
+                Disclosurely.com is an AI-powered whistleblowing platform that uses OpenRedaction 
+                to protect reporter privacy and ensure compliance.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  href="https://disclosurely.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
+                >
+                  Learn About Disclosurely.com →
+                </a>
+                <Link
+                  href="/contact"
+                  className="bg-gray-800 text-white px-8 py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
+                >
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+          </div>
 
           {/* FAQ */}
           <div className="mt-20 max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-semibold mb-2">How does rate limiting work?</h3>
+                <h3 className="text-xl font-semibold mb-2">What&apos;s included in enterprise pricing?</h3>
                 <p className="text-gray-400">
-                  Free tier keys (prefixed with `free_`) have a limit of 100 requests per day. 
-                  Pro tier keys (prefixed with `paid_`) have a limit of 1,000 requests per day. 
-                  Enterprise tier keys have a limit of 10,000 requests per day. 
-                  Limits reset at midnight UTC.
+                  Enterprise pricing is custom-tailored to your needs. It includes unlimited requests, 
+                  dedicated support, SLA guarantees, custom deployments, and compliance certifications. 
+                  Contact us for a detailed quote.
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Can I upgrade or downgrade?</h3>
+                <h3 className="text-xl font-semibold mb-2">Can we self-host the solution?</h3>
                 <p className="text-gray-400">
-                  Yes! You can change your plan at any time. When you upgrade, your API key 
-                  will be updated to the paid tier format and limits will increase immediately.
+                  Yes! We offer self-hosted and on-premise deployment options for enterprise customers. 
+                  This gives you full control over your infrastructure and data.
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">What happens if I exceed my limit?</h3>
+                <h3 className="text-xl font-semibold mb-2">What compliance certifications do you have?</h3>
                 <p className="text-gray-400">
-                  You&apos;ll receive a 429 Too Many Requests error. You can either wait for the 
-                  limit to reset or upgrade to the Pro plan for higher limits.
+                  We&apos;re compliant with GDPR, HIPAA, SOC 2, and ISO 27001. Enterprise customers 
+                  receive detailed compliance documentation and audit support.
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Is my data stored?</h3>
+                <h3 className="text-xl font-semibold mb-2">Why not just use AWS services?</h3>
                 <p className="text-gray-400">
-                  No. We process your text in real-time and don&apos;t store any of your data. 
-                  We only track usage metrics for billing purposes.
+                  OpenRedaction is purpose-built for PII detection with 99.9% accuracy. Unlike generic 
+                  AWS services, we specialize in privacy compliance and offer dedicated support, custom 
+                  models, and enterprise-grade SLAs.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">How quickly can we get started?</h3>
+                <p className="text-gray-400">
+                  Most enterprise implementations can be set up within 1-2 weeks. Self-hosted deployments 
+                  may take 2-4 weeks depending on your infrastructure requirements.
                 </p>
               </div>
             </div>
@@ -204,4 +199,3 @@ export default function Pricing() {
     </div>
   );
 }
-
