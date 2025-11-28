@@ -2,7 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
-import { Check, Shield, Zap, Headphones, Server, Lock } from 'lucide-react';
+import { Check, Shield, Headphones, Server } from 'lucide-react';
 
 export default function Pricing() {
   return (
