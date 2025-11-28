@@ -62,7 +62,7 @@ export default function ContactForm() {
         <Check className="mx-auto mb-4 text-green-400" size={48} />
         <h3 className="text-2xl font-semibold mb-2">Thank you!</h3>
         <p className="text-gray-300">
-          We've received your message and will get back to you within 24 hours.
+          We&apos;ve received your message and will get back to you within 24 hours.
         </p>
       </div>
     );
