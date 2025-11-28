@@ -364,6 +364,7 @@ export default function Playground() {
               </div>
             )}
           </div>
+          </div>
         </div>
 
         {/* Settings Drawer */}
