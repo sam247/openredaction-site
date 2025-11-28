@@ -167,17 +167,24 @@ export default function Playground() {
           {/* Left Side - Input */}
           <div className="flex-1 border-r border-gray-800 flex flex-col">
             <div className="p-4 border-b border-gray-800">
-              <div className="flex flex-wrap gap-2">
+              <label className="block text-sm text-gray-400 mb-2">Load Preset:</label>
+              <select
+                onChange={(e) => {
+                  if (e.target.value) {
+                    handlePreset(e.target.value);
+                    e.target.value = ''; // Reset to placeholder
+                  }
+                }}
+                className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gray-600"
+                defaultValue=""
+              >
+                <option value="" disabled>Select a preset...</option>
                 {Object.keys(presets).map((preset) => (
-                  <button
-                    key={preset}
-                    onClick={() => handlePreset(preset)}
-                    className="px-3 py-1 text-xs bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
-                  >
+                  <option key={preset} value={preset}>
                     {preset}
-                  </button>
+                  </option>
                 ))}
-              </div>
+              </select>
             </div>
             <div className="flex-1 p-4">
               <textarea

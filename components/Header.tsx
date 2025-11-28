@@ -14,7 +14,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-24 py-2">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <Logo size={120} />
+              <Logo size={144} />
             </Link>
           </div>
 
