@@ -56,6 +56,22 @@ console.log(result.redacted_text);</code></pre>
   // Add more posts as needed
 };
 
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = blogPosts[params.slug];
+
+  if (!post) {
+    return {};
+  }
+
+  const excerpt = post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || post.excerpt || '';
+
+  return generatePageMetadata({
+    title: post.title,
+    description: excerpt,
+    path: `/blog/${params.slug}`,
+  });
+}
+
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = blogPosts[params.slug];
 
