@@ -5,6 +5,10 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Loader2, Copy, Check, Settings, ArrowRight } from 'lucide-react';
+import type { Metadata } from 'next';
+
+// Note: Metadata export doesn't work with 'use client' components
+// Consider moving metadata to a parent layout or using next/head
 
 interface Detection {
   type: string;

@@ -1,5 +1,13 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { generatePageMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Documentation - API Reference & Guides',
+  description: 'Complete documentation for OpenRedaction API. Learn how to integrate PII detection and redaction into your application with code examples and guides.',
+  path: '/docs',
+});
 
 export default function Docs() {
   return (

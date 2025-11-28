@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { defaultMetadata } from "@/lib/metadata";
+import { StructuredData } from "@/components/StructuredData";
 
-export const metadata: Metadata = {
-  title: "OpenRedaction - AI-Powered PII Detection & Redaction",
-  description: "Automatically detect and redact personally identifiable information (PII) from text using advanced AI models.",
-  icons: {
-    icon: '/favicon.ico',
-  },
-};
+export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({
   children,
@@ -16,8 +12,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <StructuredData />
+        {children}
+      </body>
     </html>
   );
 }
-

@@ -3,6 +3,14 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import GitHubBadge from '@/components/GitHubBadge';
 import TestimonialCard from '@/components/TestimonialCard';
+import { generatePageMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Open Source PII Detection & Redaction | OpenRedaction',
+  description: 'Open source AI-powered tool for automatically detecting and redacting personally identifiable information (PII) from text. 99.9% accuracy. GDPR, HIPAA, CCPA compliant.',
+  path: '/',
+});
 
 export default function Home() {
   return (

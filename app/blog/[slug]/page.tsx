@@ -3,6 +3,8 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Calendar, ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import { generatePageMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
 
 // Blog posts data - in a real app, this would come from a CMS or database
 const blogPosts: { [key: string]: any } = {

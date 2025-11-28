@@ -3,6 +3,14 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
 import { Check, Shield, Headphones, Server } from 'lucide-react';
+import { generatePageMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Enterprise Solutions - Custom Pricing & Support',
+  description: 'Enterprise solutions for OpenRedaction with custom pricing, dedicated support, SLA guarantees, and self-hosted deployment options.',
+  path: '/pricing',
+});
 
 export default function Pricing() {
   return (

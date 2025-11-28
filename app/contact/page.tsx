@@ -1,6 +1,14 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
+import { generatePageMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Contact Us - Enterprise Solutions & Support',
+  description: 'Get in touch with OpenRedaction for enterprise solutions, self-hosted deployments, or learn more about Disclosurely.com. Contact our team today.',
+  path: '/contact',
+});
 
 export default function Contact() {
   return (

@@ -2,6 +2,14 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
+import { generatePageMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Blog - PII Detection Guides & Updates',
+  description: 'Read guides, tutorials, and updates on PII detection, privacy compliance, and OpenRedaction. Learn about GDPR, HIPAA, CCPA, and data protection.',
+  path: '/blog',
+});
 
 // Blog posts data - placeholder content
 const blogPosts = [
