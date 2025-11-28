@@ -83,8 +83,8 @@ export default function Pricing() {
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h4 className="font-semibold mb-1">Compliance Certifications</h4>
-                  <p className="text-gray-400 text-sm">GDPR, HIPAA, SOC 2, and ISO 27001 ready</p>
+                  <h4 className="font-semibold mb-1">Compliance Support</h4>
+                  <p className="text-gray-400 text-sm">Helps meet GDPR, HIPAA, and CCPA requirements</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -169,10 +169,11 @@ export default function Pricing() {
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">What compliance certifications do you have?</h3>
+                <h3 className="text-xl font-semibold mb-2">How does OpenRedaction help with compliance?</h3>
                 <p className="text-gray-400">
-                  We&apos;re compliant with GDPR, HIPAA, SOC 2, and ISO 27001. Enterprise customers 
-                  receive detailed compliance documentation and audit support.
+                  OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements by automatically 
+                  detecting and redacting PII. As an open-source tool, you maintain full control over 
+                  your data. Enterprise customers can work with us for custom deployments and support.
                 </p>
               </div>
               <div>

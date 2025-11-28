@@ -145,10 +145,10 @@ export default function Home() {
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
               <div className="text-3xl mb-4">📊</div>
-              <h3 className="text-xl font-semibold mb-2">Pass Compliance Audits</h3>
+              <h3 className="text-xl font-semibold mb-2">Complete Audit Trails</h3>
               <p className="text-gray-400">
-                Complete audit trails and detection logs. Enterprise-grade security that passes 
-                SOC 2, ISO 27001, and other compliance audits.
+                Complete audit trails and detection logs. Track all PII detections with detailed 
+                reporting for compliance and security reviews.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
@@ -289,7 +289,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2">Zero-Trust Security</h3>
               <p className="text-gray-400">
                 All data is encrypted in transit. No data is stored or logged. 
-                100% compliant with GDPR, HIPAA, and SOC 2.
+                Helps meet GDPR, HIPAA, and CCPA requirements.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
@@ -419,11 +419,11 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-2">What compliance certifications do you have?</h3>
+              <h3 className="text-xl font-semibold mb-2">How does OpenRedaction help with compliance?</h3>
               <p className="text-gray-400">
-                We&apos;re compliant with GDPR, HIPAA, SOC 2, and ISO 27001. Enterprise customers 
-                receive detailed compliance documentation and audit support. Our zero data retention 
-                policy ensures complete privacy.
+                OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements by automatically 
+                detecting and redacting PII. As an open-source tool, you maintain full control over 
+                your data and infrastructure. Our zero data retention approach ensures complete privacy.
               </p>
             </div>
             <div>
@@ -437,9 +437,9 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-semibold mb-2">What if there&apos;s a compliance issue?</h3>
               <p className="text-gray-400">
-                Enterprise customers receive comprehensive compliance documentation, audit trails, and 
-                dedicated support. For self-hosted deployments, you maintain full control and responsibility 
-                over your infrastructure. We provide the tools and support to ensure compliance.
+                As an open-source tool, you maintain full control and responsibility over your 
+                infrastructure and data. Enterprise customers can work with us for custom deployments 
+                and support. We provide the tools and documentation to help you meet compliance requirements.
               </p>
             </div>
             <div>
