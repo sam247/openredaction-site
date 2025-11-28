@@ -126,7 +126,15 @@ export default function Playground() {
       
       const transformedData: RedactResponse = {
         redacted_text: data.redacted || data.redacted_text || '',
-        detections: (data.detections || []).map((det: any) => ({
+        detections: (data.detections || []).map((det: {
+          type?: string;
+          value?: string;
+          text?: string;
+          position?: [number, number];
+          start?: number;
+          end?: number;
+          severity?: string;
+        }) => ({
           type: det.type || '',
           text: det.value || det.text || '',
           start: Array.isArray(det.position) ? det.position[0] : (det.start || 0),
@@ -137,8 +145,9 @@ export default function Playground() {
       
       setOutput(transformedData);
       setUsageCount(prev => prev + 1);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while redacting text');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while redacting text';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
