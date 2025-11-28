@@ -44,11 +44,11 @@ export default function Home() {
             </p>
 
             {/* Social Proof */}
-            <div className="flex items-center justify-center gap-6 mb-10 text-gray-400 text-sm">
+            <div className="flex items-center justify-center gap-6 mb-10 text-gray-400 text-sm flex-wrap">
               <span>⭐ Trusted by 1,000+ developers</span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span>🚀 10M+ requests processed</span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <GitHubBadge repo="sam247/openredaction" />
             </div>
 
