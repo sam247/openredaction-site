@@ -9,19 +9,8 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      {/* Announcement Banner */}
-      <div className="pt-24 bg-black border-b border-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="flex items-center justify-center space-x-2">
-            <span className="text-sm text-white">
-              🎉 Now live: AI-powered PII detection with 99.9% accuracy
-            </span>
-          </div>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <main className="pt-20 pb-32">
+      <main className="pt-24 pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             {/* Badge */}
@@ -31,9 +20,9 @@ export default function Home() {
 
             {/* Headline */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Protect Privacy.
+              Open Source Redaction.
               <br />
-              <span className="text-gray-400">OpenRedaction Detects.</span>
+              <span className="text-gray-400">Protect Privacy.</span>
             </h1>
 
             {/* Subtitle */}
