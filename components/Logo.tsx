@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 
 interface LogoProps {
   size?: number;
@@ -31,19 +30,13 @@ export default function Logo({ size = 32, className = '' }: LogoProps) {
   }
 
   return (
-    <div className={`relative ${className}`} style={{ width: size, height: size, minWidth: size, minHeight: size, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Image
-        src="/logo.png"
-        alt="OpenRedaction"
-        width={size}
-        height={size}
-        className="object-contain"
-        style={{ width: '100%', height: '100%', maxWidth: size, maxHeight: size }}
-        onError={() => setHasError(true)}
-        unoptimized
-        priority
-      />
-    </div>
+    <img
+      src="/logo.png"
+      alt="OpenRedaction"
+      className={`object-contain ${className}`}
+      style={{ width: size, height: size, display: 'block' }}
+      onError={() => setHasError(true)}
+    />
   );
 }
 
