@@ -27,12 +27,6 @@ export default function Header() {
               <Link href="/docs" className="text-gray-300 hover:text-white transition-colors">
                 Docs
               </Link>
-              <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
-                Pricing
-              </Link>
-              <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">
-                Enterprise
-              </Link>
               
               {/* Resources Dropdown */}
               <div 
@@ -46,47 +40,50 @@ export default function Header() {
                 </button>
                 
                 {resourcesOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-80 bg-gray-900 border border-gray-800 rounded-lg shadow-xl p-6">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <h3 className="text-white font-semibold mb-3 text-sm uppercase tracking-wide">Resources</h3>
-                        <div className="space-y-3">
-                          <Link 
-                            href="/docs" 
-                            className="flex items-start space-x-3 p-3 rounded-md hover:bg-gray-800 transition-colors group"
-                            onClick={() => setResourcesOpen(false)}
-                          >
-                            <FileText size={20} className="text-gray-400 group-hover:text-white mt-0.5" />
-                            <div>
-                              <div className="text-white font-medium text-sm">Documentation</div>
-                              <div className="text-gray-400 text-xs mt-1">Integrate OpenRedaction into your product</div>
-                            </div>
-                          </Link>
-                          <a 
-                            href="https://github.com/sam247/openredaction" 
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-start space-x-3 p-3 rounded-md hover:bg-gray-800 transition-colors group"
-                            onClick={() => setResourcesOpen(false)}
-                          >
-                            <Github size={20} className="text-gray-400 group-hover:text-white mt-0.5" />
-                            <div>
-                              <div className="text-white font-medium text-sm">GitHub</div>
-                              <div className="text-gray-400 text-xs mt-1">Explore OpenRedaction&apos;s open-source codebase</div>
-                            </div>
-                          </a>
-                          <Link 
-                            href="/blog" 
-                            className="flex items-start space-x-3 p-3 rounded-md hover:bg-gray-800 transition-colors group"
-                            onClick={() => setResourcesOpen(false)}
-                          >
-                            <BookOpen size={20} className="text-gray-400 group-hover:text-white mt-0.5" />
-                            <div>
-                              <div className="text-white font-medium text-sm">Blog</div>
-                              <div className="text-gray-400 text-xs mt-1">Guides and updates on PII detection</div>
-                            </div>
-                          </Link>
-                        </div>
+                  <div className="absolute top-full left-0 mt-1 w-96 bg-gray-950 border border-gray-800 rounded-lg shadow-2xl overflow-hidden">
+                    <div className="p-1">
+                      <div className="space-y-1">
+                        <Link 
+                          href="/docs" 
+                          className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-900 transition-colors group"
+                          onClick={() => setResourcesOpen(false)}
+                        >
+                          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center group-hover:bg-gray-800 transition-colors">
+                            <FileText size={20} className="text-gray-300" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-white font-medium text-sm mb-1">Documentation</div>
+                            <div className="text-gray-400 text-xs leading-relaxed">Integrate OpenRedaction into your product</div>
+                          </div>
+                        </Link>
+                        <a 
+                          href="https://github.com/sam247/openredaction" 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-900 transition-colors group"
+                          onClick={() => setResourcesOpen(false)}
+                        >
+                          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center group-hover:bg-gray-800 transition-colors">
+                            <Github size={20} className="text-gray-300" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-white font-medium text-sm mb-1">GitHub</div>
+                            <div className="text-gray-400 text-xs leading-relaxed">Explore OpenRedaction&apos;s open-source codebase</div>
+                          </div>
+                        </a>
+                        <Link 
+                          href="/blog" 
+                          className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-900 transition-colors group"
+                          onClick={() => setResourcesOpen(false)}
+                        >
+                          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center group-hover:bg-gray-800 transition-colors">
+                            <BookOpen size={20} className="text-gray-300" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-white font-medium text-sm mb-1">Blog</div>
+                            <div className="text-gray-400 text-xs leading-relaxed">Guides and updates on PII detection</div>
+                          </div>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -133,20 +130,6 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Docs
-            </Link>
-            <Link
-              href="/pricing"
-              className="block text-gray-300 hover:text-white transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Pricing
-            </Link>
-            <Link
-              href="/contact"
-              className="block text-gray-300 hover:text-white transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Enterprise
             </Link>
             <Link
               href="/blog"

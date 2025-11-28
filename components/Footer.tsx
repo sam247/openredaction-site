@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import Logo from './Logo';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -141,41 +142,46 @@ export default function Footer() {
             </div>
 
             <div className="flex flex-col items-start md:items-end gap-4">
-              <div className="flex space-x-4">
-                <a 
-                  href="https://github.com/sam247/openredaction" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
-                  aria-label="GitHub"
-                >
-                  <Github size={20} />
-                </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
-                  aria-label="Twitter"
-                >
-                  <Twitter size={20} />
-                </a>
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={20} />
-                </a>
-                <a 
-                  href="mailto:support@openredaction.com" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                  aria-label="Email"
-                >
-                  <Mail size={20} />
-                </a>
+              <div className="flex items-center gap-4">
+                <div className="flex space-x-4">
+                  <a 
+                    href="https://github.com/sam247/openredaction" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition-colors"
+                    aria-label="GitHub"
+                  >
+                    <Github size={20} />
+                  </a>
+                  <a 
+                    href="https://twitter.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition-colors"
+                    aria-label="Twitter"
+                  >
+                    <Twitter size={20} />
+                  </a>
+                  <a 
+                    href="https://linkedin.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition-colors"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin size={20} />
+                  </a>
+                  <a 
+                    href="mailto:support@openredaction.com" 
+                    className="text-gray-400 hover:text-white transition-colors"
+                    aria-label="Email"
+                  >
+                    <Mail size={20} />
+                  </a>
+                </div>
+                <div className="hidden md:block ml-4 pl-4 border-l border-gray-800">
+                  <Logo size={120} />
+                </div>
               </div>
               <span className="text-gray-400 text-sm">© 2024 OpenRedaction. All rights reserved.</span>
             </div>
