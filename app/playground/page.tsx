@@ -40,8 +40,20 @@ export default function Playground() {
   });
   const [redactionMode, setRedactionMode] = useState<'mask' | 'token' | 'remove'>('mask');
   const [configProfile, setConfigProfile] = useState<'strict' | 'balanced' | 'minimal'>('balanced');
+  const [selectedPreset, setSelectedPreset] = useState<string>('');
 
-  const presets = {
+  // API presets: gdpr, hipaa, ccpa, finance, education, transportation
+  const apiPresets = {
+    'gdpr': 'GDPR - General Data Protection defaults',
+    'hipaa': 'HIPAA - Health data emphasis',
+    'ccpa': 'CCPA - Consumer privacy defaults',
+    'finance': 'Finance - Sector-focused bundle',
+    'education': 'Education - Sector-focused bundle',
+    'transportation': 'Transportation - Sector-focused bundle',
+  };
+
+  // Sample text presets for quick testing
+  const textPresets = {
     'General chat input': 'Hi, my name is John Doe and my email is john.doe@example.com. You can reach me at 555-123-4567.',
     'Customer support log': 'Customer: Sarah Johnson\nEmail: sarah.j@company.com\nPhone: (555) 987-6543\nIssue: Account access problem\nSSN: 123-45-6789',
     'System log with IDs': 'User ID: 12345\nIP Address: 192.168.1.100\nEmail: admin@system.com\nPhone: +1-555-000-1234\nTimestamp: 2024-01-15',
@@ -60,8 +72,12 @@ export default function Playground() {
   };
 
 
-  const handlePreset = (presetName: string) => {
-    setInputText(presets[presetName as keyof typeof presets]);
+  const handleTextPreset = (presetName: string) => {
+    setInputText(textPresets[presetName as keyof typeof textPresets]);
+  };
+
+  const handleApiPreset = (presetName: string) => {
+    setSelectedPreset(presetName);
   };
 
   const handleRedact = async () => {
@@ -86,6 +102,7 @@ export default function Playground() {
         },
         body: JSON.stringify({
           text: inputText,
+          ...(selectedPreset && { preset: selectedPreset }),
         }),
       });
 
@@ -163,28 +180,46 @@ export default function Playground() {
           </div>
         </div>
 
-        <div className="flex h-[calc(100vh-120px)]">
-          {/* Left Side - Input */}
-          <div className="flex-1 border-r border-gray-800 flex flex-col">
-            <div className="p-4 border-b border-gray-800">
-              <label className="block text-sm text-gray-400 mb-2">Load Preset:</label>
-              <select
-                onChange={(e) => {
-                  if (e.target.value) {
-                    handlePreset(e.target.value);
-                    e.target.value = ''; // Reset to placeholder
-                  }
-                }}
-                className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gray-600"
-                defaultValue=""
-              >
-                <option value="" disabled>Select a preset...</option>
-                {Object.keys(presets).map((preset) => (
-                  <option key={preset} value={preset}>
-                    {preset}
-                  </option>
-                ))}
-              </select>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-[calc(100vh-200px)] border border-gray-800 rounded-lg overflow-hidden">
+            {/* Left Side - Input */}
+            <div className="flex-1 border-r border-gray-800 flex flex-col bg-black">
+            <div className="p-4 border-b border-gray-800 space-y-3">
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">API Preset:</label>
+                <select
+                  value={selectedPreset}
+                  onChange={(e) => handleApiPreset(e.target.value)}
+                  className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gray-600"
+                >
+                  <option value="">None (default)</option>
+                  {Object.entries(apiPresets).map(([key, label]) => (
+                    <option key={key} value={key}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">Load Sample Text:</label>
+                <select
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      handleTextPreset(e.target.value);
+                      e.target.value = ''; // Reset to placeholder
+                    }
+                  }}
+                  className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gray-600"
+                  defaultValue=""
+                >
+                  <option value="" disabled>Select sample text...</option>
+                  {Object.keys(textPresets).map((preset) => (
+                    <option key={preset} value={preset}>
+                      {preset}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="flex-1 p-4">
               <textarea
