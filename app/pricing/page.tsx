@@ -84,8 +84,8 @@ export default function Pricing() {
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h4 className="font-semibold mb-1">Custom PII Types</h4>
-                  <p className="text-gray-400 text-sm">Train models for your specific data patterns</p>
+                  <h4 className="font-semibold mb-1">Custom Pattern Configurations</h4>
+                  <p className="text-gray-400 text-sm">Custom regex patterns for your specific data patterns</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">

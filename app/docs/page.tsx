@@ -72,6 +72,54 @@ export default function Docs() {
               </div>
             </section>
 
+            {/* Regex vs AI */}
+            <section>
+              <h2 className="text-3xl font-semibold mb-4">Regex Patterns vs AI Layer</h2>
+              <p className="text-gray-300 mb-4">
+                OpenRedaction uses regex patterns by default for fast, deterministic detection. An optional AI/NER layer is available for messy, unstructured text.
+              </p>
+              
+              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 mb-6">
+                <h3 className="text-xl font-semibold mb-4">When to Use Regex (Default)</h3>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                  <li>Structured data (forms, databases, JSON)</li>
+                  <li>When you need fast processing (milliseconds)</li>
+                  <li>When you need deterministic results</li>
+                  <li>When cost and transparency matter</li>
+                </ul>
+                <p className="text-gray-400 text-sm">
+                  Regex patterns are fast, transparent, and easy to audit. They work great for most use cases.
+                </p>
+              </div>
+
+              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 mb-6">
+                <h3 className="text-xl font-semibold mb-4">When to Use AI Layer (Optional)</h3>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                  <li>Messy chat logs and transcripts</li>
+                  <li>Unstructured text with typos</li>
+                  <li>Context-dependent entity detection</li>
+                </ul>
+                <p className="text-yellow-400 text-sm mb-4">
+                  ⚠ Note: AI layer increases latency (seconds vs milliseconds) and cost. Use only when necessary.
+                </p>
+              </div>
+
+              <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 mb-4">
+                <div className="text-sm text-gray-400 mb-2">Enable AI Layer:</div>
+                <pre className="text-sm text-gray-300 overflow-x-auto">
+{`{
+  "text": "My name is John Doe and my email is john@example.com",
+  "use_ai": true
+}`}
+                </pre>
+              </div>
+
+              <p className="text-gray-300 text-sm">
+                By default, <code className="bg-gray-800 px-1 py-0.5 rounded">use_ai</code> is <code className="bg-gray-800 px-1 py-0.5 rounded">false</code>. 
+                Set it to <code className="bg-gray-800 px-1 py-0.5 rounded">true</code> to enable the optional AI/NER layer for improved detection on messy text.
+              </p>
+            </section>
+
             {/* Rate Limiting */}
             <section>
               <h2 className="text-3xl font-semibold mb-4">Rate Limiting</h2>

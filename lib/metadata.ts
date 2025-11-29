@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://openredaction.com';
 const siteName = 'OpenRedaction';
-const siteDescription = 'Open source AI-powered PII detection and redaction. Automatically detect and redact personally identifiable information from text with 99.9% accuracy.';
+const siteDescription = 'Open source, privacy-first PII detection and redaction. Built on 500+ tested regex patterns for speed and accuracy. Optional AI layer for messy, unstructured text.';
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -20,10 +20,13 @@ export const defaultMetadata: Metadata = {
     'CCPA',
     'data privacy',
     'open source',
-    'AI redaction',
+    'regex patterns',
+    'pattern matching',
+    'deterministic redaction',
     'personally identifiable information',
     'data protection',
     'privacy API',
+    'self-hosted redaction',
   ],
   authors: [{ name: 'OpenRedaction' }],
   creator: 'OpenRedaction',

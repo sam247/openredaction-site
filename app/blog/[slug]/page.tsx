@@ -50,7 +50,7 @@ console.log(result.redacted_text);</code></pre>
       </ul>
       
       <h2>How OpenRedaction Detects PII</h2>
-      <p>OpenRedaction uses advanced pattern matching and AI models to identify PII with high accuracy.</p>
+      <p>OpenRedaction uses 500+ tested regex patterns with an optional AI/NER layer to identify PII with high accuracy.</p>
     `,
   },
   // Add more posts as needed

@@ -5,10 +5,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Loader2, Copy, Check, Settings, ArrowRight } from 'lucide-react';
-import type { Metadata } from 'next';
-
-// Note: Metadata export doesn't work with 'use client' components
-// Consider moving metadata to a parent layout or using next/head
 
 interface Detection {
   type: string;
@@ -48,6 +44,7 @@ export default function Playground() {
   const [redactionMode, setRedactionMode] = useState<'mask' | 'token' | 'remove'>('mask');
   const [configProfile, setConfigProfile] = useState<'strict' | 'balanced' | 'minimal'>('balanced');
   const [selectedPreset, setSelectedPreset] = useState<string>('');
+  const [useAI, setUseAI] = useState(false);
 
   // API presets: gdpr, hipaa, ccpa, finance, education, transportation
   const apiPresets = {
@@ -110,6 +107,7 @@ export default function Playground() {
         body: JSON.stringify({
           text: inputText,
           ...(selectedPreset && { preset: selectedPreset }),
+          ...(useAI && { use_ai: true }),
         }),
       });
 
@@ -182,10 +180,10 @@ export default function Playground() {
                 <div className="flex items-center gap-4 flex-wrap">
                   <div>
                     <p className="text-sm text-gray-300">
-                      Paste text. We&apos;ll detect and redact PII in real time.
+                      Paste text. We&apos;ll detect and redact PII using regex patterns (fast & deterministic).
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
-                      Nothing is logged or stored. Free demo API key enabled.
+                      Nothing is logged or stored. Free demo API key enabled. Optional AI layer available in settings.
                     </p>
                   </div>
                   {usageCount > 0 && (
@@ -495,7 +493,7 @@ export default function Playground() {
               </div>
 
               {/* Config Profiles */}
-              <div>
+              <div className="mb-6">
                 <h3 className="text-sm font-semibold text-gray-400 mb-3">Config Profile</h3>
                 <div className="space-y-2">
                   {(['strict', 'balanced', 'minimal'] as const).map((profile) => (
@@ -512,6 +510,25 @@ export default function Playground() {
                     </label>
                   ))}
                 </div>
+              </div>
+
+              {/* Optional AI Layer */}
+              <div className="border-t border-gray-800 pt-6">
+                <h3 className="text-sm font-semibold text-gray-400 mb-3">Optional AI Layer</h3>
+                <label className="flex items-start cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={useAI}
+                    onChange={(e) => setUseAI(e.target.checked)}
+                    className="mt-1 w-4 h-4 rounded bg-gray-800 border-gray-700"
+                  />
+                  <div className="ml-3 flex-1">
+                    <span className="text-sm text-gray-300 block mb-1">Enable AI/NER layer</span>
+                    <p className="text-xs text-yellow-400">
+                      ⚠ Increases latency and cost. Use only for messy, unstructured text.
+                    </p>
+                  </div>
+                </label>
               </div>
             </div>
           </div>

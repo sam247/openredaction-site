@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X, ChevronDown, FileText, Code, Github, BookOpen } from 'lucide-react';
 import Logo from './Logo';
-import GitHubBadge from './GitHubBadge';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -92,9 +91,8 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Right Side - GitHub Badge and CTA */}
+          {/* Right Side - CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <GitHubBadge repo="sam247/openredaction" />
             <Link
               href="/contact"
               className="bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors"
@@ -147,9 +145,6 @@ export default function Header() {
             >
               GitHub
             </a>
-            <div className="pt-2">
-              <GitHubBadge repo="sam247/openredaction" />
-            </div>
             <Link
               href="/contact"
               className="block bg-white text-black px-4 py-2 rounded-md font-medium text-center hover:bg-gray-100 transition-colors"
