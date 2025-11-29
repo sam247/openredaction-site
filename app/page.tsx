@@ -1,7 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import GitHubBadge from '@/components/GitHubBadge';
 import TestimonialCard from '@/components/TestimonialCard';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
