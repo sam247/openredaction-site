@@ -3,7 +3,13 @@ import "./globals.css";
 import { defaultMetadata } from "@/lib/metadata";
 import { StructuredData } from "@/components/StructuredData";
 
-export const metadata: Metadata = defaultMetadata;
+export const metadata: Metadata = {
+  ...defaultMetadata,
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+};
 
 export default function RootLayout({
   children,

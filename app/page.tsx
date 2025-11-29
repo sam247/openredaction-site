@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
-      
+
       {/* Hero Section */}
       <main className="pt-24 pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,15 +27,15 @@ export default function Home() {
 
             {/* Headline */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Open Source Redaction.
+              Open-source, privacy-first PII redaction.
               <br />
-              <span className="text-gray-400">Protect Privacy.</span>
+              <span className="text-gray-400">Regex-first. Optional AI for messy text.</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              Open source, privacy-first PII redaction for modern developers. Built on 500+ tested 
-              regex patterns for speed and accuracy. Optional AI layer for messy, unstructured text.
+              Open-source library for detecting and redacting personally identifiable information. 
+              Built on 500+ tested regex patterns. Self-host for complete privacy and control.
             </p>
 
             {/* CTA Buttons */}
@@ -46,12 +46,14 @@ export default function Home() {
               >
                 Try Playground
               </Link>
-              <Link
-                href="/contact"
+              <a
+                href="https://github.com/sam247/openredaction"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-gray-900 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-800 transition-colors border border-gray-800 w-full sm:w-auto"
               >
-                Contact Enterprise
-              </Link>
+                View on GitHub
+              </a>
             </div>
 
             {/* Demo Section */}
@@ -83,20 +85,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Partners/Trust Section */}
-        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-gray-400 text-sm mb-8">Trusted by employees at:</p>
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className="bg-gray-900 border border-gray-800 rounded-lg aspect-square flex items-center justify-center p-4"
-              >
-                <span className="text-gray-600 text-xs text-center">Company {i + 1}</span>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* Benefits Section - Bento Box Layout */}
         <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,32 +111,33 @@ export default function Home() {
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">⚡</div>
-              <h3 className="text-xl font-semibold mb-2">Deploy in Minutes</h3>
+              <div className="text-3xl mb-4">📦</div>
+              <h3 className="text-xl font-semibold mb-2">Simple npm Install</h3>
               <p className="text-gray-400">
-                Simple REST API integration. Get started in minutes, not weeks.
+                Install via npm and use directly in your application. Self-host for complete control.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
               <div className="text-3xl mb-4">📊</div>
               <h3 className="text-xl font-semibold mb-2">Complete Audit Trails</h3>
               <p className="text-gray-400">
-                Complete audit trails and detection logs. Track all PII detections with detailed 
-                reporting for compliance and security reviews.
+                When self-hosted, you control all logging and audit trails. Track all PII detections 
+                with detailed reporting for compliance and security reviews.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🎯</div>
-              <h3 className="text-xl font-semibold mb-2">High Accuracy Pattern Detection</h3>
+              <div className="text-3xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold mb-2">Transparent Pattern Detection</h3>
               <p className="text-gray-400">
-                Industry-leading accuracy using 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, and more.
+                Transparent, deterministic detection using 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, and more.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <div className="text-3xl mb-4">🔒</div>
               <h3 className="text-xl font-semibold mb-2">Zero Data Retention</h3>
               <p className="text-gray-400">
-                Your data is processed in-memory and never stored. No persistent databases. Complete privacy guaranteed.
+                When self-hosted, your data is processed in-memory and never stored. No persistent databases. 
+                You maintain complete control over your data.
               </p>
             </div>
           </div>
@@ -214,7 +203,8 @@ export default function Home() {
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Layer (Optional)</h2>
               <p className="text-xl text-gray-300 mb-8">
-                For messy, unstructured text, we offer an optional AI/NER layer that can improve detection accuracy
+                For messy, unstructured text, we offer an optional AI/NER layer. 
+                Note: AI layer may miss some entities or produce false positives. Use with caution.
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -255,7 +245,8 @@ export default function Home() {
             </div>
             <div className="text-center mt-8">
               <p className="text-lg text-gray-300 mb-4">
-                <strong>Use AI layer only when necessary.</strong> For most structured data, regex patterns are faster, cheaper, and more reliable.
+                <strong>Use AI layer only when necessary.</strong> For most structured data, regex patterns are faster, cheaper, and more reliable. 
+                AI layer is slower, costlier, and less predictable than regex patterns.
               </p>
             </div>
           </div>
@@ -305,8 +296,8 @@ export default function Home() {
                   <h3 className="text-2xl font-bold mb-4 text-center">AI/NER Layer</h3>
                   <ul className="space-y-3">
                     <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
-                      <span className="text-gray-300">More powerful on messy data</span>
+                      <span className="text-yellow-400 mr-2">⚠</span>
+                      <span className="text-gray-300">May help with messy data (not guaranteed)</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-yellow-400 mr-2">⚠</span>
@@ -335,10 +326,10 @@ export default function Home() {
           </div>
         </div>
 
-        {/* How It Works Section */}
+        {/* Getting Started Section */}
         <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">How It Works</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Getting Started</h2>
             <p className="text-xl text-gray-300">Get started in 3 simple steps</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -355,18 +346,20 @@ export default function Home() {
               <div className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 2
               </div>
-              <h3 className="text-xl font-semibold mb-2">Integrate the API</h3>
+              <h3 className="text-xl font-semibold mb-2">Install the Library</h3>
               <p className="text-gray-400">
-                Add one line of code to your application. Works with any language or framework.
+                Install via npm: <code className="bg-gray-800 px-2 py-1 rounded text-sm">npm install openredaction</code>. 
+                Use directly in your Node.js application.
               </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 3
               </div>
-              <h3 className="text-xl font-semibold mb-2">Scale with Enterprise</h3>
+              <h3 className="text-xl font-semibold mb-2">Deploy Self-Hosted</h3>
               <p className="text-gray-400">
-                Contact us for enterprise solutions with custom deployments, SLAs, and dedicated support.
+                Self-host on your infrastructure for complete privacy and control. 
+                Contribute on GitHub to help improve the library.
               </p>
             </div>
           </div>
@@ -415,25 +408,25 @@ export default function Home() {
           </div>
         </div>
 
-        {/* One-Line Integration Section */}
+        {/* Simple Installation Section */}
         <div className="mt-32 bg-gray-900 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">One-Line Integration</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">Simple Installation</h2>
               <p className="text-xl text-gray-300 mb-8">
-                Start detecting and redacting PII in minutes, not days
+                Install the open-source library and start detecting PII in minutes
               </p>
               <div className="bg-black rounded-lg p-6 border border-gray-800 text-left">
-                <div className="text-gray-400 text-sm mb-2">JavaScript / TypeScript</div>
+                <div className="text-gray-400 text-sm mb-2">Install via npm</div>
+                <pre className="text-green-400 font-mono text-sm overflow-x-auto mb-4">
+{`npm install openredaction`}
+                </pre>
+                <div className="text-gray-400 text-sm mb-2 mt-4">Use in your code</div>
                 <pre className="text-green-400 font-mono text-sm overflow-x-auto">
-{`const response = await fetch('https://openredaction-api.onrender.com/v1/redact', {
-  method: 'POST',
-  headers: {
-    'x-api-key': 'your-api-key',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ text: 'Your text here' })
-});`}
+{`import { redact } from 'openredaction';
+
+const result = await redact('Your text here');
+console.log(result.redacted_text);`}
                 </pre>
               </div>
             </div>
@@ -444,35 +437,34 @@ export default function Home() {
         <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Secure PII Detection That Passes Audits
+              Secure PII Detection for Self-Hosted Deployments
             </h2>
             <p className="text-xl text-gray-300">
-              Enterprise-grade security with zero data retention
+              Self-hosted security with zero data retention
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <div className="text-3xl mb-4">🔐</div>
-              <h3 className="text-xl font-semibold mb-2">Zero-Trust Security</h3>
+              <h3 className="text-xl font-semibold mb-2">Self-Hosted Control</h3>
               <p className="text-gray-400">
-                All data is encrypted in transit. Processes text in memory, never stores raw input. 
-                No persistent databases by default. Users retain full control - can self-host. 
-                Designed to reduce compliance burden by never persisting data.
+                Self-hosted deployments give you complete control. Processes text in memory, never stores raw input. 
+                No persistent databases by default. Your data never leaves your environment.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <div className="text-3xl mb-4">⚡</div>
               <h3 className="text-xl font-semibold mb-2">Deploy Anywhere</h3>
               <p className="text-gray-400">
-                RESTful API that works with any language or framework. 
-                Deploy in minutes, scale to millions of requests.
+                Open-source library works with Node.js and can be integrated into any application. 
+                Self-host on your infrastructure for complete privacy.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <div className="text-3xl mb-4">📊</div>
               <h3 className="text-xl font-semibold mb-2">Full Audit Trail</h3>
               <p className="text-gray-400">
-                Complete detection logs with entity types, positions, and timestamps. 
+                When self-hosted, you manage all audit logs. Complete detection logs with entity types, positions, and timestamps. 
                 Perfect for compliance reporting.
               </p>
             </div>
@@ -490,94 +482,41 @@ export default function Home() {
               name="Sarah Chen"
               role="Lead Developer"
               company="TechCorp"
-              content="OpenRedaction saved us weeks of development time. The API is incredibly accurate and easy to integrate. Our compliance team loves the audit trails."
+              content="OpenRedaction saved us weeks of development time. The open-source library is transparent and easy to integrate. Self-hosting gives us complete control over our data."
               rating={5}
             />
             <TestimonialCard
               name="Michael Rodriguez"
               role="CTO"
               company="HealthData Inc"
-              content="We needed HIPAA-compliant PII detection and OpenRedaction delivered. The enterprise support has been exceptional, and the self-hosted option gives us complete control."
+              content="We needed HIPAA-compliant PII detection and OpenRedaction delivered. The self-hosted option gives us complete control, and the regex patterns are transparent and auditable."
               rating={5}
             />
             <TestimonialCard
               name="Emily Johnson"
               role="Privacy Officer"
               company="FinanceSecure"
-              content="The accuracy is outstanding - we've processed millions of documents with zero false positives. The GDPR compliance features are exactly what we needed."
+              content="The regex-first approach is perfect for our needs. We can audit all patterns, and self-hosting ensures our data never leaves our environment. The open-source community is helpful."
               rating={5}
             />
           </div>
         </div>
 
-        {/* Enterprise Solutions Section */}
-        <div className="mt-32 bg-gray-900 py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Enterprise Solutions</h2>
-              <p className="text-xl text-gray-300 mb-8">
-                Custom pricing and solutions tailored to your organization&apos;s needs
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-              <div className="bg-black rounded-lg p-6 border border-gray-800">
-                <h3 className="text-xl font-semibold mb-3">Enterprise API</h3>
-                <ul className="space-y-2 text-gray-300 mb-6">
-                  <li>• Unlimited requests</li>
-                  <li>• SLA guarantee</li>
-                  <li>• Priority support</li>
-                  <li>• Custom deployments</li>
-                </ul>
-                <Link
-                  href="/contact"
-                  className="inline-block bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
-                >
-                  Contact Sales
-                </Link>
-              </div>
-              <div className="bg-black rounded-lg p-6 border border-gray-800">
-                <h3 className="text-xl font-semibold mb-3">Self-Hosted</h3>
-                <ul className="space-y-2 text-gray-300 mb-6">
-                  <li>• On-premise deployment</li>
-                  <li>• Full data control</li>
-                  <li>• Custom configurations</li>
-                  <li>• Enterprise license</li>
-                </ul>
-                <Link
-                  href="/contact"
-                  className="inline-block bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
-                >
-                  Learn More
-                </Link>
-              </div>
-            </div>
-            <div className="text-center">
-              <p className="text-gray-300 mb-4">Need secure reporting? Check out Disclosurely.com</p>
-              <a
-                href="https://disclosurely.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-300 underline"
-              >
-                Learn About Disclosurely.com →
-              </a>
-            </div>
-          </div>
-        </div>
 
-        {/* Product Differentiation Section */}
+        {/* Our Open-Source Tools Section */}
         <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Products</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Open-Source Tools</h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              OpenRedaction offers multiple solutions to fit your needs
+              OpenRedaction offers open-source solutions for PII detection and redaction
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <h3 className="text-2xl font-semibold mb-3">OpenRedaction (npm library)</h3>
               <p className="text-gray-300 mb-4">
-                Open source regex library, developer-friendly, available via NPM. Use directly in your applications.
+                Open-source regex library, developer-friendly, available via npm. Use directly in your Node.js applications. 
+                Self-host for complete privacy and control.
               </p>
               <a
                 href="https://github.com/sam247/openredaction"
@@ -591,7 +530,8 @@ export default function Home() {
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <h3 className="text-2xl font-semibold mb-3">OpenRedaction-site (this site)</h3>
               <p className="text-gray-300 mb-4">
-                Playground where users can try redaction in the browser, with no storage. Free demo of the API.
+                Playground where users can try redaction in the browser, with no storage. 
+                Free demo of the library capabilities.
               </p>
               <Link
                 href="/playground"
@@ -600,22 +540,11 @@ export default function Home() {
                 Try Playground →
               </Link>
             </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <h3 className="text-2xl font-semibold mb-3">OpenRedaction-api</h3>
-              <p className="text-gray-300 mb-4">
-                Private API that wraps the library and optionally adds AI/NLP detection, but retains privacy by not logging input.
-              </p>
-              <Link
-                href="/contact"
-                className="text-white hover:text-gray-300 underline text-sm"
-              >
-                Contact for API Access →
-              </Link>
-            </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
               <h3 className="text-2xl font-semibold mb-3">Disclosurely.com</h3>
               <p className="text-gray-300 mb-4">
-                Enterprise-grade whistleblowing platform with compliance features (ISO/SOC ready) and advanced auditing.
+                A separate enterprise-grade whistleblowing platform with compliance features and advanced auditing. 
+                Uses OpenRedaction for PII protection.
               </p>
               <a
                 href="https://disclosurely.com"
@@ -635,20 +564,21 @@ export default function Home() {
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">Cost-Effective Redaction</h2>
               <p className="text-xl text-gray-300 mb-8">
-                Free/low-cost API using local compute vs. expensive per-token pricing from cloud providers
+                Self-hosted open-source solution vs. expensive per-token pricing from cloud providers
               </p>
             </div>
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-3xl mx-auto">
               <div className="bg-black rounded-lg border border-gray-800 overflow-hidden">
-                <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-800">
+                <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-800">
                   <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold mb-4">OpenRedaction API</h3>
-                    <div className="text-3xl font-bold text-green-400 mb-2">Free/Low-Cost</div>
-                    <p className="text-gray-300 text-sm mb-4">Uses local compute</p>
+                    <h3 className="text-xl font-bold mb-4">Self-Hosted OpenRedaction</h3>
+                    <div className="text-3xl font-bold text-green-400 mb-2">$0 Variable</div>
+                    <p className="text-gray-300 text-sm mb-4">One-time setup</p>
                     <ul className="text-left space-y-2 text-gray-400 text-sm">
-                      <li>• No per-token fees</li>
-                      <li>• Predictable pricing</li>
-                      <li>• Self-hosted = $0 variable costs</li>
+                      <li>• No per-request fees</li>
+                      <li>• Only infrastructure costs</li>
+                      <li>• Unlimited usage</li>
+                      <li>• Open-source and free</li>
                     </ul>
                   </div>
                   <div className="p-6 text-center">
@@ -659,16 +589,7 @@ export default function Home() {
                       <li>• Pay per character/token</li>
                       <li>• Costs scale with usage</li>
                       <li>• 1M requests: $100s-$1000s</li>
-                    </ul>
-                  </div>
-                  <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold mb-4">Self-Hosted</h3>
-                    <div className="text-3xl font-bold text-green-400 mb-2">$0 Variable</div>
-                    <p className="text-gray-300 text-sm mb-4">One-time setup</p>
-                    <ul className="text-left space-y-2 text-gray-400 text-sm">
-                      <li>• No per-request fees</li>
-                      <li>• Only infrastructure costs</li>
-                      <li>• Unlimited usage</li>
+                      <li>• Proprietary and vendor-locked</li>
                     </ul>
                   </div>
                 </div>
@@ -750,17 +671,18 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-semibold mb-2">Do you store my data?</h3>
               <p className="text-gray-400">
-                No. We process your text in memory and never persist it. No data is stored or logged. 
-                Processes run in real-time with zero data retention. Enterprise customers can opt for 
-                complete data isolation with self-hosted deployments.
+                When self-hosted, your data never leaves your environment. The library processes text in memory 
+                and never persists it. No data is stored or logged. Processes run in real-time with zero data retention. 
+                You maintain complete control over your data.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-2">Is this ISO/SOC compliant?</h3>
               <p className="text-gray-400">
-                The basic OpenRedaction service is designed to reduce compliance burden by never persisting data. 
-                This makes compliance simpler since there&apos;s no data storage to audit. For enterprise needs, 
-                Disclosurely.com offers ISO/SOC ready features with advanced auditing and compliance certifications.
+                OpenRedaction is an open-source library. When self-hosted, you are responsible for your own 
+                compliance certifications (ISO/SOC 2, etc.). The architecture (in-memory processing, no data retention) 
+                is designed to help you achieve compliance by minimizing data risk. Disclosurely.com, which uses 
+                OpenRedaction, is built with enterprise compliance in mind.
               </p>
             </div>
             <div>
@@ -775,16 +697,41 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2">What&apos;s the difference between regex and AI detection?</h3>
               <p className="text-gray-400">
                 Regex patterns are fast (milliseconds), deterministic, transparent, and easy to audit. 
-                They work great for structured data. The optional AI layer helps with messy, unstructured 
-                text but is slower, costlier, and less predictable. See our comparison table above for details.
+                They work great for structured data. The optional AI layer may help with messy, unstructured 
+                text but is slower, costlier, less predictable, and may miss entities or produce false positives. 
+                See our comparison table above for details.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-2">What use cases is this good for?</h3>
+              <p className="text-gray-400">
+                OpenRedaction works best for structured data like forms, databases, JSON, and well-formatted text. 
+                It&apos;s ideal when you need fast, deterministic, and transparent PII detection. The optional AI layer 
+                can help with messy chat logs or transcripts, but comes with trade-offs in speed, cost, and predictability.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-2">When should I not trust automatic redaction?</h3>
+              <p className="text-gray-400">
+                Automatic redaction is best-effort, not perfect. You should manually review output when handling 
+                highly sensitive data, legal documents, or compliance-critical content. Messy or unstructured input 
+                may still leak sensitive information. Always verify critical redactions manually.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-2">How do I self-host OpenRedaction?</h3>
+              <p className="text-gray-400">
+                Install the library via npm: <code className="bg-gray-800 px-1 py-0.5 rounded">npm install openredaction</code>. 
+                Use it directly in your Node.js application. For deployment, you can run it on your own infrastructure 
+                (Docker, Node.js server, etc.). See our documentation for detailed self-hosting instructions.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-2">Can I use this without sending data to third parties?</h3>
               <p className="text-gray-400">
-                Yes! With the self-hosted option, your data never leaves your environment. You can deploy 
-                OpenRedaction on your own infrastructure for complete data control and privacy. Contact us 
-                to discuss self-hosted deployment options.
+                Yes! Self-hosting is the primary deployment method. Your data never leaves your environment. 
+                You can deploy OpenRedaction on your own infrastructure for complete data control and privacy. 
+                See our documentation for self-hosting instructions.
               </p>
             </div>
             <div>
@@ -800,45 +747,44 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2">How does OpenRedaction help with compliance?</h3>
               <p className="text-gray-400">
                 OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements through regex transparency, 
-                self-hosting options, and zero data retention. The deterministic nature of pattern-based 
-                detection makes audits easier, and self-hosting gives you complete control over your data 
-                and infrastructure.
+                self-hosting, and zero data retention. The deterministic nature of pattern-based detection 
+                makes audits easier, and self-hosting gives you complete control over your data and infrastructure. 
+                You are responsible for your own compliance certifications.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-2">Can we self-host the solution?</h3>
               <p className="text-gray-400">
-                Yes! We offer self-hosted and on-premise deployment options for enterprise customers. 
-                This gives you full control over your infrastructure and data. Contact us to discuss 
-                your requirements.
+                Yes! Self-hosting is the primary deployment method. Install via npm and deploy on your own infrastructure 
+                for full control over your data. See our documentation for self-hosting instructions.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-2">What if there&apos;s a compliance issue?</h3>
               <p className="text-gray-400">
-                As an open-source tool, you maintain full control and responsibility over your 
-                infrastructure and data. Enterprise customers can work with us for custom deployments 
-                and support. We provide the tools and documentation to help you meet compliance requirements.
+                As an open-source tool, you maintain full control and responsibility over your infrastructure and data. 
+                We provide the tools and documentation to help you meet compliance requirements, but you are responsible 
+                for your own compliance certifications and audits.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-2">How accurate is the detection?</h3>
               <p className="text-gray-400">
-                OpenRedaction achieves high accuracy using 500+ tested regex patterns for detecting names, emails, SSNs, 
-                phone numbers, addresses, and more. Enterprise customers can work with us for custom pattern 
-                configurations tailored to their specific data patterns.
+                OpenRedaction uses 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, addresses, and more. 
+                Detection is best-effort and works best on structured data. You can contribute patterns or customize them 
+                for your specific needs. The optional AI layer may help with messy text but is not guaranteed to catch everything.
               </p>
             </div>
           </div>
         </div>
 
-        {/* GitHub Contribution Section */}
+        {/* Transparency & Community Section */}
         <div className="mt-32 bg-gray-900 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Open Source & Transparent</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">Transparency & Community</h2>
               <p className="text-xl text-gray-300 mb-8">
-                OpenRedaction is open source. Audit the code, contribute patterns, and help improve accuracy.
+                OpenRedaction is open source. Audit the code, contribute patterns, and help improve the library.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
                 <a
@@ -852,26 +798,164 @@ export default function Home() {
                     <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                   </svg>
                 </a>
+                <Link
+                  href="/docs"
+                  className="bg-gray-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-700 transition-colors border border-gray-700"
+                >
+                  Read Documentation
+                </Link>
               </div>
               <div className="grid md:grid-cols-3 gap-6 mt-12 text-left">
                 <div className="bg-black rounded-lg p-6 border border-gray-800">
                   <h3 className="text-xl font-semibold mb-3">Report Issues</h3>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-gray-400 text-sm mb-3">
                     Found a bug or have a suggestion? Open an issue on GitHub and help us improve.
                   </p>
+                  <a
+                    href="https://github.com/sam247/openredaction/issues"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-gray-300 underline text-sm"
+                  >
+                    View Issues →
+                  </a>
                 </div>
                 <div className="bg-black rounded-lg p-6 border border-gray-800">
                   <h3 className="text-xl font-semibold mb-3">Contribute Patterns</h3>
-                  <p className="text-gray-400 text-sm">
-                    Share new regex patterns or improve existing ones. The community helps maintain accuracy.
+                  <p className="text-gray-400 text-sm mb-3">
+                    Share new regex patterns or improve existing ones. The community helps maintain and expand pattern coverage.
                   </p>
+                  <a
+                    href="https://github.com/sam247/openredaction"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-gray-300 underline text-sm"
+                  >
+                    Contribute →
+                  </a>
                 </div>
                 <div className="bg-black rounded-lg p-6 border border-gray-800">
-                  <h3 className="text-xl font-semibold mb-3">Suggest Improvements</h3>
-                  <p className="text-gray-400 text-sm">
-                    Have ideas for new features? We welcome contributions and pull requests from the community.
+                  <h3 className="text-xl font-semibold mb-3">How to Contribute</h3>
+                  <p className="text-gray-400 text-sm mb-3">
+                    Fork the repository, make your changes, and submit a pull request. We welcome contributions from the community.
                   </p>
+                  <a
+                    href="https://github.com/sam247/openredaction"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-gray-300 underline text-sm"
+                  >
+                    View on GitHub →
+                  </a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Self-Host Instructions Section */}
+        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Self-Host OpenRedaction</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Install the open-source library and deploy on your infrastructure for complete privacy and control
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto bg-gray-900 rounded-lg p-8 border border-gray-800">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold mb-3">Installation</h3>
+                <div className="bg-black rounded-lg p-4 border border-gray-800">
+                  <pre className="text-green-400 font-mono text-sm">
+{`npm install openredaction`}
+                  </pre>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3">Basic Usage</h3>
+                <div className="bg-black rounded-lg p-4 border border-gray-800">
+                  <pre className="text-green-400 font-mono text-sm overflow-x-auto">
+{`import { redact } from 'openredaction';
+
+const text = "Contact John Doe at john@example.com";
+const result = await redact(text);
+console.log(result.redacted_text);`}
+                  </pre>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3">Deployment Options</h3>
+                <ul className="list-disc list-inside text-gray-300 space-y-2">
+                  <li>Node.js server - Run directly in your Node.js application</li>
+                  <li>Docker - Containerize and deploy on any infrastructure</li>
+                  <li>On-premise - Deploy on your own servers for maximum control</li>
+                </ul>
+              </div>
+              <div className="pt-4 border-t border-gray-800">
+                <p className="text-gray-400 text-sm mb-4">
+                  For detailed self-hosting instructions, configuration options, and deployment examples, 
+                  see our documentation or the GitHub README.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href="/docs"
+                    className="bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors text-center"
+                  >
+                    View Documentation
+                  </Link>
+                  <a
+                    href="https://github.com/sam247/openredaction"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-800 text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors border border-gray-700 text-center"
+                  >
+                    View on GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Limitations & Best Practices Section */}
+        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Limitations & Best Practices</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Important information about using OpenRedaction effectively
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto bg-gray-900 rounded-lg p-8 border border-gray-800">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-yellow-400">Best-Effort Redaction</h3>
+                <p className="text-gray-300">
+                  Redaction is best-effort, not perfect. OpenRedaction uses regex patterns and optional AI to detect PII, 
+                  but it may miss some entities or produce false positives. Always manually review output when handling 
+                  highly sensitive data.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-yellow-400">Structured vs Unstructured Data</h3>
+                <p className="text-gray-300">
+                  Regex patterns work best on structured data (forms, databases, JSON, well-formatted text). 
+                  Messy or unstructured input may still leak sensitive information. The optional AI layer may help 
+                  with messy text but is slower, costlier, and not guaranteed to catch everything.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-yellow-400">Manual Review Recommended</h3>
+                <p className="text-gray-300">
+                  For legal documents, compliance-critical content, or highly sensitive data, always manually review 
+                  the redacted output. Automatic redaction should be used as a first pass, not a final solution.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-yellow-400">Self-Hosted Responsibility</h3>
+                <p className="text-gray-300">
+                  When self-hosting, you are responsible for your own infrastructure, security, compliance certifications, 
+                  and data handling. OpenRedaction provides the tools, but you maintain full control and responsibility.
+                </p>
               </div>
             </div>
           </div>
@@ -881,24 +965,26 @@ export default function Home() {
         <div className="mt-32 bg-gradient-to-r from-gray-900 to-black py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Protect Your Data?
+              Ready to Get Started?
             </h2>
             <p className="text-xl text-gray-300 mb-8">
-              Get started with our free playground or contact us for enterprise solutions
+              Try the playground, install the library, or contribute on GitHub
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/contact"
+                href="/playground"
                 className="bg-white text-black px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-colors w-full sm:w-auto"
               >
-                Contact Enterprise Team
+                Try Playground
               </Link>
-              <Link
-                href="/playground"
+              <a
+                href="https://github.com/sam247/openredaction"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-gray-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-700 transition-colors border border-gray-700 w-full sm:w-auto"
               >
-                Try Free Playground
-              </Link>
+                View on GitHub
+              </a>
             </div>
           </div>
         </div>

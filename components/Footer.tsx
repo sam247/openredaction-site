@@ -36,12 +36,12 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/pricing" className="text-gray-400 hover:text-white transition-colors">
-                  Pricing
+                  Self-Hosted
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
-                  Enterprise
+                  Support
                 </Link>
               </li>
             </ul>
@@ -183,7 +183,7 @@ export default function Footer() {
                   <Logo size={120} />
                 </div>
               </div>
-              <span className="text-gray-400 text-sm">© 2024 OpenRedaction. All rights reserved.</span>
+              <span className="text-gray-400 text-sm">© 2025 OpenRedaction. All rights reserved.</span>
             </div>
           </div>
         </div>

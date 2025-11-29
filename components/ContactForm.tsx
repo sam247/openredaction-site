@@ -149,10 +149,10 @@ export default function ContactForm() {
           className="w-full bg-gray-900 border border-gray-800 rounded-md px-4 py-3 text-white focus:outline-none focus:border-gray-700"
         >
           <option value="">Select an option...</option>
-          <option value="enterprise-api">Enterprise API Access</option>
-          <option value="self-hosted">Self-Hosted Solution</option>
+          <option value="self-hosted">Self-Hosted Deployment Support</option>
+          <option value="github-issue">GitHub Issue / Bug Report</option>
+          <option value="contribution">Contribution / Pull Request</option>
           <option value="disclosurely">Disclosurely.com Platform</option>
-          <option value="consulting">Consulting & Implementation</option>
           <option value="other">Other</option>
         </select>
       </div>

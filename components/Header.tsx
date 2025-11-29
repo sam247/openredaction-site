@@ -94,7 +94,7 @@ export default function Header() {
           {/* Right Side - CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <Link
-              href="/contact"
+              href="/playground"
               className="bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors"
             >
               Get Started
@@ -146,7 +146,7 @@ export default function Header() {
               GitHub
             </a>
             <Link
-              href="/contact"
+              href="/playground"
               className="block bg-white text-black px-4 py-2 rounded-md font-medium text-center hover:bg-gray-100 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

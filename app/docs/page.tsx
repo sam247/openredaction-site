@@ -4,8 +4,8 @@ import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = generatePageMetadata({
-  title: 'Documentation - API Reference & Guides',
-  description: 'Complete documentation for OpenRedaction API. Learn how to integrate PII detection and redaction into your application with code examples and guides.',
+  title: 'Documentation - Open-Source Library',
+  description: 'Complete documentation for OpenRedaction open-source library. Learn how to install and use the npm package for PII detection and redaction in your Node.js applications.',
   path: '/docs',
 });
 
@@ -16,58 +16,55 @@ export default function Docs() {
       
       <main className="pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-5xl font-bold mb-8">API Documentation</h1>
+          <h1 className="text-5xl font-bold mb-8">Library Documentation</h1>
 
           <div className="space-y-12">
-            {/* Authentication */}
+            {/* Installation */}
             <section>
-              <h2 className="text-3xl font-semibold mb-4">Authentication</h2>
+              <h2 className="text-3xl font-semibold mb-4">Installation</h2>
               <p className="text-gray-300 mb-4">
-                All API requests require an API key in the request header. Get your API key from the dashboard.
+                Install OpenRedaction via npm:
               </p>
               <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-sm">
-                <code className="text-gray-300">
-                  x-api-key: free_your-api-key-here
+                <code className="text-green-400">
+                  npm install openredaction
                 </code>
               </div>
             </section>
 
-            {/* Redact Endpoint */}
+            {/* Basic Usage */}
             <section>
-              <h2 className="text-3xl font-semibold mb-4">Redact Text</h2>
+              <h2 className="text-3xl font-semibold mb-4">Basic Usage</h2>
               <p className="text-gray-300 mb-4">
-                Detect and redact PII from text.
+                Import and use the redact function to detect and redact PII from text.
               </p>
               
               <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 mb-4">
-                <div className="text-sm text-gray-400 mb-2">POST /v1/redact</div>
-                <pre className="text-sm text-gray-300 overflow-x-auto">
-{`{
-  "text": "My name is John Doe and my email is john@example.com"
-}`}
-                </pre>
-              </div>
+                <div className="text-sm text-gray-400 mb-2">Example:</div>
+                <pre className="text-sm text-green-400 overflow-x-auto">
+{`import { redact } from 'openredaction';
 
-              <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-                <div className="text-sm text-gray-400 mb-2">Response:</div>
-                <pre className="text-sm text-gray-300 overflow-x-auto">
-{`{
-  "redacted_text": "My name is [REDACTED] and my email is [REDACTED]",
-  "detections": [
-    {
-      "type": "PERSON",
-      "text": "John Doe",
-      "start": 11,
-      "end": 19
-    },
-    {
-      "type": "EMAIL",
-      "text": "john@example.com",
-      "start": 38,
-      "end": 55
-    }
-  ]
-}`}
+const text = "My name is John Doe and my email is john@example.com";
+const result = await redact(text);
+
+console.log(result.redacted_text);
+// "My name is [REDACTED] and my email is [REDACTED]"
+
+console.log(result.detections);
+// [
+//   {
+//     type: "PERSON",
+//     text: "John Doe",
+//     start: 11,
+//     end: 19
+//   },
+//   {
+//     type: "EMAIL",
+//     text: "john@example.com",
+//     start: 38,
+//     end: 55
+//   }
+// ]`}
                 </pre>
               </div>
             </section>
@@ -106,39 +103,38 @@ export default function Docs() {
 
               <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 mb-4">
                 <div className="text-sm text-gray-400 mb-2">Enable AI Layer:</div>
-                <pre className="text-sm text-gray-300 overflow-x-auto">
-{`{
-  "text": "My name is John Doe and my email is john@example.com",
-  "use_ai": true
-}`}
+                <pre className="text-sm text-green-400 overflow-x-auto">
+{`import { redact } from 'openredaction';
+
+const result = await redact(text, {
+  useAI: true  // Optional: enable AI layer for messy text
+});`}
                 </pre>
               </div>
 
               <p className="text-gray-300 text-sm">
-                By default, <code className="bg-gray-800 px-1 py-0.5 rounded">use_ai</code> is <code className="bg-gray-800 px-1 py-0.5 rounded">false</code>. 
-                Set it to <code className="bg-gray-800 px-1 py-0.5 rounded">true</code> to enable the optional AI/NER layer for improved detection on messy text.
+                By default, <code className="bg-gray-800 px-1 py-0.5 rounded">useAI</code> is <code className="bg-gray-800 px-1 py-0.5 rounded">false</code>. 
+                Set it to <code className="bg-gray-800 px-1 py-0.5 rounded">true</code> to enable the optional AI/NER layer for improved detection on messy text. 
+                Note: AI layer increases latency and cost. Use only when necessary.
               </p>
             </section>
 
-            {/* Rate Limiting */}
+            {/* Self-Hosting */}
             <section>
-              <h2 className="text-3xl font-semibold mb-4">Rate Limiting</h2>
+              <h2 className="text-3xl font-semibold mb-4">Self-Hosting</h2>
               <p className="text-gray-300 mb-4">
-                Rate limits are based on your plan tier:
+                OpenRedaction is designed to be self-hosted. Deploy on your own infrastructure for complete privacy and control.
               </p>
-              <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
-                <li><strong>Free tier:</strong> 100 requests/day</li>
-                <li><strong>Pro tier:</strong> 10,000 requests/day</li>
-              </ul>
-              <p className="text-gray-300 mb-4">
-                Rate limit information is included in response headers:
-              </p>
-              <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-sm">
-                <code className="text-gray-300">
-                  x-ratelimit-limit: 100<br />
-                  x-ratelimit-remaining: 95<br />
-                  x-ratelimit-reset: 1732656000
-                </code>
+              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 mb-4">
+                <h3 className="text-xl font-semibold mb-3">Deployment Options</h3>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                  <li><strong>Node.js Server:</strong> Run directly in your Node.js application</li>
+                  <li><strong>Docker:</strong> Containerize and deploy on any infrastructure</li>
+                  <li><strong>On-Premise:</strong> Deploy on your own servers for maximum control</li>
+                </ul>
+                <p className="text-gray-400 text-sm">
+                  When self-hosted, you maintain complete control over your data. No data leaves your environment.
+                </p>
               </div>
             </section>
 
@@ -147,83 +143,87 @@ export default function Docs() {
               <h2 className="text-3xl font-semibold mb-4">Error Handling</h2>
               <div className="space-y-4">
                 <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-                  <div className="text-red-400 font-semibold mb-2">429 Too Many Requests</div>
+                  <div className="text-red-400 font-semibold mb-2">Invalid Input</div>
                   <pre className="text-sm text-gray-300 overflow-x-auto">
-{`{
-  "error": "Rate limit exceeded",
-  "message": "You have exceeded your daily rate limit of 100 requests"
-}`}
-                  </pre>
-                </div>
-                <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-                  <div className="text-red-400 font-semibold mb-2">401 Unauthorized</div>
-                  <pre className="text-sm text-gray-300 overflow-x-auto">
-{`{
-  "error": "Invalid API key"
+{`try {
+  const result = await redact(null);
+} catch (error) {
+  console.error('Error:', error.message);
+  // "Invalid input: text must be a non-empty string"
 }`}
                   </pre>
                 </div>
               </div>
             </section>
 
-            {/* Code Examples */}
+            {/* Advanced Usage */}
             <section>
-              <h2 className="text-3xl font-semibold mb-4">Code Examples</h2>
+              <h2 className="text-3xl font-semibold mb-4">Advanced Usage</h2>
               
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">JavaScript/TypeScript</h3>
+                  <h3 className="text-xl font-semibold mb-2">Custom Options</h3>
                   <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-                    <pre className="text-sm text-gray-300 overflow-x-auto">
-{`const response = await fetch('https://openredaction-api.onrender.com/v1/redact', {
-  method: 'POST',
-  headers: {
-    'x-api-key': 'free_your-api-key-here',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    text: 'My email is john@example.com'
-  })
-});
+                    <pre className="text-sm text-green-400 overflow-x-auto">
+{`import { redact } from 'openredaction';
 
-const data = await response.json();
-console.log(data.redacted_text);`}
+const result = await redact(text, {
+  useAI: false,           // Enable optional AI layer
+  patterns: ['email', 'phone'],  // Custom pattern selection
+  redactionChar: '[REDACTED]'    // Custom redaction string
+});`}
                     </pre>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Python</h3>
+                  <h3 className="text-xl font-semibold mb-2">Batch Processing</h3>
                   <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-                    <pre className="text-sm text-gray-300 overflow-x-auto">
-{`import requests
+                    <pre className="text-sm text-green-400 overflow-x-auto">
+{`import { redact } from 'openredaction';
 
-response = requests.post(
-    'https://openredaction-api.onrender.com/v1/redact',
-    headers={
-        'x-api-key': 'free_your-api-key-here',
-        'Content-Type': 'application/json'
-    },
-    json={'text': 'My email is john@example.com'}
-)
+const texts = [
+  "Contact John at john@example.com",
+  "Call 555-123-4567 for support"
+];
 
-data = response.json()
-print(data['redacted_text'])`}
+const results = await Promise.all(
+  texts.map(text => redact(text))
+);
+
+results.forEach((result, index) => {
+  console.log(\`Text \${index + 1}:\`, result.redacted_text);
+});`}
                     </pre>
                   </div>
                 </div>
+              </div>
+            </section>
 
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">cURL</h3>
-                  <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-                    <pre className="text-sm text-gray-300 overflow-x-auto">
-{`curl -X POST https://openredaction-api.onrender.com/v1/redact \\
-  -H "x-api-key: free_your-api-key-here" \\
-  -H "Content-Type: application/json" \\
-  -d '{"text": "My email is john@example.com"}'`}
-                    </pre>
-                  </div>
-                </div>
+            {/* GitHub & Resources */}
+            <section>
+              <h2 className="text-3xl font-semibold mb-4">Resources</h2>
+              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                <ul className="space-y-3 text-gray-300">
+                  <li>
+                    <a href="https://github.com/sam247/openredaction" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 underline">
+                      View on GitHub →
+                    </a>
+                    <p className="text-gray-400 text-sm mt-1">Browse the source code, report issues, and contribute</p>
+                  </li>
+                  <li>
+                    <a href="https://github.com/sam247/openredaction/issues" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 underline">
+                      Report Issues →
+                    </a>
+                    <p className="text-gray-400 text-sm mt-1">Found a bug? Have a feature request? Open an issue</p>
+                  </li>
+                  <li>
+                    <Link href="/playground" className="text-white hover:text-gray-300 underline">
+                      Try Playground →
+                    </Link>
+                    <p className="text-gray-400 text-sm mt-1">Test OpenRedaction in your browser</p>
+                  </li>
+                </ul>
               </div>
             </section>
           </div>

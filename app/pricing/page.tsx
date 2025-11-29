@@ -7,8 +7,8 @@ import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = generatePageMetadata({
-  title: 'Enterprise Solutions - Custom Pricing & Support',
-  description: 'Enterprise solutions for OpenRedaction with custom pricing, dedicated support, SLA guarantees, and self-hosted deployment options.',
+  title: 'Self-Hosted Deployment & Support',
+  description: 'Self-hosted deployment instructions and support for OpenRedaction. Open-source library usage, community support, and self-hosting options.',
   path: '/pricing',
 });
 
@@ -21,11 +21,11 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Enterprise Solutions
+              Self-Hosted Deployment & Support
             </h1>
             <p className="text-xl text-gray-300">
-              Custom pricing and solutions tailored to your organization&apos;s needs. 
-              Get enterprise-grade PII detection with dedicated support.
+              Deploy OpenRedaction on your infrastructure for complete privacy and control. 
+              Open-source library with community support.
             </p>
           </div>
 
@@ -45,75 +45,116 @@ export default function Pricing() {
             </div>
           </div>
 
-          {/* Enterprise Benefits */}
+          {/* Self-Hosted Benefits */}
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <Shield className="text-white mb-4" size={32} />
-              <h3 className="text-xl font-semibold mb-2">SLA Guarantee</h3>
+              <Server className="text-white mb-4" size={32} />
+              <h3 className="text-xl font-semibold mb-2">Self-Hosted Control</h3>
               <p className="text-gray-400">
-                99.9% uptime guarantee with dedicated infrastructure and monitoring
+                Deploy on your infrastructure for complete data control and privacy
+              </p>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <Shield className="text-white mb-4" size={32} />
+              <h3 className="text-xl font-semibold mb-2">Open Source</h3>
+              <p className="text-gray-400">
+                Transparent, auditable code. Contribute and customize to your needs
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <Headphones className="text-white mb-4" size={32} />
-              <h3 className="text-xl font-semibold mb-2">Priority Support</h3>
+              <h3 className="text-xl font-semibold mb-2">Community Support</h3>
               <p className="text-gray-400">
-                Dedicated support team with guaranteed response times and direct access
-              </p>
-            </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <Server className="text-white mb-4" size={32} />
-              <h3 className="text-xl font-semibold mb-2">Custom Deployment</h3>
-              <p className="text-gray-400">
-                Self-hosted options, custom integrations, and tailored configurations
+                Get help from the community via GitHub issues and discussions
               </p>
             </div>
           </div>
 
-          {/* Enterprise Features */}
+          {/* Self-Hosted Features */}
           <div className="max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold text-center mb-8">Enterprise Features</h2>
+            <h2 className="text-3xl font-bold text-center mb-8">Self-Hosted Features</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h4 className="font-semibold mb-1">Unlimited Requests</h4>
-                  <p className="text-gray-400 text-sm">Scale to millions of requests per day</p>
+                  <h4 className="font-semibold mb-1">Complete Data Control</h4>
+                  <p className="text-gray-400 text-sm">Your data never leaves your environment</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
                   <h4 className="font-semibold mb-1">Custom Pattern Configurations</h4>
-                  <p className="text-gray-400 text-sm">Custom regex patterns for your specific data patterns</p>
+                  <p className="text-gray-400 text-sm">Customize regex patterns for your specific needs</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h4 className="font-semibold mb-1">Compliance Support</h4>
-                  <p className="text-gray-400 text-sm">Helps meet GDPR, HIPAA, and CCPA requirements</p>
+                  <h4 className="font-semibold mb-1">Compliance Ready</h4>
+                  <p className="text-gray-400 text-sm">Architecture helps meet GDPR, HIPAA, and CCPA requirements</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h4 className="font-semibold mb-1">Dedicated Infrastructure</h4>
-                  <p className="text-gray-400 text-sm">Isolated environments for maximum security</p>
+                  <h4 className="font-semibold mb-1">Zero Variable Costs</h4>
+                  <p className="text-gray-400 text-sm">No per-request fees, only infrastructure costs</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h4 className="font-semibold mb-1">Advanced Analytics</h4>
-                  <p className="text-gray-400 text-sm">Detailed usage reports and audit trails</p>
+                  <h4 className="font-semibold mb-1">Full Audit Control</h4>
+                  <p className="text-gray-400 text-sm">You manage all audit logs and reporting</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Check className="text-green-400 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h4 className="font-semibold mb-1">On-Premise Options</h4>
-                  <p className="text-gray-400 text-sm">Deploy on your own infrastructure</p>
+                  <h4 className="font-semibold mb-1">Open Source</h4>
+                  <p className="text-gray-400 text-sm">Transparent, auditable, and customizable</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Installation Instructions */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold text-center mb-8">Getting Started</h2>
+            <div className="bg-gray-900 rounded-lg p-8 border border-gray-800">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Installation</h3>
+                  <div className="bg-black rounded-lg p-4 border border-gray-800">
+                    <pre className="text-green-400 font-mono text-sm">
+{`npm install openredaction`}
+                    </pre>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Basic Usage</h3>
+                  <div className="bg-black rounded-lg p-4 border border-gray-800">
+                    <pre className="text-green-400 font-mono text-sm overflow-x-auto">
+{`import { redact } from 'openredaction';
+
+const result = await redact('Your text here');
+console.log(result.redacted_text);`}
+                    </pre>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Deployment</h3>
+                  <p className="text-gray-300 mb-3">
+                    Deploy on your own infrastructure using Node.js, Docker, or any container platform. 
+                    See our documentation for detailed deployment instructions.
+                  </p>
+                  <Link
+                    href="/docs"
+                    className="text-white hover:text-gray-300 underline"
+                  >
+                    View Documentation →
+                  </Link>
                 </div>
               </div>
             </div>
@@ -122,9 +163,12 @@ export default function Pricing() {
           {/* Contact Form */}
           <div className="max-w-3xl mx-auto mb-16">
             <div className="bg-gray-900 rounded-lg p-8 md:p-12 border border-gray-800">
-              <h2 className="text-3xl font-bold text-center mb-4">Get Custom Pricing</h2>
-              <p className="text-gray-300 text-center mb-8">
-                Tell us about your needs and we&apos;ll provide a tailored solution
+              <h2 className="text-3xl font-bold text-center mb-4">Get Self-Hosted Support</h2>
+              <p className="text-gray-300 text-center mb-4">
+                Need help with self-hosted deployment? Have questions about the library?
+              </p>
+              <p className="text-yellow-400 text-sm text-center mb-8">
+                Note: For self-hosted support only. We do not provide cloud-hosted API service.
               </p>
               <ContactForm />
             </div>
@@ -162,41 +206,41 @@ export default function Pricing() {
             <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-semibold mb-2">What&apos;s included in enterprise pricing?</h3>
+                <h3 className="text-xl font-semibold mb-2">How do I self-host OpenRedaction?</h3>
                 <p className="text-gray-400">
-                  Enterprise pricing is custom-tailored to your needs. It includes unlimited requests, 
-                  dedicated support, SLA guarantees, custom deployments, and compliance certifications. 
-                  Contact us for a detailed quote.
+                  Install the library via npm: <code className="bg-gray-800 px-1 py-0.5 rounded">npm install openredaction</code>. 
+                  Use it directly in your Node.js application. Deploy on your own infrastructure using Docker, 
+                  Node.js server, or any container platform. See our documentation for detailed instructions.
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Can we self-host the solution?</h3>
+                <h3 className="text-xl font-semibold mb-2">What support is available?</h3>
                 <p className="text-gray-400">
-                  Yes! We offer self-hosted and on-premise deployment options for enterprise customers. 
-                  This gives you full control over your infrastructure and data.
+                  Community support is available via GitHub issues and discussions. For self-hosted deployment 
+                  questions, you can contact us. We do not provide cloud-hosted API service or enterprise SLAs.
                 </p>
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">How does OpenRedaction help with compliance?</h3>
                 <p className="text-gray-400">
-                  OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements by automatically 
-                  detecting and redacting PII. As an open-source tool, you maintain full control over 
-                  your data. Enterprise customers can work with us for custom deployments and support.
+                  OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements through regex transparency, 
+                  self-hosting, and zero data retention. The architecture is designed to help you achieve compliance, 
+                  but you are responsible for your own compliance certifications.
                 </p>
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">Why not just use AWS services?</h3>
                 <p className="text-gray-400">
-                  OpenRedaction is purpose-built for PII detection with 99.9% accuracy. Unlike generic 
-                  AWS services, we specialize in privacy compliance and offer dedicated support, custom 
-                  models, and enterprise-grade SLAs.
+                  OpenRedaction is open source and self-hostable, so your data never leaves your environment. 
+                  Unlike AWS/Google, we require no account, log no data, and offer predictable costs (no per-token 
+                  pricing). Our regex-first approach is faster, more transparent, and easier to audit.
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">How quickly can we get started?</h3>
+                <h3 className="text-xl font-semibold mb-2">What are the costs?</h3>
                 <p className="text-gray-400">
-                  Most enterprise implementations can be set up within 1-2 weeks. Self-hosted deployments 
-                  may take 2-4 weeks depending on your infrastructure requirements.
+                  The library is free and open source. When self-hosted, you only pay for your infrastructure costs. 
+                  There are no per-request fees or variable costs. You maintain full control over your deployment.
                 </p>
               </div>
             </div>

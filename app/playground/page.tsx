@@ -27,8 +27,6 @@ export default function Playground() {
   const [activeTab, setActiveTab] = useState<'redacted' | 'entities' | 'json'>('redacted');
   const [copied, setCopied] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [usageCount, setUsageCount] = useState(0);
-  const FREE_LIMIT = 10; // Mock limit for demo
   
   // Settings
   const [entityTypes, setEntityTypes] = useState({
@@ -146,7 +144,6 @@ export default function Playground() {
       };
       
       setOutput(transformedData);
-      setUsageCount(prev => prev + 1);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'An error occurred while redacting text';
       setError(errorMessage);
@@ -180,31 +177,15 @@ export default function Playground() {
                 <div className="flex items-center gap-4 flex-wrap">
                   <div>
                     <p className="text-sm text-gray-300">
-                      Paste text. We&apos;ll detect and redact PII using regex patterns (fast & deterministic).
+                      Try the OpenRedaction library in your browser. This is a demo of the open-source library capabilities.
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
                       Nothing is logged or stored. Free demo API key enabled. Optional AI layer available in settings.
                     </p>
                   </div>
-                  {usageCount > 0 && (
-                    <div className="px-3 py-1 bg-gray-800 rounded-md border border-gray-700">
-                      <span className="text-xs text-gray-400">
-                        {FREE_LIMIT - usageCount} free requests remaining
-                      </span>
-                    </div>
-                  )}
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                {usageCount >= 3 && (
-                  <Link
-                    href="/contact"
-                    className="flex items-center space-x-2 px-4 py-2 bg-white text-black rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
-                  >
-                    <span>Get Enterprise Access</span>
-                    <ArrowRight size={16} />
-                  </Link>
-                )}
                 <button
                   onClick={() => setShowSettings(!showSettings)}
                   className="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
@@ -337,20 +318,22 @@ export default function Playground() {
                           {output.redacted_text}
                         </pre>
                       </div>
-                      {output.detections.length > 0 && (
-                        <div className="mt-4 bg-gray-900 border border-gray-800 rounded-lg p-4">
-                          <p className="text-sm text-gray-300 mb-2">
-                            Want to integrate this into your application?
-                          </p>
-                          <Link
-                            href="/contact"
-                            className="inline-flex items-center space-x-2 text-white hover:text-gray-300 text-sm font-medium"
-                          >
-                            <span>Contact us for API access</span>
-                            <ArrowRight size={16} />
-                          </Link>
-                        </div>
-                      )}
+                          {output.detections.length > 0 && (
+                            <div className="mt-4 bg-gray-900 border border-gray-800 rounded-lg p-4">
+                              <p className="text-sm text-gray-300 mb-2">
+                                Want to use this in your application?
+                              </p>
+                              <a
+                                href="https://github.com/sam247/openredaction"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center space-x-2 text-white hover:text-gray-300 text-sm font-medium"
+                              >
+                                <span>Install the library on GitHub</span>
+                                <ArrowRight size={16} />
+                              </a>
+                            </div>
+                          )}
                     </div>
                   )}
 
@@ -418,21 +401,21 @@ export default function Playground() {
                 <div className="text-center max-w-md px-4">
                   <p className="text-lg mb-2">Ready to redact</p>
                   <p className="text-sm mb-6">Enter text on the left and click &quot;Detect & Redact PII&quot;</p>
-                  {usageCount >= 5 && (
-                    <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 mt-4">
-                      <p className="text-white font-semibold mb-2">Need more requests?</p>
-                      <p className="text-sm text-gray-400 mb-4">
-                        You&apos;ve used {usageCount} free requests. Get unlimited access with enterprise plans.
-                      </p>
-                      <Link
-                        href="/contact"
-                        className="inline-flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
-                      >
-                        <span>Contact Enterprise Team</span>
-                        <ArrowRight size={16} />
-                      </Link>
-                    </div>
-                  )}
+                  <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 mt-4">
+                    <p className="text-white font-semibold mb-2">Want to use this in your app?</p>
+                    <p className="text-sm text-gray-400 mb-4">
+                      Install the open-source library and self-host on your infrastructure.
+                    </p>
+                    <a
+                      href="https://github.com/sam247/openredaction"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
+                    >
+                      <span>View on GitHub</span>
+                      <ArrowRight size={16} />
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
