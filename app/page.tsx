@@ -28,8 +28,6 @@ export default function Home() {
             {/* Headline */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Open-source, privacy-first PII redaction.
-              <br />
-              <span className="text-gray-400">Regex-first. Optional AI for messy text.</span>
             </h1>
 
             {/* Subtitle */}
