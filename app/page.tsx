@@ -34,20 +34,11 @@ export default function Home() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
               OpenRedaction is a powerful API for automatically detecting and redacting 
               personally identifiable information (PII) from text, ensuring compliance 
               and protecting user privacy.
             </p>
-
-            {/* Social Proof */}
-            <div className="flex items-center justify-center gap-6 mb-10 text-gray-400 text-sm flex-wrap">
-              <span>⭐ Trusted by 1,000+ developers</span>
-              <span className="hidden sm:inline">•</span>
-              <span>🚀 10M+ requests processed</span>
-              <span className="hidden sm:inline">•</span>
-              <GitHubBadge repo="sam247/openredaction" />
-            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
