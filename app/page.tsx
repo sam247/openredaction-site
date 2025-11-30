@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import TestimonialCard from '@/components/TestimonialCard';
+import FAQAccordion from '@/components/FAQAccordion';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
@@ -665,115 +666,68 @@ console.log(result.redacted_text);`}
         {/* FAQ Section */}
         <div className="mt-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Do you store my data?</h3>
-              <p className="text-gray-400">
-                When self-hosted, your data never leaves your environment. The library processes text in memory 
-                and never persists it. No data is stored or logged. Processes run in real-time with zero data retention. 
-                You maintain complete control over your data.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Is this ISO/SOC compliant?</h3>
-              <p className="text-gray-400">
-                OpenRedaction is an open-source library. When self-hosted, you are responsible for your own 
-                compliance certifications (ISO/SOC 2, etc.). The architecture (in-memory processing, no data retention) 
-                is designed to help you achieve compliance by minimizing data risk. Disclosurely.com, which uses 
-                OpenRedaction, is built with enterprise compliance in mind.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">How is this different from other redaction tools?</h3>
-              <p className="text-gray-400">
-                OpenRedaction is open source, self-hostable, and regex-first. Unlike proprietary solutions, 
-                you can audit the code, deploy on your infrastructure, and maintain full control. We use 
-                500+ tested patterns for deterministic, transparent detection with zero data retention.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">What&apos;s the difference between regex and AI detection?</h3>
-              <p className="text-gray-400">
-                Regex patterns are fast (milliseconds), deterministic, transparent, and easy to audit. 
-                They work great for structured data. The optional AI layer may help with messy, unstructured 
-                text but is slower, costlier, less predictable, and may miss entities or produce false positives. 
-                See our comparison table above for details.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">What use cases is this good for?</h3>
-              <p className="text-gray-400">
-                OpenRedaction works best for structured data like forms, databases, JSON, and well-formatted text. 
-                It&apos;s ideal when you need fast, deterministic, and transparent PII detection. The optional AI layer 
-                can help with messy chat logs or transcripts, but comes with trade-offs in speed, cost, and predictability.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">When should I not trust automatic redaction?</h3>
-              <p className="text-gray-400">
-                Automatic redaction is best-effort, not perfect. You should manually review output when handling 
-                highly sensitive data, legal documents, or compliance-critical content. Messy or unstructured input 
-                may still leak sensitive information. Always verify critical redactions manually.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">How do I self-host OpenRedaction?</h3>
-              <p className="text-gray-400">
-                Install the library via npm: <code className="bg-gray-800 px-1 py-0.5 rounded">npm install openredaction</code>. 
-                Use it directly in your Node.js application. For deployment, you can run it on your own infrastructure 
-                (Docker, Node.js server, etc.). See our documentation for detailed self-hosting instructions.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Can I use this without sending data to third parties?</h3>
-              <p className="text-gray-400">
-                Yes! Self-hosting is the primary deployment method. Your data never leaves your environment. 
-                You can deploy OpenRedaction on your own infrastructure for complete data control and privacy. 
-                See our documentation for self-hosting instructions.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Why not just use AWS/Google services?</h3>
-              <p className="text-gray-400">
-                OpenRedaction is open source and self-hostable, so your data never leaves your environment. 
-                Unlike AWS/Google, we require no account, log no data, and offer predictable costs (no per-token 
-                pricing). Our regex-first approach is faster, more transparent, and easier to audit than 
-                proprietary AI services.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">How does OpenRedaction help with compliance?</h3>
-              <p className="text-gray-400">
-                OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements through regex transparency, 
-                self-hosting, and zero data retention. The deterministic nature of pattern-based detection 
-                makes audits easier, and self-hosting gives you complete control over your data and infrastructure. 
-                You are responsible for your own compliance certifications.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Can we self-host the solution?</h3>
-              <p className="text-gray-400">
-                Yes! Self-hosting is the primary deployment method. Install via npm and deploy on your own infrastructure 
-                for full control over your data. See our documentation for self-hosting instructions.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">What if there&apos;s a compliance issue?</h3>
-              <p className="text-gray-400">
-                As an open-source tool, you maintain full control and responsibility over your infrastructure and data. 
-                We provide the tools and documentation to help you meet compliance requirements, but you are responsible 
-                for your own compliance certifications and audits.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">How accurate is the detection?</h3>
-              <p className="text-gray-400">
-                OpenRedaction uses 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, addresses, and more. 
-                Detection is best-effort and works best on structured data. You can contribute patterns or customize them 
-                for your specific needs. The optional AI layer may help with messy text but is not guaranteed to catch everything.
-              </p>
-            </div>
-          </div>
+          <FAQAccordion
+            items={[
+              {
+                question: 'Do you store my data?',
+                answer: 'When self-hosted, your data never leaves your environment. The library processes text in memory and never persists it. No data is stored or logged. Processes run in real-time with zero data retention. You maintain complete control over your data.',
+              },
+              {
+                question: 'Is this ISO/SOC compliant?',
+                answer: 'OpenRedaction is an open-source library. When self-hosted, you are responsible for your own compliance certifications (ISO/SOC 2, etc.). The architecture (in-memory processing, no data retention) is designed to help you achieve compliance by minimizing data risk. Disclosurely.com, which uses OpenRedaction, is built with enterprise compliance in mind.',
+              },
+              {
+                question: 'How is this different from other redaction tools?',
+                answer: 'OpenRedaction is open source, self-hostable, and regex-first. Unlike proprietary solutions, you can audit the code, deploy on your infrastructure, and maintain full control. We use 500+ tested patterns for deterministic, transparent detection with zero data retention.',
+              },
+              {
+                question: 'What\'s the difference between regex and AI detection?',
+                answer: 'Regex patterns are fast (milliseconds), deterministic, transparent, and easy to audit. They work great for structured data. The optional AI layer may help with messy, unstructured text but is slower, costlier, less predictable, and may miss entities or produce false positives. See our comparison table above for details.',
+              },
+              {
+                question: 'What use cases is this good for?',
+                answer: 'OpenRedaction works best for structured data like forms, databases, JSON, and well-formatted text. It\'s ideal when you need fast, deterministic, and transparent PII detection. The optional AI layer can help with messy chat logs or transcripts, but comes with trade-offs in speed, cost, and predictability.',
+              },
+              {
+                question: 'When should I not trust automatic redaction?',
+                answer: 'Automatic redaction is best-effort, not perfect. You should manually review output when handling highly sensitive data, legal documents, or compliance-critical content. Messy or unstructured input may still leak sensitive information. Always verify critical redactions manually.',
+              },
+              {
+                question: 'How do I self-host OpenRedaction?',
+                answer: (
+                  <>
+                    Install the library via npm: <code className="bg-gray-800 px-1 py-0.5 rounded">npm install openredaction</code>. 
+                    Use it directly in your Node.js application. For deployment, you can run it on your own infrastructure 
+                    (Docker, Node.js server, etc.). See our documentation for detailed self-hosting instructions.
+                  </>
+                ),
+              },
+              {
+                question: 'Can I use this without sending data to third parties?',
+                answer: 'Yes! Self-hosting is the primary deployment method. Your data never leaves your environment. You can deploy OpenRedaction on your own infrastructure for complete data control and privacy. See our documentation for self-hosting instructions.',
+              },
+              {
+                question: 'Why not just use AWS/Google services?',
+                answer: 'OpenRedaction is open source and self-hostable, so your data never leaves your environment. Unlike AWS/Google, we require no account, log no data, and offer predictable costs (no per-token pricing). Our regex-first approach is faster, more transparent, and easier to audit than proprietary AI services.',
+              },
+              {
+                question: 'How does OpenRedaction help with compliance?',
+                answer: 'OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements through regex transparency, self-hosting, and zero data retention. The deterministic nature of pattern-based detection makes audits easier, and self-hosting gives you complete control over your data and infrastructure. You are responsible for your own compliance certifications.',
+              },
+              {
+                question: 'Can we self-host the solution?',
+                answer: 'Yes! Self-hosting is the primary deployment method. Install via npm and deploy on your own infrastructure for full control over your data. See our documentation for self-hosting instructions.',
+              },
+              {
+                question: 'What if there\'s a compliance issue?',
+                answer: 'As an open-source tool, you maintain full control and responsibility over your infrastructure and data. We provide the tools and documentation to help you meet compliance requirements, but you are responsible for your own compliance certifications and audits.',
+              },
+              {
+                question: 'How accurate is the detection?',
+                answer: 'OpenRedaction uses 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, addresses, and more. Detection is best-effort and works best on structured data. You can contribute patterns or customize them for your specific needs. The optional AI layer may help with messy text but is not guaranteed to catch everything.',
+              },
+            ]}
+          />
         </div>
 
         {/* Transparency & Community Section */}
