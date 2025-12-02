@@ -135,7 +135,10 @@ export default function Playground() {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ text: inputText }),
+            body: JSON.stringify({ 
+              text: inputText,
+              useAI: true 
+            }),
           });
           
           console.log('AI response status:', aiResponse.status);
