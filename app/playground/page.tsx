@@ -122,8 +122,10 @@ export default function Playground() {
     try {
       // First, run regex detection
       const regexResult = detectorRef.current.detect(inputText);
+      console.log('Regex result:', regexResult);
       
       let allDetections = [...(regexResult.detections || [])];
+      console.log('Initial detections:', allDetections);
       
       // If AI is enabled, call the AI endpoint and merge results
       if (useAI) {
@@ -136,18 +138,26 @@ export default function Playground() {
             body: JSON.stringify({ text: inputText }),
           });
           
+          console.log('AI response status:', aiResponse.status);
+          
           if (aiResponse.ok) {
             const aiData = await aiResponse.json();
+            console.log('AI response data:', aiData);
+            
             if (aiData.entities && Array.isArray(aiData.entities)) {
+              console.log('AI entities found:', aiData.entities);
+              
               // Merge AI detections with regex detections
               // Convert AI entities to the same format as regex detections
-              const aiDetections = aiData.entities.map((entity: any) => ({
+              const aiDetections = aiData.entities.map((entity: any, index: number) => ({
                 type: entity.type || '',
                 value: entity.value || '',
                 position: [entity.start || 0, entity.end || 0],
-                placeholder: `[${entity.type || 'PII'}_${Date.now()}]`,
+                placeholder: `[${entity.type || 'PII'}_${index}]`,
                 severity: 'medium' as const,
               }));
+              
+              console.log('Converted AI detections:', aiDetections);
               
               // Merge detections, avoiding duplicates (same position)
               const existingPositions = new Set(
@@ -156,17 +166,27 @@ export default function Playground() {
                 )
               );
               
+              console.log('Existing positions:', Array.from(existingPositions));
+              
               aiDetections.forEach((aiDet: any) => {
                 const posKey = `${aiDet.position[0]}-${aiDet.position[1]}`;
+                console.log(`Checking AI detection at ${posKey}, exists: ${existingPositions.has(posKey)}`);
                 if (!existingPositions.has(posKey)) {
                   allDetections.push(aiDet);
                   existingPositions.add(posKey);
                 }
               });
+              
+              console.log('All detections after merge:', allDetections);
+            } else {
+              console.warn('AI response missing entities array:', aiData);
             }
+          } else {
+            const errorText = await aiResponse.text();
+            console.error('AI response not OK:', aiResponse.status, errorText);
           }
         } catch (aiError) {
-          console.warn('AI detection failed, using regex-only results:', aiError);
+          console.error('AI detection failed:', aiError);
           // Continue with regex-only results if AI fails
         }
       }
