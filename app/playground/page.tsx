@@ -146,14 +146,79 @@ export default function Playground() {
     setOutput(null);
 
     try {
-      // Use the OpenRedaction library client-side
-      // The detect method returns a DetectionResult with redacted text already included
-      const result = detectorRef.current.detect(inputText);
+      // First, run regex detection
+      const regexResult = detectorRef.current.detect(inputText);
+      
+      let allDetections = [...(regexResult.detections || [])];
+      
+      // If AI is enabled, call the AI endpoint and merge results
+      if (useAI) {
+        try {
+          const aiResponse = await fetch('https://openredaction-api.onrender.com/ai-detect', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: inputText }),
+          });
+          
+          if (aiResponse.ok) {
+            const aiData = await aiResponse.json();
+            if (aiData.entities && Array.isArray(aiData.entities)) {
+              // Merge AI detections with regex detections
+              // Convert AI entities to the same format as regex detections
+              const aiDetections = aiData.entities.map((entity: any) => ({
+                type: entity.type || '',
+                value: entity.value || '',
+                position: [entity.start || 0, entity.end || 0],
+                placeholder: `[${entity.type || 'PII'}_${Date.now()}]`,
+                severity: 'medium' as const,
+              }));
+              
+              // Merge detections, avoiding duplicates (same position)
+              const existingPositions = new Set(
+                allDetections.map((d: any) => 
+                  `${Array.isArray(d.position) ? d.position[0] : d.start}-${Array.isArray(d.position) ? d.position[1] : d.end}`
+                )
+              );
+              
+              aiDetections.forEach((aiDet: any) => {
+                const posKey = `${aiDet.position[0]}-${aiDet.position[1]}`;
+                if (!existingPositions.has(posKey)) {
+                  allDetections.push(aiDet);
+                  existingPositions.add(posKey);
+                }
+              });
+            }
+          }
+        } catch (aiError) {
+          console.warn('AI detection failed, using regex-only results:', aiError);
+          // Continue with regex-only results if AI fails
+        }
+      }
+      
+      // Sort detections by start position
+      allDetections.sort((a: any, b: any) => {
+        const aStart = Array.isArray(a.position) ? a.position[0] : (a.start || 0);
+        const bStart = Array.isArray(b.position) ? b.position[0] : (b.start || 0);
+        return aStart - bStart;
+      });
+      
+      // Apply redaction to the text with all detections
+      let redactedText = inputText;
+      // Apply redactions in reverse order to maintain positions
+      for (let i = allDetections.length - 1; i >= 0; i--) {
+        const det = allDetections[i];
+        const start = Array.isArray(det.position) ? det.position[0] : (det.start || 0);
+        const end = Array.isArray(det.position) ? det.position[1] : (det.end || 0);
+        const placeholder = det.placeholder || `[${det.type || 'PII'}]`;
+        redactedText = redactedText.slice(0, start) + placeholder + redactedText.slice(end);
+      }
       
       // Transform to expected format
       const transformedData: RedactResponse = {
-        redacted_text: result.redacted || inputText,
-        detections: (result.detections || []).map((det: any) => ({
+        redacted_text: redactedText,
+        detections: allDetections.map((det: any) => ({
           type: det.type || '',
           text: det.value || '',
           start: Array.isArray(det.position) ? det.position[0] : (det.start || 0),
