@@ -22,7 +22,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             {/* Badge */}
-            <div className="inline-flex items-center space-x-2 bg-gray-900 px-4 py-2 rounded-full mb-8">
+            <div className="inline-flex items-center space-x-2 bg-gray-900 px-4 py-2 rounded-full mb-8 mt-8">
               <span className="text-sm text-gray-300">500+ Tested Patterns • Fast & Deterministic</span>
             </div>
 

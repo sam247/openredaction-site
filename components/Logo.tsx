@@ -19,8 +19,15 @@ export default function Logo({ size = 32, className = '' }: LogoProps) {
   if (!mounted || hasError) {
     return (
       <div 
-        className={`bg-white rounded-full flex items-center justify-center ${className}`}
-        style={{ width: size, height: size }}
+        className={`bg-white rounded-full flex items-center justify-center flex-shrink-0 ${className}`}
+        style={{ 
+          width: size, 
+          height: size,
+          minWidth: size,
+          minHeight: size,
+          maxWidth: size,
+          maxHeight: size
+        }}
       >
         <span className="text-black font-bold" style={{ fontSize: size * 0.4 }}>
           OR
@@ -33,9 +40,23 @@ export default function Logo({ size = 32, className = '' }: LogoProps) {
     <img
       src="/logo.png"
       alt="OpenRedaction"
-      className={`object-contain ${className}`}
-      style={{ width: size, height: size, display: 'block' }}
+      className={`object-contain flex-shrink-0 ${className}`}
+      style={{ 
+        width: size, 
+        height: size, 
+        display: 'block',
+        minWidth: size,
+        minHeight: size,
+        maxWidth: size,
+        maxHeight: size
+      }}
       onError={() => setHasError(true)}
+      onLoad={(e) => {
+        // Ensure image maintains size on load
+        const img = e.target as HTMLImageElement;
+        img.style.width = `${size}px`;
+        img.style.height = `${size}px`;
+      }}
     />
   );
 }
