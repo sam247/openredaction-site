@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { OpenRedaction } from '@openredaction/openredaction';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -43,6 +44,18 @@ export default function Playground() {
   const [configProfile, setConfigProfile] = useState<'strict' | 'balanced' | 'minimal'>('balanced');
   const [selectedPreset, setSelectedPreset] = useState<string>('');
   const [useAI, setUseAI] = useState(false);
+
+  // Initialize OpenRedaction library with AI support
+  const detector = useMemo(() => {
+    return new OpenRedaction({
+      preset: selectedPreset || 'gdpr',
+      redactionMode: redactionMode === 'mask' ? 'placeholder' : redactionMode === 'token' ? 'hash' : 'mask-all',
+      ai: useAI ? {
+        enabled: true,
+        endpoint: 'https://openredaction-api.onrender.com'
+      } : undefined
+    });
+  }, [selectedPreset, redactionMode, useAI]);
 
   // API presets: gdpr, hipaa, ccpa, finance, education, transportation
   const apiPresets = {
@@ -93,52 +106,20 @@ export default function Playground() {
     setOutput(null);
 
     try {
-      // Playground always uses the demo API key - it's free and works out of the box
-      const keyToUse = 'free_demo-playground';
+      // Use the OpenRedaction library client-side
+      const result = await detector.detect(inputText);
       
-      const response = await fetch('https://openredaction-api.onrender.com/v1/redact', {
-        method: 'POST',
-        headers: {
-          'x-api-key': keyToUse,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: inputText,
-          ...(selectedPreset && { preset: selectedPreset }),
-          ...(useAI && { use_ai: true }),
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-        if (response.status === 401 || response.status === 403) {
-          throw new Error('Unauthorized: Invalid API key. Please check your API key in settings.');
-        }
-        throw new Error(errorData.error || `Failed to redact text (${response.status})`);
-      }
-
-      const data = await response.json();
+      // Redact the text
+      const redactedText = detector.redact(inputText, result);
       
-      // Transform API response to match expected format
-      if (!data.redacted && !data.redacted_text) {
-        throw new Error('Invalid API response: missing redacted text');
-      }
-      
+      // Transform to expected format
       const transformedData: RedactResponse = {
-        redacted_text: data.redacted || data.redacted_text || '',
-        detections: (data.detections || []).map((det: {
-          type?: string;
-          value?: string;
-          text?: string;
-          position?: [number, number];
-          start?: number;
-          end?: number;
-          severity?: string;
-        }) => ({
+        redacted_text: redactedText,
+        detections: result.map((det: any) => ({
           type: det.type || '',
           text: det.value || det.text || '',
-          start: Array.isArray(det.position) ? det.position[0] : (det.start || 0),
-          end: Array.isArray(det.position) ? det.position[1] : (det.end || 0),
+          start: det.start || 0,
+          end: det.end || 0,
           severity: det.severity,
         })),
       };
