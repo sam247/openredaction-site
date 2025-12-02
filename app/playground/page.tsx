@@ -146,19 +146,41 @@ export default function Playground() {
           if (aiResponse.ok) {
             const aiData = await aiResponse.json();
             console.log('AI response data:', aiData);
+            console.log('AI response full structure:', JSON.stringify(aiData, null, 2));
             
+            // Check for entities in various possible response formats
+            let entities = [];
             if (aiData.entities && Array.isArray(aiData.entities)) {
-              console.log('AI entities found:', aiData.entities);
+              entities = aiData.entities;
+            } else if (aiData.detections && Array.isArray(aiData.detections)) {
+              entities = aiData.detections;
+            } else if (Array.isArray(aiData)) {
+              entities = aiData;
+            }
+            
+            console.log('Extracted entities:', entities);
+            console.log('Number of entities:', entities.length);
+            
+            if (entities.length > 0) {
+              console.log('AI entities found:', entities);
               
               // Merge AI detections with regex detections
               // Convert AI entities to the same format as regex detections
-              const aiDetections = aiData.entities.map((entity: any, index: number) => ({
-                type: entity.type || '',
-                value: entity.value || '',
-                position: [entity.start || 0, entity.end || 0],
-                placeholder: `[${entity.type || 'PII'}_${index}]`,
-                severity: 'medium' as const,
-              }));
+              const aiDetections = entities.map((entity: any, index: number) => {
+                // Handle different possible entity formats
+                const start = entity.start ?? entity.position?.[0] ?? 0;
+                const end = entity.end ?? entity.position?.[1] ?? 0;
+                const value = entity.value ?? entity.text ?? entity.entity ?? '';
+                const type = entity.type ?? entity.label ?? 'PII';
+                
+                return {
+                  type: type,
+                  value: value,
+                  position: [start, end],
+                  placeholder: `[${type}_${index}]`,
+                  severity: 'medium' as const,
+                };
+              });
               
               console.log('Converted AI detections:', aiDetections);
               
@@ -182,7 +204,10 @@ export default function Playground() {
               
               console.log('All detections after merge:', allDetections);
             } else {
-              console.warn('AI response missing entities array:', aiData);
+              console.warn('No entities found in AI response. Full response:', aiData);
+              if (aiData.aiUsed === false) {
+                console.warn('AI was not used by the API. This might indicate the API endpoint is not configured to use AI, or the useAI parameter is not being recognized.');
+              }
             }
           } else {
             const errorText = await aiResponse.text();
