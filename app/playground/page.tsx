@@ -180,7 +180,7 @@ export default function Playground() {
                       Try the OpenRedaction library in your browser. This is a demo of the open-source library capabilities.
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
-                      Nothing is logged or stored. Free demo API key enabled. Optional AI layer available in settings.
+                      Nothing is logged or stored. Free demo API key enabled. Hosted AI assist available in settings (optional).
                     </p>
                   </div>
                 </div>
@@ -495,9 +495,9 @@ export default function Playground() {
                 </div>
               </div>
 
-              {/* Optional AI Layer */}
+              {/* Hosted AI Assist */}
               <div className="border-t border-gray-800 pt-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-3">Optional AI Layer</h3>
+                <h3 className="text-sm font-semibold text-gray-400 mb-3">Hosted AI Assist</h3>
                 <label className="flex items-start cursor-pointer">
                   <input
                     type="checkbox"
@@ -506,9 +506,9 @@ export default function Playground() {
                     className="mt-1 w-4 h-4 rounded bg-gray-800 border-gray-700"
                   />
                   <div className="ml-3 flex-1">
-                    <span className="text-sm text-gray-300 block mb-1">Enable AI/NER layer</span>
-                    <p className="text-xs text-yellow-400">
-                      ⚠ Increases latency and cost. Use only for messy, unstructured text.
+                    <span className="text-sm text-gray-300 block mb-1">Use AI assist</span>
+                    <p className="text-xs text-gray-400 mt-1">
+                      When enabled, this sends your text through our hosted AI proxy to pick up extra PII in messy text. When disabled, only regex-based detection is used.
                     </p>
                   </div>
                 </label>
