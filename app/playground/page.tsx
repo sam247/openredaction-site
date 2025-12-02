@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { Loader2, Copy, Check, Settings, ArrowRight } from 'lucide-react';
+import { Loader2, Copy, Check, ArrowRight } from 'lucide-react';
 
 interface Detection {
   type: string;
@@ -26,21 +26,6 @@ export default function Playground() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'redacted' | 'entities' | 'json'>('redacted');
   const [copied, setCopied] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  
-  // Settings
-  const [entityTypes, setEntityTypes] = useState({
-    email: true,
-    phone: true,
-    name: true,
-    ssn: true,
-    ip: true,
-    address: true,
-    creditCard: true,
-    dateOfBirth: true,
-  });
-  const [redactionMode, setRedactionMode] = useState<'mask' | 'token' | 'remove'>('mask');
-  const [configProfile, setConfigProfile] = useState<'strict' | 'balanced' | 'minimal'>('balanced');
   const [selectedPreset, setSelectedPreset] = useState<string>('');
   const [useAI, setUseAI] = useState(false);
   const detectorRef = useRef<any>(null);
@@ -54,24 +39,18 @@ export default function Playground() {
         const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
           ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
           : 'gdpr';
-        const modeValue = redactionMode === 'mask' ? 'placeholder' : redactionMode === 'token' ? 'hash' : 'mask-all';
         detectorRef.current = new OpenRedaction({
           preset: presetValue,
-          redactionMode: modeValue as any,
-          ai: useAI ? {
-            enabled: true,
-            endpoint: 'https://openredaction-api.onrender.com'
-          } : undefined
+          redactionMode: 'placeholder' as any,
         } as any);
         setLibraryLoaded(true);
       }).catch((err) => {
         console.error('Failed to load OpenRedaction library:', err);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedPreset, libraryLoaded]);
 
-  // Update detector when settings change
+  // Update detector when preset changes
   useEffect(() => {
     if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
       import('@openredaction/openredaction').then((module) => {
@@ -79,18 +58,13 @@ export default function Playground() {
         const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
           ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
           : 'gdpr';
-        const modeValue = redactionMode === 'mask' ? 'placeholder' : redactionMode === 'token' ? 'hash' : 'mask-all';
         detectorRef.current = new OpenRedaction({
           preset: presetValue,
-          redactionMode: modeValue as any,
-          ai: useAI ? {
-            enabled: true,
-            endpoint: 'https://openredaction-api.onrender.com'
-          } : undefined
+          redactionMode: 'placeholder' as any,
         } as any);
       });
     }
-  }, [selectedPreset, redactionMode, useAI, libraryLoaded]);
+  }, [selectedPreset, libraryLoaded]);
 
   // API presets: gdpr, hipaa, ccpa, finance, education, transportation
   const apiPresets = {
@@ -264,19 +238,10 @@ export default function Playground() {
                       Try the OpenRedaction library in your browser. This is a demo of the open-source library capabilities.
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
-                      Nothing is logged or stored. Free demo API key enabled. Hosted AI assist available in settings (optional).
+                      Nothing is logged or stored. Free demo API key enabled. Hosted AI assist available (optional).
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setShowSettings(!showSettings)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
-                >
-                  <Settings size={16} />
-                  <span className="text-sm">Settings</span>
-                </button>
               </div>
             </div>
           </div>
@@ -321,6 +286,23 @@ export default function Playground() {
                     </option>
                   ))}
                 </select>
+              </div>
+              {/* AI Toggle */}
+              <div className="pt-2 border-t border-gray-800">
+                <label className="flex items-start cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={useAI}
+                    onChange={(e) => setUseAI(e.target.checked)}
+                    className="mt-1 w-4 h-4 rounded bg-gray-800 border-gray-700"
+                  />
+                  <div className="ml-3 flex-1">
+                    <span className="text-sm text-gray-300 block mb-1">Use AI Assist (hosted)</span>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Sends your text to our hosted AI proxy for extra detection. Your text is not stored or logged.
+                    </p>
+                  </div>
+                </label>
               </div>
             </div>
             <div className="flex-1 p-4">
@@ -507,99 +489,6 @@ export default function Playground() {
           </div>
         </div>
 
-        {/* Settings Drawer */}
-        {showSettings && (
-          <div className="fixed inset-y-0 right-0 w-80 bg-gray-900 border-l border-gray-800 z-50 overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold">Settings</h2>
-                <button
-                  onClick={() => setShowSettings(false)}
-                  className="text-gray-400 hover:text-white"
-                >
-                  ×
-                </button>
-              </div>
-
-              {/* Entity Types */}
-              <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-3">Entity Types</h3>
-                <div className="space-y-2">
-                  {Object.entries(entityTypes).map(([key, value]) => (
-                    <label key={key} className="flex items-center justify-between cursor-pointer">
-                      <span className="text-sm text-gray-300 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
-                      <input
-                        type="checkbox"
-                        checked={value}
-                        onChange={(e) => setEntityTypes({ ...entityTypes, [key]: e.target.checked })}
-                        className="w-4 h-4 rounded bg-gray-800 border-gray-700"
-                      />
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Redaction Mode */}
-              <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-3">Redaction Mode</h3>
-                <div className="space-y-2">
-                  {(['mask', 'token', 'remove'] as const).map((mode) => (
-                    <label key={mode} className="flex items-center cursor-pointer">
-                      <input
-                        type="radio"
-                        name="mode"
-                        value={mode}
-                        checked={redactionMode === mode}
-                        onChange={() => setRedactionMode(mode)}
-                        className="mr-2"
-                      />
-                      <span className="text-sm text-gray-300 capitalize">{mode}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Config Profiles */}
-              <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-3">Config Profile</h3>
-                <div className="space-y-2">
-                  {(['strict', 'balanced', 'minimal'] as const).map((profile) => (
-                    <label key={profile} className="flex items-center cursor-pointer">
-                      <input
-                        type="radio"
-                        name="profile"
-                        value={profile}
-                        checked={configProfile === profile}
-                        onChange={() => setConfigProfile(profile)}
-                        className="mr-2"
-                      />
-                      <span className="text-sm text-gray-300 capitalize">{profile}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Hosted AI Assist */}
-              <div className="border-t border-gray-800 pt-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-3">Hosted AI Assist</h3>
-                <label className="flex items-start cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={useAI}
-                    onChange={(e) => setUseAI(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded bg-gray-800 border-gray-700"
-                  />
-                  <div className="ml-3 flex-1">
-                    <span className="text-sm text-gray-300 block mb-1">Use AI Assist (hosted)</span>
-                    <p className="text-xs text-gray-400 mt-1">
-                      Sends your text to our hosted AI proxy for extra detection. Your text is not stored or logged.
-                    </p>
-                  </div>
-                </label>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
 
       <Footer />
