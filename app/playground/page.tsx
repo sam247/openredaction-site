@@ -136,8 +136,7 @@ export default function Playground() {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
-              text: inputText,
-              useAI: true 
+              text: inputText
             }),
           });
           
