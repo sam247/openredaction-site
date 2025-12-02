@@ -147,20 +147,18 @@ export default function Playground() {
 
     try {
       // Use the OpenRedaction library client-side
-      const result = await detectorRef.current.detect(inputText);
-      
-      // Redact the text
-      const redactedText = detectorRef.current.redact(inputText, result);
+      // The detect method returns a DetectionResult with redacted text already included
+      const result = detectorRef.current.detect(inputText);
       
       // Transform to expected format
       const transformedData: RedactResponse = {
-        redacted_text: redactedText,
-        detections: result.map((det: any) => ({
+        redacted_text: result.redacted || inputText,
+        detections: (result.detections || []).map((det: any) => ({
           type: det.type || '',
-          text: det.value || det.text || '',
-          start: det.start || 0,
-          end: det.end || 0,
-          severity: det.severity,
+          text: det.value || '',
+          start: Array.isArray(det.position) ? det.position[0] : (det.start || 0),
+          end: Array.isArray(det.position) ? det.position[1] : (det.end || 0),
+          severity: det.severity || 'medium',
         })),
       };
       
