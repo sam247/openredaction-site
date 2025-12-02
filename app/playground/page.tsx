@@ -506,9 +506,9 @@ export default function Playground() {
                     className="mt-1 w-4 h-4 rounded bg-gray-800 border-gray-700"
                   />
                   <div className="ml-3 flex-1">
-                    <span className="text-sm text-gray-300 block mb-1">Use AI assist</span>
+                    <span className="text-sm text-gray-300 block mb-1">Use AI Assist (hosted)</span>
                     <p className="text-xs text-gray-400 mt-1">
-                      When enabled, this sends your text through our hosted AI proxy to pick up extra PII in messy text. When disabled, only regex-based detection is used.
+                      Sends your text to our hosted AI proxy for extra detection. Your text is not stored or logged.
                     </p>
                   </div>
                 </label>

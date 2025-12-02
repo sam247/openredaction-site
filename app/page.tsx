@@ -33,7 +33,7 @@ export default function Home() {
 
             {/* Subtitle */}
             <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              OpenRedaction is an open-source redaction engine. It works entirely with regex by default, and can optionally use our hosted AI assist to catch extra PII in messy, unstructured text.
+              OpenRedaction is the open-source redaction engine. Regex-only by default; enable AI assist for extra detection on messy or unstructured text.
             </p>
 
             {/* CTA Buttons */}
@@ -94,6 +94,13 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
+              <div className="text-3xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold mb-2">Regex-Based Redaction</h3>
+              <p className="text-gray-400">
+                Transparent, deterministic detection using 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, and more. Fast, reliable, and fully auditable.
+              </p>
+            </div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <div className="text-3xl mb-4">✅</div>
               <h3 className="text-xl font-semibold mb-2">Comply with GDPR Instantly</h3>
               <p className="text-gray-400">
@@ -117,17 +124,10 @@ export default function Home() {
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
               <div className="text-3xl mb-4">📊</div>
-              <h3 className="text-xl font-semibold mb-2">Complete Audit Trails</h3>
+              <h3 className="text-xl font-semibold mb-2">Self-Hosted Control</h3>
               <p className="text-gray-400">
-                When self-hosted, you control all logging and audit trails. Track all PII detections 
+                When self-hosted, you control all logging and data handling. Track PII detections 
                 with detailed reporting for compliance and security reviews.
-              </p>
-            </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold mb-2">Transparent Pattern Detection</h3>
-              <p className="text-gray-400">
-                Transparent, deterministic detection using 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, and more.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
@@ -141,17 +141,22 @@ export default function Home() {
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
               <div className="text-3xl mb-4">🤖</div>
               <h3 className="text-xl font-semibold mb-2">Hosted AI Assist (Optional)</h3>
-              <p className="text-gray-400 mb-3">
-                Regex-only by default – no AI required. Toggle AI assist to detect extra PII in messy or unstructured text.
-              </p>
-              <ul className="space-y-2 text-gray-400 text-sm">
+              <ul className="space-y-2 text-gray-400 text-sm mt-3">
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>No setup – uses our hosted AI proxy, no API keys needed</span>
+                  <span className="text-green-400 mr-2">•</span>
+                  <span>Regex-only by default — no setup needed</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>No storage – we don&apos;t log or store your text</span>
+                  <span className="text-green-400 mr-2">•</span>
+                  <span>Toggle AI assist to catch extra PII in free text</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">•</span>
+                  <span>No accounts, no API keys, no storage</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">•</span>
+                  <span>Fully open source + self-hostable</span>
                 </li>
               </ul>
             </div>
@@ -316,7 +321,7 @@ export default function Home() {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-yellow-400 mr-2">⚠</span>
-                      <span className="text-gray-300">Slower but smarter on natural language</span>
+                      <span className="text-gray-300">Better detection on natural language / unstructured text</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-yellow-400 mr-2">⚠</span>
@@ -344,7 +349,7 @@ export default function Home() {
             </div>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-400 italic">
-                AI assist is best-effort and may miss some entities; for highly sensitive workloads, we recommend using regex-only mode or manual review.
+                AI assist is best-effort; for highly sensitive data, we recommend manual review or regex-only mode.
               </p>
             </div>
           </div>
@@ -366,7 +371,7 @@ export default function Home() {
                     1
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Regex Pattern Detection</h3>
+                    <h3 className="text-xl font-semibold mb-2">Regex detection</h3>
                     <p className="text-gray-400">
                       We run our hardened regex patterns over your text. This is the default and primary detection method - fast, deterministic, and transparent.
                     </p>
@@ -379,9 +384,9 @@ export default function Home() {
                     2
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Optional AI Assist</h3>
+                    <h3 className="text-xl font-semibold mb-2">Optional AI assist via hosted proxy</h3>
                     <p className="text-gray-400">
-                      If AI assist is enabled, we send the text to our hosted AI proxy, which asks an LLM to identify extra PII spans. This step is optional and only used when explicitly enabled.
+                      If AI assist is enabled, we send the text to our hosted AI proxy, which identifies extra PII spans. This step is optional and only used when explicitly enabled.
                     </p>
                   </div>
                 </div>
@@ -392,7 +397,7 @@ export default function Home() {
                     3
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Merge & Redact</h3>
+                    <h3 className="text-xl font-semibold mb-2">Merge & redact</h3>
                     <p className="text-gray-400">
                       Regex + AI spans are merged, and the text is redacted deterministically by the OpenRedaction engine. All processing happens in memory.
                     </p>
@@ -402,7 +407,7 @@ export default function Home() {
             </div>
             <div className="mt-8 bg-black rounded-lg p-6 border border-gray-800">
               <p className="text-gray-300 text-center">
-                <strong className="text-white">Privacy Note:</strong> We don&apos;t store or log your text in our hosted AI proxy. Everything is processed in memory and discarded.
+                Text is processed in memory and discarded — we store nothing.
               </p>
             </div>
           </div>
@@ -544,9 +549,9 @@ console.log(result.redacted_text);`}
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <div className="text-3xl mb-4">📊</div>
-              <h3 className="text-xl font-semibold mb-2">Full Audit Trail</h3>
+              <h3 className="text-xl font-semibold mb-2">Self-Hosted Logging</h3>
               <p className="text-gray-400">
-                When self-hosted, you manage all audit logs. Complete detection logs with entity types, positions, and timestamps. 
+                When self-hosted, you manage all logging. Complete detection logs with entity types, positions, and timestamps. 
                 Perfect for compliance reporting.
               </p>
             </div>
@@ -646,10 +651,13 @@ console.log(result.redacted_text);`}
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">Simple, Low-Friction Pricing</h2>
               <p className="text-xl text-gray-300 mb-4">
-                OpenRedaction library and regex mode are free and open source.
+                OpenRedaction library (regex-only) — free and open source.
+              </p>
+              <p className="text-lg text-gray-300 mb-2">
+                Hosted AI Assist — included for small workloads (fair-use limits apply).
               </p>
               <p className="text-lg text-gray-400 mb-8">
-                Hosted AI assist is available out of the box for small workloads (fair-use rate limiting applies). For heavy usage or strict privacy needs, you can self-host and configure your own AI endpoint.
+                For large or privacy-sensitive workloads you can self-host and configure your own AI endpoint.
               </p>
             </div>
             <div className="max-w-3xl mx-auto">
@@ -662,7 +670,7 @@ console.log(result.redacted_text);`}
                     <ul className="text-left space-y-2 text-gray-400 text-sm">
                       <li>• No per-request fees</li>
                       <li>• Only infrastructure costs</li>
-                      <li>• Unlimited usage</li>
+                      <li>• No usage limits</li>
                       <li>• Open-source and free</li>
                     </ul>
                   </div>
@@ -760,7 +768,7 @@ console.log(result.redacted_text);`}
               },
               {
                 question: 'Is this ISO/SOC compliant?',
-                answer: 'OpenRedaction is an open-source library. When self-hosted, you are responsible for your own compliance certifications (ISO/SOC 2, etc.). The architecture (in-memory processing, no data retention) is designed to help you achieve compliance by minimizing data risk. Disclosurely.com, which uses OpenRedaction, is built with enterprise compliance in mind.',
+                answer: 'OpenRedaction is an open-source library. When self-hosted, you are responsible for your own compliance certifications (ISO/SOC 2, etc.). The architecture (in-memory processing, no data retention) is designed to help you achieve compliance by minimizing data risk.',
               },
               {
                 question: 'How is this different from other redaction tools?',
@@ -813,16 +821,16 @@ console.log(result.redacted_text);`}
                 answer: 'OpenRedaction uses 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, addresses, and more. Detection is best-effort and works best on structured data. You can contribute patterns or customize them for your specific needs. The optional AI layer may help with messy text but is not guaranteed to catch everything.',
               },
               {
-                question: 'Do I have to use AI?',
-                answer: 'No. Regex-only mode is the default and works completely without AI. AI assist is optional and only used when explicitly enabled. For most structured data, regex patterns are faster, cheaper, and more reliable.',
+                question: 'Do I have to use AI assist?',
+                answer: 'No. Regex-only mode is the default and works fully offline / self-hosted.',
               },
               {
-                question: 'Where does my data go in AI assist mode?',
-                answer: 'When AI assist is enabled in the playground or via the API, your text is sent to our hosted AI proxy, which forwards it to our model provider strictly for entity detection. We don\'t log or store your text. Everything is processed in memory and discarded.',
+                question: 'Where does my data go when AI assist is enabled?',
+                answer: 'Text is sent to a hosted AI proxy for detection only; we do not store or log your input.',
               },
               {
-                question: 'Can I self-host everything?',
-                answer: 'Yes. OpenRedaction is open source, and you can run the engine and API yourself, with or without AI assist. For strict privacy needs, you can self-host and configure your own AI endpoint.',
+                question: 'Can I self-host the API and AI assist myself?',
+                answer: 'Yes. The entire system is open source — you can run it on your own server or infrastructure, with or without AI assist.',
               },
             ]}
           />
