@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { OpenRedaction } from '@openredaction/openredaction';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -44,18 +43,54 @@ export default function Playground() {
   const [configProfile, setConfigProfile] = useState<'strict' | 'balanced' | 'minimal'>('balanced');
   const [selectedPreset, setSelectedPreset] = useState<string>('');
   const [useAI, setUseAI] = useState(false);
+  const detectorRef = useRef<any>(null);
+  const [libraryLoaded, setLibraryLoaded] = useState(false);
 
-  // Initialize OpenRedaction library with AI support
-  const detector = useMemo(() => {
-    return new OpenRedaction({
-      preset: selectedPreset || 'gdpr',
-      redactionMode: redactionMode === 'mask' ? 'placeholder' : redactionMode === 'token' ? 'hash' : 'mask-all',
-      ai: useAI ? {
-        enabled: true,
-        endpoint: 'https://openredaction-api.onrender.com'
-      } : undefined
-    });
-  }, [selectedPreset, redactionMode, useAI]);
+  // Lazy load OpenRedaction library only on client side
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !libraryLoaded) {
+      import('@openredaction/openredaction').then((module) => {
+        const { OpenRedaction } = module;
+        const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
+          ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
+          : 'gdpr';
+        const modeValue = redactionMode === 'mask' ? 'placeholder' : redactionMode === 'token' ? 'hash' : 'mask-all';
+        detectorRef.current = new OpenRedaction({
+          preset: presetValue,
+          redactionMode: modeValue as any,
+          ai: useAI ? {
+            enabled: true,
+            endpoint: 'https://openredaction-api.onrender.com'
+          } : undefined
+        } as any);
+        setLibraryLoaded(true);
+      }).catch((err) => {
+        console.error('Failed to load OpenRedaction library:', err);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Update detector when settings change
+  useEffect(() => {
+    if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
+      import('@openredaction/openredaction').then((module) => {
+        const { OpenRedaction } = module;
+        const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
+          ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
+          : 'gdpr';
+        const modeValue = redactionMode === 'mask' ? 'placeholder' : redactionMode === 'token' ? 'hash' : 'mask-all';
+        detectorRef.current = new OpenRedaction({
+          preset: presetValue,
+          redactionMode: modeValue as any,
+          ai: useAI ? {
+            enabled: true,
+            endpoint: 'https://openredaction-api.onrender.com'
+          } : undefined
+        } as any);
+      });
+    }
+  }, [selectedPreset, redactionMode, useAI, libraryLoaded]);
 
   // API presets: gdpr, hipaa, ccpa, finance, education, transportation
   const apiPresets = {
@@ -101,16 +136,21 @@ export default function Playground() {
       return;
     }
 
+    if (!libraryLoaded || !detectorRef.current) {
+      setError('Library is still loading. Please wait a moment and try again.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setOutput(null);
 
     try {
       // Use the OpenRedaction library client-side
-      const result = await detector.detect(inputText);
+      const result = await detectorRef.current.detect(inputText);
       
       // Redact the text
-      const redactedText = detector.redact(inputText, result);
+      const redactedText = detectorRef.current.redact(inputText, result);
       
       // Transform to expected format
       const transformedData: RedactResponse = {

@@ -4,6 +4,20 @@ const nextConfig = {
   images: {
     unoptimized: false,
   },
+  webpack: (config, { isServer }) => {
+    // Ignore Node.js modules that aren't available in the browser
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        'fs/promises': false,
+        worker_threads: false,
+        path: false,
+        crypto: false,
+      };
+    }
+    return config;
+  },
 }
 
 module.exports = nextConfig
