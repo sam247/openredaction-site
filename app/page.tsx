@@ -151,7 +151,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-400 mr-2">✓</span>
-                  <span>No storage – we don't log or store your text</span>
+                  <span>No storage – we don&apos;t log or store your text</span>
                 </li>
               </ul>
             </div>
@@ -402,7 +402,7 @@ export default function Home() {
             </div>
             <div className="mt-8 bg-black rounded-lg p-6 border border-gray-800">
               <p className="text-gray-300 text-center">
-                <strong className="text-white">Privacy Note:</strong> We don't store or log your text in our hosted AI proxy. Everything is processed in memory and discarded.
+                <strong className="text-white">Privacy Note:</strong> We don&apos;t store or log your text in our hosted AI proxy. Everything is processed in memory and discarded.
               </p>
             </div>
           </div>
