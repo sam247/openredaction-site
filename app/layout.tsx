@@ -3,7 +3,7 @@ import "./globals.css";
 import { defaultMetadata } from "@/lib/metadata";
 import { StructuredData } from "@/components/StructuredData";
 import { Analytics } from "@vercel/analytics/next";
-import { Botd } from "@vercel/botd/next";
+import { BotdScript } from "botid/next";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Botd />
+        <BotdScript />
         <StructuredData />
         {children}
         <Analytics />
