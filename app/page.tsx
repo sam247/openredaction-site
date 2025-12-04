@@ -28,12 +28,12 @@ export default function Home() {
 
             {/* Headline */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Regex-first PII redaction. Optional AI assist when you need it.
+              Open-source PII redaction, regex-first.
             </h1>
 
             {/* Subtitle */}
             <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              OpenRedaction is the open-source redaction engine. Regex-only by default; enable AI assist for extra detection on messy or unstructured text.
+              Use the library locally for free, or call the hosted API with AI assist and an API key when you need it.
             </p>
 
             {/* CTA Buttons */}
@@ -832,8 +832,47 @@ console.log(result.redacted_text);`}
                 question: 'Can I self-host the API and AI assist myself?',
                 answer: 'Yes. The entire system is open source — you can run it on your own server or infrastructure, with or without AI assist.',
               },
+              {
+                question: 'Do you store my data?',
+                answer: 'No, the hosted API is stateless and does not store raw text in databases. Minimal metadata may be logged for rate limiting and abuse prevention. See our Privacy Policy for details.',
+              },
+              {
+                question: 'What is the difference between Free and Pro?',
+                answer: 'Free = anonymous AI assist with IP-based limits + self-hosted regex. Pro = dedicated API key with higher monthly AI limits (50,000 requests/month) and priority rate limiting.',
+              },
             ]}
           />
+        </div>
+
+        {/* Developer CTA Section */}
+        <div className="mt-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-gray-900 to-black rounded-lg p-8 md:p-12 border border-gray-800">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-bold mb-4">Using Node or another backend?</h2>
+              <p className="text-xl text-gray-300 mb-6">
+                Call our API directly with an API key. Get started with the Pro tier for higher limits and priority rate limiting.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  href="https://github.com/sam247/openredaction-api"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors inline-flex items-center space-x-2"
+                >
+                  <span>View API Docs</span>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                </a>
+                <Link
+                  href="/pricing"
+                  className="bg-gray-800 text-white px-8 py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
+                >
+                  View Pricing
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Transparency & Community Section */}

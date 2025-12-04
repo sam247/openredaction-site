@@ -19,6 +19,12 @@ interface RedactResponse {
   detections: Detection[];
 }
 
+interface UsageInfo {
+  count: number | null;
+  limit: number | null;
+  reset: string | null;
+}
+
 export default function Playground() {
   const [inputText, setInputText] = useState('');
   const [output, setOutput] = useState<RedactResponse | null>(null);
@@ -28,6 +34,8 @@ export default function Playground() {
   const [copied, setCopied] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<string>('');
   const [useAI, setUseAI] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [usageInfo, setUsageInfo] = useState<UsageInfo>({ count: null, limit: null, reset: null });
   const detectorRef = useRef<any>(null);
   const [libraryLoaded, setLibraryLoaded] = useState(false);
 
@@ -130,17 +138,63 @@ export default function Playground() {
       // If AI is enabled, call the AI endpoint and merge results
       if (useAI) {
         try {
+          const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+          };
+          
+          // Add API key header if provided
+          if (apiKey.trim()) {
+            headers['x-api-key'] = apiKey.trim();
+          }
+          
           const aiResponse = await fetch('https://openredaction-api.onrender.com/ai-detect', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers,
             body: JSON.stringify({ 
               text: inputText
             }),
           });
           
           console.log('AI response status:', aiResponse.status);
+          
+          // Extract usage info from headers
+          const usageCount = aiResponse.headers.get('X-Usage-Count');
+          const usageLimit = aiResponse.headers.get('X-Usage-Limit');
+          const usageReset = aiResponse.headers.get('X-Usage-Reset');
+          
+          if (usageCount !== null || usageLimit !== null || usageReset !== null) {
+            setUsageInfo({
+              count: usageCount ? parseInt(usageCount, 10) : null,
+              limit: usageLimit ? parseInt(usageLimit, 10) : null,
+              reset: usageReset,
+            });
+          } else {
+            setUsageInfo({ count: null, limit: null, reset: null });
+          }
+          
+          // Handle error responses
+          if (!aiResponse.ok) {
+            const errorData = await aiResponse.json().catch(() => ({}));
+            const errorCode = errorData.code || errorData.error || '';
+            
+            if (aiResponse.status === 401 && errorCode === 'INVALID_KEY') {
+              setError('Invalid API key. Please check your key or upgrade.');
+              setLoading(false);
+              return;
+            } else if (aiResponse.status === 429 && errorCode === 'RATE_LIMIT') {
+              setError('Rate limit reached. Try again later or upgrade to a Pro key.');
+              setLoading(false);
+              return;
+            } else if (aiResponse.status === 400 && errorCode === 'TEXT_TOO_LONG') {
+              setError('Text too long. Please shorten your input.');
+              setLoading(false);
+              return;
+            } else {
+              setError(`AI detection failed: ${errorData.message || 'Unknown error'}`);
+              setLoading(false);
+              return;
+            }
+          }
           
           if (aiResponse.ok) {
             const aiData = await aiResponse.json();
@@ -208,12 +262,9 @@ export default function Playground() {
                 console.warn('AI was not used by the API. This might indicate the API endpoint is not configured to use AI, or the useAI parameter is not being recognized.');
               }
             }
-          } else {
-            const errorText = await aiResponse.text();
-            console.error('AI response not OK:', aiResponse.status, errorText);
-          }
         } catch (aiError) {
           console.error('AI detection failed:', aiError);
+          setError('AI detection failed. Continuing with regex-only results.');
           // Continue with regex-only results if AI fails
         }
       }
@@ -334,6 +385,21 @@ export default function Playground() {
                   ))}
                 </select>
               </div>
+              {/* API Key Field */}
+              <div className="pt-2 border-t border-gray-800">
+                <label className="block text-sm text-gray-400 mb-2">API Key (optional)</label>
+                <input
+                  type="password"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="Enter your API key"
+                  className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Use an API key to access higher AI-assist limits. Leave empty to use the free tier.
+                </p>
+              </div>
+              
               {/* AI Toggle */}
               <div className="pt-2 border-t border-gray-800">
                 <label className="flex items-start cursor-pointer">
@@ -360,7 +426,24 @@ export default function Playground() {
                 className="w-full h-full bg-gray-900/50 border border-gray-800 rounded-lg p-4 font-mono text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600 focus:ring-1 focus:ring-gray-600 resize-none transition-all"
               />
             </div>
-            <div className="p-4 border-t border-gray-800 bg-gray-900/50">
+            <div className="p-4 border-t border-gray-800 bg-gray-900/50 space-y-3">
+              {/* Usage Info Display */}
+              {usageInfo.count !== null && usageInfo.limit !== null && (
+                <div className="text-xs text-gray-400 text-center">
+                  Usage: {usageInfo.count} / {usageInfo.limit.toLocaleString()}
+                  {usageInfo.reset && ` (resets ${new Date(usageInfo.reset).toLocaleDateString()})`}
+                </div>
+              )}
+              {usageInfo.count === null && usageInfo.limit === null && useAI && (
+                <div className="text-xs text-gray-500 text-center">
+                  Using free tier (IP-limited).{' '}
+                  <Link href="/pricing" className="text-white hover:text-gray-300 underline">
+                    Upgrade to Pro
+                  </Link>{' '}
+                  for higher limits.
+                </div>
+              )}
+              
               <button
                 onClick={handleRedact}
                 disabled={loading || !inputText.trim()}
@@ -433,18 +516,30 @@ export default function Playground() {
                       </div>
                           {output.detections.length > 0 && (
                             <div className="mt-4 bg-gray-900 border border-gray-800 rounded-lg p-4">
-                              <p className="text-sm text-gray-300 mb-2">
+                              <p className="text-sm text-gray-300 mb-3">
                                 Want to use this in your application?
                               </p>
-                              <a
-                                href="https://github.com/sam247/openredaction"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center space-x-2 text-white hover:text-gray-300 text-sm font-medium"
-                              >
-                                <span>Install the library on GitHub</span>
-                                <ArrowRight size={16} />
-                              </a>
+                              <div className="flex flex-col sm:flex-row gap-3">
+                                <a
+                                  href="https://github.com/sam247/openredaction"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center space-x-2 text-white hover:text-gray-300 text-sm font-medium"
+                                >
+                                  <span>Install the library</span>
+                                  <ArrowRight size={16} />
+                                </a>
+                                <span className="text-gray-600 hidden sm:inline">•</span>
+                                <a
+                                  href="https://github.com/sam247/openredaction-api"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center space-x-2 text-white hover:text-gray-300 text-sm font-medium"
+                                >
+                                  <span>View API docs</span>
+                                  <ArrowRight size={16} />
+                                </a>
+                              </div>
                             </div>
                           )}
                     </div>
@@ -517,17 +612,28 @@ export default function Playground() {
                   <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 mt-4">
                     <p className="text-white font-semibold mb-2">Want to use this in your app?</p>
                     <p className="text-sm text-gray-400 mb-4">
-                      Install the open-source library and self-host on your infrastructure.
+                      Use the open-source library locally, or call our hosted API with an API key.
                     </p>
-                    <a
-                      href="https://github.com/sam247/openredaction"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
-                    >
-                      <span>View on GitHub</span>
-                      <ArrowRight size={16} />
-                    </a>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <a
+                        href="https://github.com/sam247/openredaction"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
+                      >
+                        <span>Install Library</span>
+                        <ArrowRight size={16} />
+                      </a>
+                      <a
+                        href="https://github.com/sam247/openredaction-api"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-md font-medium hover:bg-gray-700 transition-colors text-sm border border-gray-700"
+                      >
+                        <span>View API Docs</span>
+                        <ArrowRight size={16} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
