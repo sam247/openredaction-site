@@ -173,7 +173,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
   // Process content - ensure links have proper styling
   const processedContent = post.content
-    .replace(/<a href="([^"]+)">/g, (match, href) => {
+    .replace(/<a href="([^"]+)">/g, (_match: string, href: string) => {
       if (href.startsWith('/') || href.startsWith('https://openredaction.com')) {
         return `<a href="${href}" style="color: #fff; text-decoration: underline; hover:color: #d1d5db;">`;
       }
