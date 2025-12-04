@@ -3,7 +3,6 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import TestimonialCard from '@/components/TestimonialCard';
 import FAQAccordion from '@/components/FAQAccordion';
-import StructuredData from '@/components/StructuredData';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
