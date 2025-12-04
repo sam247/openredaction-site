@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import CodeExamples from '@/components/CodeExamples';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
@@ -259,28 +260,8 @@ x-api-key: YOUR_API_KEY_HERE (optional)`}
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold mb-3">Code Example</h3>
-                  <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
-                    <pre className="text-sm text-green-400 overflow-x-auto">
-{`const response = await fetch(
-  'https://openredaction-api.onrender.com/ai-detect',
-  {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': 'YOUR_API_KEY_HERE' // Optional: omit for free tier
-    },
-    body: JSON.stringify({
-      text: 'Contact John Doe at john@example.com or call 555-123-4567'
-    })
-  }
-);
-
-const data = await response.json();
-console.log(data.entities); // Array of detected entities
-console.log(data.aiUsed);   // true if AI was used`}
-                    </pre>
-                  </div>
+                  <h3 className="text-xl font-semibold mb-3">Code Examples</h3>
+                  <CodeExamples />
                 </div>
 
                 <div>

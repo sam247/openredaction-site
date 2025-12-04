@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
+import CodeExamples from '@/components/CodeExamples';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
@@ -112,6 +113,53 @@ export default function Pricing() {
             </div>
           </div>
 
+          {/* Comparison Table */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold text-center mb-8">Free vs Pro Comparison</h2>
+            <div className="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
+              <div className="overflow-x-auto -mx-4 sm:mx-0">
+                <div className="inline-block min-w-full align-middle">
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="border-b border-gray-800">
+                        <th className="text-left py-4 px-4 sm:px-6 text-white font-semibold text-sm sm:text-base">Feature</th>
+                        <th className="text-center py-4 px-4 sm:px-6 text-white font-semibold text-sm sm:text-base">Free</th>
+                        <th className="text-center py-4 px-4 sm:px-6 text-white font-semibold text-sm sm:text-base">Pro</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-gray-800">
+                        <td className="py-4 px-4 sm:px-6 text-gray-300 text-sm sm:text-base">Regex-only redaction</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-green-400 text-sm sm:text-base">✓ unlimited</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-green-400 text-sm sm:text-base">✓ unlimited</td>
+                      </tr>
+                      <tr className="border-b border-gray-800">
+                        <td className="py-4 px-4 sm:px-6 text-gray-300 text-sm sm:text-base">AI-assist</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-gray-400 text-sm sm:text-base">200/day (IP-based)</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-white font-semibold text-sm sm:text-base">50,000/month</td>
+                      </tr>
+                      <tr className="border-b border-gray-800">
+                        <td className="py-4 px-4 sm:px-6 text-gray-300 text-sm sm:text-base">API key</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-gray-500 text-sm sm:text-base">✗</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-green-400 text-sm sm:text-base">✓</td>
+                      </tr>
+                      <tr className="border-b border-gray-800">
+                        <td className="py-4 px-4 sm:px-6 text-gray-300 text-sm sm:text-base">Priority limits</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-gray-500 text-sm sm:text-base">✗</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-green-400 text-sm sm:text-base">✓</td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 px-4 sm:px-6 text-gray-300 text-sm sm:text-base">Commercial use</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-green-400 text-sm sm:text-base">✓</td>
+                        <td className="py-4 px-4 sm:px-6 text-center text-green-400 text-sm sm:text-base">✓</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Privacy Note */}
           <div className="max-w-3xl mx-auto mb-16">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
@@ -123,6 +171,11 @@ export default function Pricing() {
                 AI assist is optional. When enabled, your text is sent to our stateless hosted proxy and then to our model provider for PII detection. We do not store your text.
               </p>
             </div>
+          </div>
+
+          {/* Code Examples */}
+          <div className="max-w-3xl mx-auto mb-16">
+            <CodeExamples />
           </div>
 
           {/* Rate Limits */}

@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import TestimonialCard from '@/components/TestimonialCard';
 import FAQAccordion from '@/components/FAQAccordion';
+import StructuredData from '@/components/StructuredData';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
@@ -39,7 +40,7 @@ export default function Home() {
             {/* Tier Explanation */}
             <div className="mb-10 max-w-3xl mx-auto">
               <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-                <div className="grid md:grid-cols-2 gap-6 text-left">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 text-left">
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-2">Free Tier</h3>
                     <p className="text-sm text-gray-400">
@@ -103,6 +104,104 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Examples Section */}
+        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">See It In Action</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Real examples of how OpenRedaction detects and redacts PII from different types of text
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Example 1: Email & Phone */}
+            <div className="bg-gray-900 rounded-lg p-4 sm:p-6 border border-gray-800">
+              <h3 className="text-lg font-semibold mb-4">Email & Phone Number</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="text-xs text-gray-400 mb-2 font-mono">Input:</div>
+                  <div className="bg-black rounded p-3 border border-gray-800 text-sm text-white font-mono">
+                    Contact Sarah at sarah.johnson@company.com or call (555) 987-6543
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-2 font-mono">Output:</div>
+                  <div className="bg-black rounded p-3 border border-gray-800 text-sm text-green-400 font-mono">
+                    Contact [REDACTED] at [REDACTED] or call [REDACTED]
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Example 2: Address & SSN */}
+            <div className="bg-gray-900 rounded-lg p-4 sm:p-6 border border-gray-800">
+              <h3 className="text-lg font-semibold mb-4">Address & SSN</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="text-xs text-gray-400 mb-2 font-mono">Input:</div>
+                  <div className="bg-black rounded p-3 border border-gray-800 text-sm text-white font-mono">
+                    John Smith, 123 Main St, New York, NY 10001. SSN: 123-45-6789
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-2 font-mono">Output:</div>
+                  <div className="bg-black rounded p-3 border border-gray-800 text-sm text-green-400 font-mono">
+                    [REDACTED], [REDACTED]. SSN: [REDACTED]
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Example 3: Credit Card */}
+            <div className="bg-gray-900 rounded-lg p-4 sm:p-6 border border-gray-800">
+              <h3 className="text-lg font-semibold mb-4">Credit Card Number</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="text-xs text-gray-400 mb-2 font-mono">Input:</div>
+                  <div className="bg-black rounded p-3 border border-gray-800 text-sm text-white font-mono">
+                    Payment card: 4532-1234-5678-9010, expires 12/25
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-2 font-mono">Output:</div>
+                  <div className="bg-black rounded p-3 border border-gray-800 text-sm text-green-400 font-mono">
+                    Payment card: [REDACTED], expires [REDACTED]
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="/playground"
+              className="inline-block bg-white text-black px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
+            >
+              Try More Examples in Playground →
+            </Link>
+          </div>
+        </div>
+
+        {/* Blog Banner */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+          <Link
+            href="/blog/building-openredaction-developer-journey"
+            className="block bg-gradient-to-r from-gray-900 to-black rounded-lg p-6 border border-gray-800 hover:border-gray-700 transition-colors group"
+          >
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🚀</span>
+                <div>
+                  <p className="text-white font-semibold group-hover:text-green-400 transition-colors">
+                    New: Read how OpenRedaction evolved into a hybrid AI-assisted redaction API
+                  </p>
+                  <p className="text-gray-400 text-sm mt-1">Developer Journey →</p>
+                </div>
+              </div>
+              <span className="text-gray-500 group-hover:text-white transition-colors">→</span>
+            </div>
+          </Link>
+        </div>
 
         {/* Benefits Section - Bento Box Layout */}
         <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1102,6 +1201,44 @@ console.log(result.redacted_text);`}
               >
                 View on GitHub
               </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Security Overview */}
+        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gray-900 rounded-lg p-8 border border-gray-800">
+            <h2 className="text-2xl font-semibold mb-6 text-center">Security & Privacy</h2>
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl mb-3">🔒</div>
+                <h3 className="text-lg font-semibold mb-2">Stateless Processing</h3>
+                <p className="text-gray-400 text-sm">
+                  All processing happens in memory. No persistent storage of your data.
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl mb-3">🗑️</div>
+                <h3 className="text-lg font-semibold mb-2">No Raw Text Stored</h3>
+                <p className="text-gray-400 text-sm">
+                  Your input text is processed and immediately discarded. We don&apos;t log or store it.
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl mb-3">🔐</div>
+                <h3 className="text-lg font-semibold mb-2">Optional AI-Assist</h3>
+                <p className="text-gray-400 text-sm">
+                  AI assist is optional via external provider. Regex-only mode works completely offline.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/privacy"
+                className="text-white hover:text-gray-300 underline text-sm"
+              >
+                Read our Privacy Policy →
+              </Link>
             </div>
           </div>
         </div>

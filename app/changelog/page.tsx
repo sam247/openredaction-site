@@ -1,0 +1,117 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import Link from 'next/link';
+import { Calendar, ExternalLink } from 'lucide-react';
+import { generatePageMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Changelog | OpenRedaction',
+  description: 'Recent updates, versions, and improvements to OpenRedaction. Track new features, bug fixes, and enhancements.',
+  path: '/changelog',
+});
+
+const changelogEntries = [
+  {
+    date: '2025-01-15',
+    version: '1.1.0',
+    title: 'Hosted API with AI Assist & Pro Tier',
+    changes: [
+      'Added hosted AI-assist API endpoint',
+      'Introduced Pro tier with API keys (£9/month, 50,000 requests)',
+      'Added usage tracking with response headers (X-Usage-Count, X-Usage-Limit, X-Usage-Reset)',
+      'Implemented rate limiting for free and pro tiers',
+      'Added Stripe integration for subscriptions',
+      'Created success page with API key delivery',
+    ],
+  },
+  {
+    date: '2025-01-10',
+    version: '1.0.0',
+    title: 'Initial Release',
+    changes: [
+      'Open-source regex-based PII detection library',
+      '500+ tested patterns for emails, phones, SSNs, addresses, credit cards',
+      'Support for GDPR, HIPAA, and CCPA presets',
+      'Self-hostable with npm installation',
+      'Interactive playground for testing',
+      'Comprehensive documentation',
+    ],
+  },
+];
+
+export default function Changelog() {
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <Header />
+
+      <main className="pt-24 pb-32">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Changelog</h1>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Track updates, new features, and improvements to OpenRedaction
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {changelogEntries.map((entry, index) => (
+              <div key={index} className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h2 className="text-2xl font-semibold">{entry.title}</h2>
+                      <span className="text-sm bg-gray-800 px-2 py-1 rounded text-gray-400">
+                        v{entry.version}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-gray-400 text-sm">
+                      <Calendar size={14} className="mr-2" />
+                      {new Date(entry.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <ul className="space-y-2">
+                  {entry.changes.map((change, changeIndex) => (
+                    <li key={changeIndex} className="flex items-start text-gray-300">
+                      <span className="text-green-400 mr-2">•</span>
+                      <span>{change}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800 text-center">
+            <p className="text-gray-300 mb-4">
+              For the latest updates and releases, check out our{' '}
+              <a
+                href="https://github.com/sam247/openredaction/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-gray-300 underline inline-flex items-center gap-1"
+              >
+                GitHub releases
+                <ExternalLink size={14} />
+              </a>
+            </p>
+            <Link
+              href="/docs"
+              className="inline-block text-white hover:text-gray-300 underline"
+            >
+              View Documentation →
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
+

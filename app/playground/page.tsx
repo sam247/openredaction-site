@@ -357,9 +357,9 @@ export default function Playground() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-[calc(100vh-200px)] border border-gray-800 rounded-lg overflow-hidden bg-black">
+          <div className="flex flex-col lg:flex-row h-auto lg:h-[calc(100vh-200px)] border border-gray-800 rounded-lg overflow-hidden bg-black">
             {/* Left Side - Input */}
-            <div className="flex-1 border-r border-gray-800 flex flex-col bg-black">
+            <div className="flex-1 lg:border-r border-b lg:border-b-0 border-gray-800 flex flex-col bg-black">
             <div className="p-4 border-b border-gray-800 space-y-3 bg-gray-900/50">
               <div>
                 <label className="block text-sm text-gray-400 mb-2">API Preset:</label>
@@ -421,7 +421,23 @@ export default function Playground() {
                     className="mt-1 w-4 h-4 rounded bg-gray-800 border-gray-700"
                   />
                   <div className="ml-3 flex-1">
-                    <span className="text-sm text-gray-300 block mb-1">Use AI Assist (hosted)</span>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm text-gray-300">Use AI Assist (hosted)</span>
+                      {useAI && (
+                        <span className={`text-xs px-2 py-0.5 rounded font-medium ${
+                          apiKey.trim() 
+                            ? 'bg-green-900/30 text-green-400 border border-green-800' 
+                            : 'bg-gray-800 text-gray-400 border border-gray-700'
+                        }`}>
+                          {apiKey.trim() ? 'Pro' : 'Free tier'}
+                        </span>
+                      )}
+                    </div>
+                    {apiKey.trim() && (
+                      <div className="mb-1">
+                        <span className="text-xs text-green-400 font-medium">✓ Pro API mode enabled</span>
+                      </div>
+                    )}
                     <p className="text-xs text-gray-400 mt-1">
                       Sends your text to our hosted AI proxy for extra detection. Your text is not stored or logged.
                     </p>
@@ -458,9 +474,18 @@ export default function Playground() {
                   {usageInfo.reset && ` (resets ${new Date(usageInfo.reset).toLocaleDateString()})`}
                 </div>
               )}
-              {usageInfo.count === null && usageInfo.limit === null && useAI && (
+              {usageInfo.count === null && usageInfo.limit === null && useAI && !apiKey.trim() && (
                 <div className="text-xs text-gray-500 text-center">
                   Using free tier (IP-limited).{' '}
+                  <Link href="/pricing" className="text-white hover:text-gray-300 underline">
+                    Upgrade to Pro
+                  </Link>{' '}
+                  for higher limits.
+                </div>
+              )}
+              {error && error.includes('Rate limit') && (
+                <div className="text-xs text-red-400 text-center">
+                  Rate limit reached.{' '}
                   <Link href="/pricing" className="text-white hover:text-gray-300 underline">
                     Upgrade to Pro
                   </Link>{' '}
@@ -486,10 +511,10 @@ export default function Playground() {
           </div>
 
           {/* Right Side - Output */}
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col min-h-[400px] lg:min-h-0">
             {error && (
               <div className="p-4 bg-red-900 border-b border-red-800">
-                <p className="text-red-200 text-sm">{error}</p>
+                <p className="text-red-200 text-sm break-words">{error}</p>
               </div>
             )}
 
