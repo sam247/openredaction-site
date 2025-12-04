@@ -228,8 +228,38 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 prose-li:text-gray-300 prose-li:my-1 prose-li:leading-7 prose-li:text-base
                 prose-hr:border-gray-800 prose-hr:my-10 prose-hr:border-t
                 prose-blockquote:border-l-gray-800 prose-blockquote:text-gray-400"
+              style={{
+                lineHeight: '1.75',
+              }}
               dangerouslySetInnerHTML={{ __html: processedContent }}
             />
+            <style jsx global>{`
+              .prose p {
+                margin-bottom: 1.5rem !important;
+                line-height: 1.75 !important;
+              }
+              .prose ul {
+                margin-top: 1.5rem !important;
+                margin-bottom: 1.5rem !important;
+              }
+              .prose li {
+                margin-top: 0.5rem !important;
+                margin-bottom: 0.5rem !important;
+                line-height: 1.75 !important;
+              }
+              .prose h2 {
+                margin-top: 2.5rem !important;
+                margin-bottom: 1.5rem !important;
+              }
+              .prose h3 {
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+              }
+              .prose hr {
+                margin-top: 2.5rem !important;
+                margin-bottom: 2.5rem !important;
+              }
+            `}</style>
           </article>
         </div>
       </main>
