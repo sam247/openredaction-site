@@ -1,3 +1,5 @@
+const { withBotId } = require('botid/next');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -20,5 +22,5 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withBotId(nextConfig)
 

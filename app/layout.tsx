@@ -3,7 +3,6 @@ import "./globals.css";
 import { defaultMetadata } from "@/lib/metadata";
 import { StructuredData } from "@/components/StructuredData";
 import { Analytics } from "@vercel/analytics/next";
-import { BotdScript } from "botid/next";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
