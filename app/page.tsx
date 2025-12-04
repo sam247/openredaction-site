@@ -210,8 +210,8 @@ export default function Home() {
               Focus on what matters - we handle the complexity of PII detection
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 lg:col-span-2">
               <div className="text-3xl mb-4">🔍</div>
               <h3 className="text-xl font-semibold mb-2">Regex-Based Redaction</h3>
               <p className="text-gray-400">
@@ -240,7 +240,7 @@ export default function Home() {
                 Install via npm and use directly in your application. Self-host for complete control.
               </p>
             </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 lg:col-span-2">
               <div className="text-3xl mb-4">📊</div>
               <h3 className="text-xl font-semibold mb-2">Self-Hosted Control</h3>
               <p className="text-gray-400">
@@ -256,7 +256,7 @@ export default function Home() {
                 You maintain complete control over your data.
               </p>
             </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 md:col-span-2">
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 lg:col-span-3">
               <div className="text-3xl mb-4">🤖</div>
               <h3 className="text-xl font-semibold mb-2">Hosted AI Assist (Optional)</h3>
               <ul className="space-y-2 text-gray-400 text-sm mt-3">

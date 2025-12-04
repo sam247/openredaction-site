@@ -16,7 +16,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-24 py-2">
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center">
-              <Logo size={160} />
+              <Logo size={180} />
             </Link>
 
             {/* Desktop Navigation - Left Aligned */}
