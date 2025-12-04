@@ -262,6 +262,7 @@ export default function Playground() {
                 console.warn('AI was not used by the API. This might indicate the API endpoint is not configured to use AI, or the useAI parameter is not being recognized.');
               }
             }
+          }
         } catch (aiError) {
           console.error('AI detection failed:', aiError);
           setError('AI detection failed. Continuing with regex-only results.');
