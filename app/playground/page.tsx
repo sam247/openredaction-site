@@ -25,8 +25,8 @@ interface UsageInfo {
   reset: string | null;
 }
 
-const MAX_INPUT_AI = 50000; // 50k characters for AI-assist mode
-const MAX_INPUT_REGEX = 200000; // 200k characters for regex-only mode
+const MAX_INPUT_AI = 500; // 500 characters for AI-assist mode (free demo limit)
+const MAX_INPUT_REGEX = 500; // 500 characters for regex-only mode (free demo limit)
 
 export default function Playground() {
   const [inputText, setInputText] = useState('');
