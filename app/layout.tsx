@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { defaultMetadata } from "@/lib/metadata";
 import { StructuredData } from "@/components/StructuredData";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body>
         <StructuredData />
         {children}
+        <Analytics />
       </body>
     </html>
   );
