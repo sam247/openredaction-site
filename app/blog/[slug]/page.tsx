@@ -78,7 +78,7 @@ const blogPosts: { [key: string]: any } = {
       
       <h2>5. What we learned (the hard and the good)</h2>
       
-      <h3>✅ Good</h3>
+      <h3>Good</h3>
       <ul>
         <li>Open source brings visibility and trust.</li>
         <li>Hybrid model satisfies both "privacy-first" and "power-when-needed" communities.</li>
@@ -87,7 +87,7 @@ const blogPosts: { [key: string]: any } = {
         <li>Hosting under your own proxy lets you control quota, avoid vendor friction, and shield users from complexity.</li>
       </ul>
       
-      <h3>⚠️ Challenges & trade-offs</h3>
+      <h3>Challenges & trade-offs</h3>
       <ul>
         <li>You must explain clearly when AI-assist sends data externally — honesty builds trust.</li>
         <li>Edge cases: very long inputs, abuse, rate-limiting — had to harden API accordingly.</li>
@@ -217,16 +217,16 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               className="prose prose-invert prose-lg max-w-none
                 prose-headings:text-white prose-headings:font-semibold
                 prose-h1:text-3xl prose-h1:font-bold prose-h1:mt-8 prose-h1:mb-4
-                prose-h2:text-2xl prose-h2:font-semibold prose-h2:mt-8 prose-h2:mb-4
-                prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-3
-                prose-p:text-gray-300 prose-p:mb-4 prose-p:leading-relaxed
+                prose-h2:text-2xl prose-h2:font-semibold prose-h2:mt-8 prose-h2:mb-6 prose-h2:leading-tight
+                prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-4 prose-h3:leading-tight
+                prose-p:text-gray-300 prose-p:mb-6 prose-p:leading-7 prose-p:text-base
                 prose-a:text-white prose-a:underline prose-a:hover:text-gray-300
                 prose-strong:text-white prose-strong:font-semibold
                 prose-code:text-green-400 prose-code:bg-gray-900 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
                 prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800 prose-pre:rounded prose-pre:p-4
-                prose-ul:text-gray-300 prose-ul:my-4 prose-ul:pl-6
-                prose-li:text-gray-300 prose-li:my-2 prose-li:leading-relaxed
-                prose-hr:border-gray-800 prose-hr:my-8
+                prose-ul:text-gray-300 prose-ul:my-6 prose-ul:pl-6 prose-ul:space-y-2
+                prose-li:text-gray-300 prose-li:my-1 prose-li:leading-7 prose-li:text-base
+                prose-hr:border-gray-800 prose-hr:my-10 prose-hr:border-t
                 prose-blockquote:border-l-gray-800 prose-blockquote:text-gray-400"
               dangerouslySetInnerHTML={{ __html: processedContent }}
             />
