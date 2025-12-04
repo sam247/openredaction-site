@@ -121,14 +121,60 @@ The site can be deployed to any platform that supports Next.js:
 
 ## API Integration
 
-The site integrates with the OpenRedaction API:
+### Hosted API Usage
+
+The site integrates with the OpenRedaction hosted API for AI-assist functionality:
 
 - **Base URL**: `https://openredaction-api.onrender.com`
-- **Endpoints**:
-  - `POST /v1/redact` - Redact PII from text
-  - Rate limiting: Free (100/day), Pro (10,000/day)
+- **AI Detect Endpoint**: `POST /ai-detect`
+- **Rate Limits**:
+  - **Free Tier**: IP-based limits (fair-use, anonymous)
+  - **Pro Tier**: 50,000 AI-assist requests/month with API key
 
-See the [API documentation](https://github.com/sam247/openredaction-api) for more details.
+#### Using the Hosted API
+
+To use the hosted API with an API key:
+
+```javascript
+const response = await fetch('https://openredaction-api.onrender.com/ai-detect', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': 'YOUR_API_KEY_HERE' // Optional: omit for free tier
+  },
+  body: JSON.stringify({
+    text: 'Your text to redact here'
+  })
+});
+
+const data = await response.json();
+// Response includes: { entities: [...], aiUsed: true/false }
+```
+
+#### Response Headers
+
+The API returns usage information in response headers:
+- `X-Usage-Count`: Current usage count
+- `X-Usage-Limit`: Monthly limit
+- `X-Usage-Reset`: Reset date (ISO 8601)
+
+#### Error Codes
+
+- `401` with `INVALID_KEY`: Invalid or missing API key
+- `429` with `RATE_LIMIT`: Rate limit exceeded
+- `400` with `TEXT_TOO_LONG`: Input text exceeds maximum length (50,000 characters)
+
+#### Getting an API Key
+
+1. Visit [openredaction.com/pricing](https://openredaction.com/pricing)
+2. Subscribe to the Pro tier (£9/month)
+3. Check your email for your API key
+4. Use the key in the `x-api-key` header
+
+For more details, see:
+- [API Documentation](https://github.com/sam247/openredaction-api)
+- [Site Documentation](/docs) - Complete API usage guide
+- [Playground](https://openredaction.com/playground) - Try the API in your browser
 
 ## License
 

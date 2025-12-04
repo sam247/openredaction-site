@@ -96,9 +96,61 @@ export default function Privacy() {
             </section>
 
             <section className="mb-12">
+              <h2 className="text-2xl font-semibold mb-4">Third-Party Services</h2>
+              <p className="text-gray-300 mb-4">
+                OpenRedaction uses the following third-party services:
+              </p>
+              <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                <li><strong>AI Model Provider:</strong> When AI assist is enabled, your text is sent to our hosted proxy, which forwards it to our AI model provider (DeepSeek) strictly for entity detection. The model provider processes your text but does not store it. We do not share your data with the model provider for training or other purposes.</li>
+                <li><strong>Stripe:</strong> For Pro tier subscriptions, we use Stripe to process payments. Stripe collects and processes payment information (credit card details, billing address) according to their privacy policy. We do not store full credit card numbers on our servers.</li>
+                <li><strong>Email Service:</strong> We use an email service provider to send API keys and service notifications. Email addresses are used solely for service-related communications and are not shared with third parties for marketing purposes.</li>
+              </ul>
+              <p className="text-gray-300">
+                All third-party services are used in compliance with applicable privacy laws and data protection regulations.
+              </p>
+            </section>
+
+            <section className="mb-12">
+              <h2 className="text-2xl font-semibold mb-4">Metadata Logging</h2>
+              <p className="text-gray-300 mb-4">
+                For rate limiting, abuse prevention, and service improvement, we may log minimal metadata:
+              </p>
+              <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                <li>IP addresses (for free tier rate limiting)</li>
+                <li>API key identifiers (for Pro tier usage tracking)</li>
+                <li>Request timestamps</li>
+                <li>Response status codes</li>
+                <li>Usage counts (for quota management)</li>
+              </ul>
+              <p className="text-gray-300">
+                <strong>We do not log:</strong> your input text, detected entities, or any content of your requests. All metadata is retained only as long as necessary for rate limiting and abuse prevention purposes.
+              </p>
+            </section>
+
+            <section className="mb-12">
+              <h2 className="text-2xl font-semibold mb-4">GDPR & UK-GDPR Compliance</h2>
+              <p className="text-gray-300 mb-4">
+                Our data handling practices align with GDPR and UK-GDPR principles:
+              </p>
+              <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                <li><strong>Data Minimization:</strong> We only process data necessary for the service (PII detection and redaction)</li>
+                <li><strong>Storage Limitation:</strong> We do not store your text — processing is stateless</li>
+                <li><strong>Purpose Limitation:</strong> Data is used solely for PII detection and redaction</li>
+                <li><strong>Transparency:</strong> All code is open source and auditable</li>
+                <li><strong>Right to Erasure:</strong> Since we don&apos;t store your text, there&apos;s nothing to delete. For metadata, contact us to request deletion.</li>
+              </ul>
+              <p className="text-gray-300">
+                For complete control over your data, you can self-host the open-source library, which requires no external services and processes everything locally.
+              </p>
+            </section>
+
+            <section className="mb-12">
               <h2 className="text-2xl font-semibold mb-4">Contact</h2>
               <p className="text-gray-300">
-                If you have questions about this privacy policy, please contact us through our support channels.
+                If you have questions about this privacy policy, please contact us through our support channels or{' '}
+                <Link href="/contact" className="text-white hover:text-gray-300 underline">
+                  contact page
+                </Link>.
               </p>
             </section>
 

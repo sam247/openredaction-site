@@ -25,6 +25,9 @@ interface UsageInfo {
   reset: string | null;
 }
 
+const MAX_INPUT_AI = 50000; // 50k characters for AI-assist mode
+const MAX_INPUT_REGEX = 200000; // 200k characters for regex-only mode
+
 export default function Playground() {
   const [inputText, setInputText] = useState('');
   const [output, setOutput] = useState<RedactResponse | null>(null);
@@ -115,6 +118,13 @@ export default function Playground() {
   const handleRedact = async () => {
     if (!inputText.trim()) {
       setError('Please enter some text to redact');
+      return;
+    }
+
+    // Check input size limits
+    const maxLength = useAI ? MAX_INPUT_AI : MAX_INPUT_REGEX;
+    if (inputText.length > maxLength) {
+      setError(`Text too long — please reduce input to ${maxLength.toLocaleString()} characters. Current: ${inputText.length.toLocaleString()} characters.`);
       return;
     }
 
@@ -419,13 +429,26 @@ export default function Playground() {
                 </label>
               </div>
             </div>
-            <div className="flex-1 p-4">
+            <div className="flex-1 p-4 flex flex-col">
               <textarea
                 value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
+                onChange={(e) => {
+                  const maxLength = useAI ? MAX_INPUT_AI : MAX_INPUT_REGEX;
+                  if (e.target.value.length <= maxLength) {
+                    setInputText(e.target.value);
+                  }
+                }}
                 placeholder="Paste chat logs, emails, or JSON here…"
-                className="w-full h-full bg-gray-900/50 border border-gray-800 rounded-lg p-4 font-mono text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600 focus:ring-1 focus:ring-gray-600 resize-none transition-all"
+                className="w-full flex-1 bg-gray-900/50 border border-gray-800 rounded-lg p-4 font-mono text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600 focus:ring-1 focus:ring-gray-600 resize-none transition-all"
               />
+              <div className="mt-2 flex justify-between items-center text-xs">
+                <span className={`${inputText.length > (useAI ? MAX_INPUT_AI : MAX_INPUT_REGEX) ? 'text-red-400' : 'text-gray-500'}`}>
+                  {inputText.length.toLocaleString()} / {(useAI ? MAX_INPUT_AI : MAX_INPUT_REGEX).toLocaleString()} characters
+                </span>
+                {useAI && (
+                  <span className="text-gray-500">AI-assist limit: {MAX_INPUT_AI.toLocaleString()} chars</span>
+                )}
+              </div>
             </div>
             <div className="p-4 border-t border-gray-800 bg-gray-900/50 space-y-3">
               {/* Usage Info Display */}

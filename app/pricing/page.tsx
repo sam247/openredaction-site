@@ -125,6 +125,44 @@ export default function Pricing() {
             </div>
           </div>
 
+          {/* Rate Limits */}
+          <div className="max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold text-center mb-8">Rate Limits & Usage</h2>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Free Tier</h3>
+                  <ul className="list-disc list-inside text-gray-300 space-y-2">
+                    <li>IP-based rate limiting (fair-use limits apply)</li>
+                    <li>Anonymous usage — no API key required</li>
+                    <li>Lower priority during high traffic periods</li>
+                    <li>Usage information not provided in response headers</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Pro Tier</h3>
+                  <ul className="list-disc list-inside text-gray-300 space-y-2">
+                    <li><strong>50,000 AI-assist requests per month</strong></li>
+                    <li>API key required for authentication</li>
+                    <li>Priority rate limiting</li>
+                    <li>Usage tracked and provided in response headers:
+                      <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
+                        <li><code className="bg-gray-800 px-1 py-0.5 rounded text-xs">X-Usage-Count</code>: Current usage count</li>
+                        <li><code className="bg-gray-800 px-1 py-0.5 rounded text-xs">X-Usage-Limit</code>: Monthly limit (50,000)</li>
+                        <li><code className="bg-gray-800 px-1 py-0.5 rounded text-xs">X-Usage-Reset</code>: Reset date (ISO 8601)</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div className="pt-4 border-t border-gray-800">
+                  <p className="text-gray-400 text-sm">
+                    <strong>Note:</strong> Rate limits apply only to AI-assist requests. Regex-only redaction via the open-source library has no limits and works completely offline.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* FAQ */}
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>

@@ -11,59 +11,19 @@ export const metadata: Metadata = generatePageMetadata({
   path: '/blog',
 });
 
-// Blog posts data - placeholder content
+// Blog posts data
 const blogPosts = [
   {
     id: 1,
-    title: 'Getting Started with OpenRedaction: A Complete Guide',
-    excerpt: 'Learn how to integrate OpenRedaction into your application and start detecting PII in minutes. This guide covers installation, basic usage, and best practices.',
-    date: '2024-11-15',
-    category: 'Tutorial',
-    slug: 'getting-started-with-openredaction',
-  },
-  {
-    id: 2,
-    title: 'Understanding PII Detection: What You Need to Know',
-    excerpt: 'Explore the different types of personally identifiable information and how OpenRedaction detects them. Learn about email addresses, phone numbers, SSNs, and more.',
-    date: '2024-11-10',
+    title: 'From Regex Library to Real API: Building OpenRedaction\'s Developer Journey',
+    excerpt: 'How OpenRedaction evolved from a simple regex-based redaction library into a hosted API with AI-assist, billing and product-grade infrastructure.',
+    date: '2025-12-04',
     category: 'Guide',
-    slug: 'understanding-pii-detection',
-  },
-  {
-    id: 3,
-    title: 'Privacy Compliance Made Simple with OpenRedaction',
-    excerpt: 'Discover how OpenRedaction helps you meet GDPR, HIPAA, and CCPA requirements. Learn about automatic PII detection and redaction for compliance.',
-    date: '2024-11-05',
-    category: 'Compliance',
-    slug: 'privacy-compliance-made-simple',
-  },
-  {
-    id: 4,
-    title: 'Building a Secure Chat Application with PII Protection',
-    excerpt: 'Step-by-step tutorial on building a chat application that automatically redacts PII before storing messages. Includes code examples and implementation details.',
-    date: '2024-10-28',
-    category: 'Tutorial',
-    slug: 'building-secure-chat-application',
-  },
-  {
-    id: 5,
-    title: 'OpenRedaction API Presets: GDPR, HIPAA, and More',
-    excerpt: 'Learn about OpenRedaction\'s API presets for different compliance requirements. Understand how to use GDPR, HIPAA, CCPA, and sector-specific presets.',
-    date: '2024-10-20',
-    category: 'Guide',
-    slug: 'api-presets-gdpr-hipaa',
-  },
-  {
-    id: 6,
-    title: 'Self-Hosting OpenRedaction: A Complete Setup Guide',
-    excerpt: 'Complete guide to self-hosting OpenRedaction for maximum control and privacy. Includes deployment options, configuration, and security considerations.',
-    date: '2024-10-15',
-    category: 'Tutorial',
-    slug: 'self-hosting-openredaction',
+    slug: 'building-openredaction-developer-journey',
   },
 ];
 
-const categories = ['Latest', 'Tutorial', 'Guide', 'Compliance'];
+const categories = ['Latest', 'Guide'];
 
 export default function Blog() {
   return (

@@ -32,9 +32,29 @@ export default function Home() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              Use the library locally for free, or call the hosted API with AI assist and an API key when you need it.
+            <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-2xl mx-auto">
+              Library + regex = free. AI-assist API = paid with key.
             </p>
+
+            {/* Tier Explanation */}
+            <div className="mb-10 max-w-3xl mx-auto">
+              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                <div className="grid md:grid-cols-2 gap-6 text-left">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">Free Tier</h3>
+                    <p className="text-sm text-gray-400">
+                      Open-source library with regex-only redaction. Use locally, self-host, or try the playground. AI assist available with fair-use limits (IP-based).
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">Pro API</h3>
+                    <p className="text-sm text-gray-400">
+                      £9/month for 50,000 AI-assist requests. Get an API key for backend use with priority rate limiting and higher limits.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">

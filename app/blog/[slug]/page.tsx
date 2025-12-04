@@ -6,54 +6,146 @@ import { notFound } from 'next/navigation';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
-// Blog posts data - in a real app, this would come from a CMS or database
+// Blog posts data
 const blogPosts: { [key: string]: any } = {
-  'getting-started-with-openredaction': {
-    title: 'Getting Started with OpenRedaction: A Complete Guide',
-    date: '2024-11-15',
-    category: 'Tutorial',
-    content: `
-      <p>OpenRedaction is a powerful open-source tool for automatically detecting and redacting personally identifiable information (PII) from text. This guide will walk you through getting started.</p>
-      
-      <h2>Installation</h2>
-      <p>You can install OpenRedaction via npm:</p>
-      <pre><code>npm install openredaction</code></pre>
-      
-      <h2>Basic Usage</h2>
-      <p>Here's a simple example of how to use OpenRedaction:</p>
-      <pre><code>import { redact } from 'openredaction';
-
-const text = "Contact John Doe at john@example.com or call 555-123-4567";
-const result = await redact(text);
-console.log(result.redacted_text);</code></pre>
-      
-      <h2>Next Steps</h2>
-      <p>Check out our documentation for more advanced features and API options.</p>
-    `,
-  },
-  'understanding-pii-detection': {
-    title: 'Understanding PII Detection: What You Need to Know',
-    date: '2024-11-10',
+  'building-openredaction-developer-journey': {
+    title: 'From Regex Library to Real API: Building OpenRedaction\'s Developer Journey',
+    date: '2025-12-04',
     category: 'Guide',
+    excerpt: 'How OpenRedaction evolved from a simple regex-based redaction library into a hosted API with AI-assist, billing and product-grade infrastructure.',
     content: `
-      <p>Personally Identifiable Information (PII) comes in many forms. Understanding what constitutes PII is crucial for protecting user privacy.</p>
+      <p>You know that feeling when you build something small, open-source… then suddenly people star it, fork it, and ask: <em>"How much for the API?"</em></p>
       
-      <h2>Types of PII</h2>
+      <p>That's where we found ourselves with OpenRedaction. What began as a deterministic regex-based redaction library — simple, local, dependable — has now become something bigger: a hosted AI-assist proxy, Stripe payments, API keys, and a real product behind it.</p>
+      
+      <p>In this post I walk you through that journey: why we built each piece, what worked, what we learned — and how you can use the same blueprint for your own dev tools.</p>
+      
+      <hr />
+      
+      <h2>1. The beginning: an open-source library for privacy-first redaction</h2>
+      
       <ul>
-        <li>Email addresses</li>
-        <li>Phone numbers</li>
-        <li>Social Security Numbers</li>
-        <li>Credit card numbers</li>
-        <li>Physical addresses</li>
-        <li>IP addresses</li>
-        <li>Names and dates of birth</li>
+        <li><strong>Origins</strong> — OpenRedaction started as a personal tool: a regex-based engine to strip out names, emails, phone numbers, addresses, etc. from text. It was simple, deterministic, fast, and local.</li>
+        <li><strong>Why regex-first?</strong> Regex gives control: no external calls, no hidden AI, no data leaks. That's important for privacy, security, and compliance.</li>
+        <li><strong>Open-sourcing</strong> — I made it MIT, published on GitHub, added many patterns, tests, and documentation. People liked it: devs could trust its transparency and deterministic behaviour.</li>
       </ul>
       
-      <h2>How OpenRedaction Detects PII</h2>
-      <p>OpenRedaction uses 500+ tested regex patterns with an optional AI/NER layer to identify PII. Detection is best-effort and works best on structured data.</p>
+      <p><strong>Value delivered:</strong> a lean, dependable redaction engine for anyone who needs PII-safe output — logs, disclosures, transcripts, and more.</p>
+      
+      <hr />
+      
+      <h2>2. The gap: real-world data isn't neat — regex wasn't enough</h2>
+      
+      <p>Real world isn't clean. Names are lowercase, uppercase, mixed case; people combine first/last names incorrectly; addresses vary; phone numbers have weird formats; blobs of unstructured text with noise.</p>
+      
+      <p>Regex did a great job — but still missed messy, ambiguous, or unusual cases.</p>
+      
+      <p>So I asked: <em>What if we layer an AI-powered detection pass over regex?</em></p>
+      
+      <p>But I also wanted to stay true to the original values: privacy, transparency, and optionality.</p>
+      
+      <hr />
+      
+      <h2>3. The hybrid solution: regex-first + optional AI-assist</h2>
+      
+      <p>We designed the architecture to be hybrid:</p>
+      
+      <ul>
+        <li><strong>Regex-first core</strong> — still default, local, open-source.</li>
+        <li><strong>Optional AI-assist via hosted proxy</strong> — when you need extra detection power.</li>
+        <li><strong>User decides</strong> — you can stay 100% local, or use hosted API.</li>
+      </ul>
+      
+      <p>That balance preserves trust while giving flexibility.</p>
+      
+      <hr />
+      
+      <h2>4. From library to product: building the API, proxy, billing</h2>
+      
+      <p>A few big steps:</p>
+      
+      <ul>
+        <li>Built a <strong>hosted AI proxy</strong> — accepts text, passes it to a model provider, returns structured entity spans.</li>
+        <li>Wrapped with <strong>rate-limiting, API keys, quota checks</strong> — using Upstash + KV storage.</li>
+        <li>Integrated <strong>payment handling</strong> (via Stripe) → after checkout, generate API key + email to user.</li>
+        <li>Updated docs + README + site messaging — made clear what's free, what's paid, and how to use.</li>
+        <li>Added <strong>free tier + pro tier</strong> — free tier for experimentation; pro tier for real usage (e.g. 50,000 AI-assisted requests/month).</li>
+      </ul>
+      
+      <p>This turned OpenRedaction from a hobby-library to a <strong>real dev-tool product</strong>.</p>
+      
+      <hr />
+      
+      <h2>5. What we learned (the hard and the good)</h2>
+      
+      <h3>✅ Good</h3>
+      <ul>
+        <li>Open source brings visibility and trust.</li>
+        <li>Hybrid model satisfies both "privacy-first" and "power-when-needed" communities.</li>
+        <li>Simple billing + API key logic is enough at early stage.</li>
+        <li>Transparent docs + clear messaging convert interested devs quickly.</li>
+        <li>Hosting under your own proxy lets you control quota, avoid vendor friction, and shield users from complexity.</li>
+      </ul>
+      
+      <h3>⚠️ Challenges & trade-offs</h3>
+      <ul>
+        <li>You must explain clearly when AI-assist sends data externally — honesty builds trust.</li>
+        <li>Edge cases: very long inputs, abuse, rate-limiting — had to harden API accordingly.</li>
+        <li>Documentation & UX must stay rock-solid to avoid confusion.</li>
+        <li>You lose the "fully local only" claim when users choose AI mode — needs clear communication.</li>
+      </ul>
+      
+      <hr />
+      
+      <h2>6. The result: a tool devs can trust — with flexibility</h2>
+      
+      <p>OpenRedaction today:</p>
+      
+      <ul>
+        <li>Is still free and open-source at its core.</li>
+        <li>Lets you redact with pure regex quickly and privately.</li>
+        <li>Offers optional AI-assist for messy or unstructured text.</li>
+        <li>Provides a hosted API, billing, and key-based access — ideal for production.</li>
+        <li>Gives community & enterprise users flexibility: local vs hosted; free vs paid; DIY vs plug-and-play.</li>
+      </ul>
+      
+      <p>It's become a <strong>full-featured redaction platform</strong>, but with developer values and transparency intact.</p>
+      
+      <hr />
+      
+      <h2>7. Advice for other dev-tool creators</h2>
+      
+      <p>If you're building a developer library and thinking of turning it into a product:</p>
+      
+      <ul>
+        <li>Start with <strong>deterministic core functionality</strong> — something reliable, open-source, and trustable.</li>
+        <li>Expose a clear switch — "core library only" vs "hosted service" — let users choose.</li>
+        <li>Build incremental — library → self-hosted → hosted API → billing.</li>
+        <li>Keep docs simple, honest, and upfront about trade-offs (privacy, cost, limits).</li>
+        <li>Don't over-engineer early. A simple API key + rate limiting + small quota is enough to test demand.</li>
+        <li>Use a hosted proxy rather than exposing vendor complexity — shield users from underlying dependencies.</li>
+      </ul>
+      
+      <hr />
+      
+      <h2>Conclusion</h2>
+      
+      <p>OpenRedaction's journey — from small regex library to hosted API product — is a classic developer-tool growth arc. Because we stayed grounded in simplicity, transparency and dev-values, we haven't lost flexibility or trust — and unlocked real usage and revenue potential.</p>
+      
+      <p>If you're building a tool, library or small SaaS: treat your users as developers, give them control, stay honest — and build slowly.</p>
+      
+      <p>Want to see the live code or try it? Check out <a href="https://github.com/sam247/openredaction" target="_blank" rel="noopener noreferrer">GitHub → OpenRedaction</a> or visit <a href="https://openredaction.com">openredaction.com</a>.</p>
+      
+      <div style="margin-top: 3rem; padding: 1.5rem; background: #111827; border: 1px solid #374151; border-radius: 0.5rem;">
+        <h3 style="margin-top: 0; margin-bottom: 1rem;">Ready to get started?</h3>
+        <ul style="margin-bottom: 1rem;">
+          <li><a href="/pricing">View pricing and get an API key</a> for the Pro tier</li>
+          <li><a href="/playground">Try the playground</a> to test redaction in your browser</li>
+          <li><a href="/docs">Read the documentation</a> for integration guides and API details</li>
+        </ul>
+      </div>
     `,
   },
-  // Add more posts as needed
 };
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -63,7 +155,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {};
   }
 
-  const excerpt = post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || post.excerpt || '';
+  const excerpt = post.excerpt || post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || '';
 
   return generatePageMetadata({
     title: post.title,
@@ -78,6 +170,12 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   if (!post) {
     notFound();
   }
+
+  // Convert internal links to Next.js Link components
+  const processedContent = post.content
+    .replace(/<a href="\/pricing">/g, '<a href="/pricing" style="color: #fff; text-decoration: underline;">')
+    .replace(/<a href="\/playground">/g, '<a href="/playground" style="color: #fff; text-decoration: underline;">')
+    .replace(/<a href="\/docs">/g, '<a href="/docs" style="color: #fff; text-decoration: underline;">');
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -120,8 +218,9 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 prose-code:text-green-400 prose-code:bg-gray-900 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
                 prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800
                 prose-ul:text-gray-300
-                prose-li:text-gray-300"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+                prose-li:text-gray-300
+                prose-hr:border-gray-800"
+              dangerouslySetInnerHTML={{ __html: processedContent }}
             />
           </article>
         </div>
@@ -131,4 +230,3 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     </div>
   );
 }
-

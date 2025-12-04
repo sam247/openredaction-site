@@ -201,6 +201,172 @@ results.forEach((result, index) => {
               </div>
             </section>
 
+            {/* Hosted API Usage */}
+            <section>
+              <h2 className="text-3xl font-semibold mb-4">Hosted API Usage</h2>
+              <p className="text-gray-300 mb-6">
+                Use the hosted API for AI-assist functionality. The API provides optional AI-powered detection on top of regex patterns for better detection on messy or unstructured text.
+              </p>
+
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
+                  <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-sm">
+                    <div className="text-gray-400 mb-1">POST</div>
+                    <div className="text-green-400">https://openredaction-api.onrender.com/ai-detect</div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Request Format</h3>
+                  <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 mb-4">
+                    <div className="text-sm text-gray-400 mb-2">Headers:</div>
+                    <pre className="text-sm text-green-400 overflow-x-auto">
+{`Content-Type: application/json
+x-api-key: YOUR_API_KEY_HERE (optional)`}
+                    </pre>
+                  </div>
+                  <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
+                    <div className="text-sm text-gray-400 mb-2">Body (JSON):</div>
+                    <pre className="text-sm text-green-400 overflow-x-auto">
+{`{
+  "text": "Your text to redact here"
+}`}
+                    </pre>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Response Format</h3>
+                  <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
+                    <pre className="text-sm text-green-400 overflow-x-auto">
+{`{
+  "entities": [
+    {
+      "type": "PERSON",
+      "value": "John Doe",
+      "start": 0,
+      "end": 8
+    }
+  ],
+  "aiUsed": true
+}`}
+                    </pre>
+                  </div>
+                  <p className="text-gray-400 text-sm mt-2">
+                    Response headers include usage information: <code className="bg-gray-800 px-1 py-0.5 rounded">X-Usage-Count</code>, <code className="bg-gray-800 px-1 py-0.5 rounded">X-Usage-Limit</code>, <code className="bg-gray-800 px-1 py-0.5 rounded">X-Usage-Reset</code>
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Code Example</h3>
+                  <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
+                    <pre className="text-sm text-green-400 overflow-x-auto">
+{`const response = await fetch(
+  'https://openredaction-api.onrender.com/ai-detect',
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': 'YOUR_API_KEY_HERE' // Optional: omit for free tier
+    },
+    body: JSON.stringify({
+      text: 'Contact John Doe at john@example.com or call 555-123-4567'
+    })
+  }
+);
+
+const data = await response.json();
+console.log(data.entities); // Array of detected entities
+console.log(data.aiUsed);   // true if AI was used`}
+                    </pre>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Error Codes</h3>
+                  <div className="space-y-3">
+                    <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
+                      <div className="text-red-400 font-semibold mb-1">401 - Invalid API Key</div>
+                      <pre className="text-sm text-gray-300 overflow-x-auto">
+{`{
+  "code": "INVALID_KEY",
+  "message": "Invalid or missing API key"
+}`}
+                      </pre>
+                      <p className="text-gray-400 text-sm mt-2">Check your API key or subscribe to Pro tier</p>
+                    </div>
+                    <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
+                      <div className="text-red-400 font-semibold mb-1">429 - Rate Limit Exceeded</div>
+                      <pre className="text-sm text-gray-300 overflow-x-auto">
+{`{
+  "code": "RATE_LIMIT",
+  "message": "Rate limit exceeded"
+}`}
+                      </pre>
+                      <p className="text-gray-400 text-sm mt-2">Wait before retrying or upgrade to Pro tier for higher limits</p>
+                    </div>
+                    <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
+                      <div className="text-red-400 font-semibold mb-1">400 - Text Too Long</div>
+                      <pre className="text-sm text-gray-300 overflow-x-auto">
+{`{
+  "code": "TEXT_TOO_LONG",
+  "message": "Input text exceeds maximum length"
+}`}
+                      </pre>
+                      <p className="text-gray-400 text-sm mt-2">Maximum input length is 50,000 characters for AI-assist mode</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Rate Limits</h3>
+                  <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-lg font-semibold text-white mb-2">Free Tier</h4>
+                        <ul className="list-disc list-inside text-gray-300 space-y-1">
+                          <li>IP-based rate limiting (fair-use limits)</li>
+                          <li>Anonymous usage (no API key required)</li>
+                          <li>Lower priority during high traffic</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-white mb-2">Pro Tier</h4>
+                        <ul className="list-disc list-inside text-gray-300 space-y-1">
+                          <li>50,000 AI-assist requests per month</li>
+                          <li>API key required</li>
+                          <li>Priority rate limiting</li>
+                          <li>Usage tracked via response headers</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Getting an API Key</h3>
+                  <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                    <p className="text-gray-300 mb-4">
+                      To get a Pro API key:
+                    </p>
+                    <ol className="list-decimal list-inside text-gray-300 space-y-2 mb-4">
+                      <li>Visit the <Link href="/pricing" className="text-white hover:text-gray-300 underline">pricing page</Link></li>
+                      <li>Subscribe to the Pro tier (£9/month)</li>
+                      <li>Check your email for your API key</li>
+                      <li>Include the key in the <code className="bg-gray-800 px-1 py-0.5 rounded">x-api-key</code> header</li>
+                    </ol>
+                    <Link
+                      href="/pricing"
+                      className="inline-block bg-white text-black px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors"
+                    >
+                      View Pricing →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {/* GitHub & Resources */}
             <section>
               <h2 className="text-3xl font-semibold mb-4">Resources</h2>
