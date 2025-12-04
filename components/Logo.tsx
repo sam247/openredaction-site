@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface LogoProps {
   size?: number;
@@ -9,14 +9,9 @@ interface LogoProps {
 
 export default function Logo({ size = 32, className = '' }: LogoProps) {
   const [hasError, setHasError] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // During SSR, show fallback to avoid hydration issues
-  if (!mounted || hasError) {
+  // Show fallback if image fails to load
+  if (hasError) {
     return (
       <div 
         className={`bg-white rounded-full flex items-center justify-center flex-shrink-0 ${className}`}
@@ -51,12 +46,6 @@ export default function Logo({ size = 32, className = '' }: LogoProps) {
         maxHeight: size
       }}
       onError={() => setHasError(true)}
-      onLoad={(e) => {
-        // Ensure image maintains size on load
-        const img = e.target as HTMLImageElement;
-        img.style.width = `${size}px`;
-        img.style.height = `${size}px`;
-      }}
     />
   );
 }
