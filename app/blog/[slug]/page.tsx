@@ -136,12 +136,12 @@ const blogPosts: { [key: string]: any } = {
       
       <p>Want to see the live code or try it? Check out <a href="https://github.com/sam247/openredaction" target="_blank" rel="noopener noreferrer">GitHub → OpenRedaction</a> or visit <a href="https://openredaction.com">openredaction.com</a>.</p>
       
-      <div style="margin-top: 3rem; padding: 1.5rem; background: #111827; border: 1px solid #374151; border-radius: 0.5rem;">
-        <h3 style="margin-top: 0; margin-bottom: 1rem;">Ready to get started?</h3>
-        <ul style="margin-bottom: 1rem;">
-          <li><a href="/pricing">View pricing and get an API key</a> for the Pro tier</li>
-          <li><a href="/playground">Try the playground</a> to test redaction in your browser</li>
-          <li><a href="/docs">Read the documentation</a> for integration guides and API details</li>
+      <div style="margin-top: 3rem; padding: 1.5rem; background-color: #111827; border: 1px solid #374151; border-radius: 0.5rem;">
+        <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600; color: #fff;">Ready to get started?</h3>
+        <ul style="margin-bottom: 1rem; padding-left: 1.5rem; list-style-type: disc; color: #d1d5db;">
+          <li style="margin-bottom: 0.5rem;"><a href="/pricing" style="color: #fff; text-decoration: underline;">View pricing and get an API key</a> for the Pro tier</li>
+          <li style="margin-bottom: 0.5rem;"><a href="/playground" style="color: #fff; text-decoration: underline;">Try the playground</a> to test redaction in your browser</li>
+          <li style="margin-bottom: 0.5rem;"><a href="/docs" style="color: #fff; text-decoration: underline;">Read the documentation</a> for integration guides and API details</li>
         </ul>
       </div>
     `,
@@ -171,11 +171,15 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     notFound();
   }
 
-  // Convert internal links to Next.js Link components
+  // Process content - ensure links have proper styling
   const processedContent = post.content
-    .replace(/<a href="\/pricing">/g, '<a href="/pricing" style="color: #fff; text-decoration: underline;">')
-    .replace(/<a href="\/playground">/g, '<a href="/playground" style="color: #fff; text-decoration: underline;">')
-    .replace(/<a href="\/docs">/g, '<a href="/docs" style="color: #fff; text-decoration: underline;">');
+    .replace(/<a href="([^"]+)">/g, (match, href) => {
+      if (href.startsWith('/') || href.startsWith('https://openredaction.com')) {
+        return `<a href="${href}" style="color: #fff; text-decoration: underline; hover:color: #d1d5db;">`;
+      }
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline;">`;
+    })
+    .trim();
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -211,15 +215,19 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
             <div 
               className="prose prose-invert prose-lg max-w-none
-                prose-headings:text-white
-                prose-p:text-gray-300
-                prose-a:text-white prose-a:underline
-                prose-strong:text-white
-                prose-code:text-green-400 prose-code:bg-gray-900 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800
-                prose-ul:text-gray-300
-                prose-li:text-gray-300
-                prose-hr:border-gray-800"
+                prose-headings:text-white prose-headings:font-semibold
+                prose-h1:text-3xl prose-h1:font-bold prose-h1:mt-8 prose-h1:mb-4
+                prose-h2:text-2xl prose-h2:font-semibold prose-h2:mt-8 prose-h2:mb-4
+                prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-3
+                prose-p:text-gray-300 prose-p:mb-4 prose-p:leading-relaxed
+                prose-a:text-white prose-a:underline prose-a:hover:text-gray-300
+                prose-strong:text-white prose-strong:font-semibold
+                prose-code:text-green-400 prose-code:bg-gray-900 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
+                prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800 prose-pre:rounded prose-pre:p-4
+                prose-ul:text-gray-300 prose-ul:my-4 prose-ul:pl-6
+                prose-li:text-gray-300 prose-li:my-2 prose-li:leading-relaxed
+                prose-hr:border-gray-800 prose-hr:my-8
+                prose-blockquote:border-l-gray-800 prose-blockquote:text-gray-400"
               dangerouslySetInnerHTML={{ __html: processedContent }}
             />
           </article>
