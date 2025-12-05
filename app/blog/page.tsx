@@ -29,6 +29,14 @@ const blogPosts = [
     category: 'Guide',
     slug: 'building-openredaction-developer-journey',
   },
+  {
+    id: 3,
+    title: 'PII Detection for AI: How to Safely Use User Data with LLMs',
+    excerpt: 'Learn how PII detection fits into AI workflows, where personal data typically leaks, and how to design a PII-aware architecture using a hybrid pattern-first + AI assist approach.',
+    date: '2025-12-05',
+    category: 'Guide',
+    slug: 'pii-detection-for-ai',
+  },
 ];
 
 const categories = ['Latest', 'Guide'];

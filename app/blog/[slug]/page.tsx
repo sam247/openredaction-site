@@ -123,6 +123,8 @@ const blogPosts: { [key: string]: any } = {
       <div style="margin-top: 3rem; padding: 1.5rem; background-color: #111827; border: 1px solid #374151; border-radius: 0.5rem;">
         <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600; color: #fff;">Ready to get started?</h3>
         <ul style="margin-bottom: 1rem; padding-left: 1.5rem; list-style-type: disc; color: #d1d5db;">
+          <li style="margin-bottom: 0.5rem;">Learn about <a href="/blog/pii-detection-for-ai" style="color: #fff; text-decoration: underline;">PII Detection for AI</a> and how to safely use user data with LLMs</li>
+          <li style="margin-bottom: 0.5rem;">Read <a href="/blog/understanding-pii-detection" style="color: #fff; text-decoration: underline;">Understanding PII Detection</a> for a primer on the basics</li>
           <li style="margin-bottom: 0.5rem;"><a href="/pricing" style="color: #fff; text-decoration: underline;">View pricing and get an API key</a> for the Pro tier</li>
           <li style="margin-bottom: 0.5rem;"><a href="/playground" style="color: #fff; text-decoration: underline;">Try the playground</a> to test redaction in your browser</li>
           <li style="margin-bottom: 0.5rem;"><a href="/docs" style="color: #fff; text-decoration: underline;">Read the documentation</a> for integration guides and API details</li>
@@ -332,10 +334,303 @@ const blogPosts: { [key: string]: any } = {
       <div style="margin-top: 3rem; padding: 1.5rem; background-color: #111827; border: 1px solid #374151; border-radius: 0.5rem;">
         <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600; color: #fff;">Ready to get started?</h3>
         <ul style="margin-bottom: 1rem; padding-left: 1.5rem; list-style-type: disc; color: #d1d5db;">
+          <li style="margin-bottom: 0.5rem;">Learn about <a href="/blog/pii-detection-for-ai" style="color: #fff; text-decoration: underline;">PII Detection for AI</a> and how to safely use user data with LLMs</li>
           <li style="margin-bottom: 0.5rem;">Read about <a href="/blog/building-openredaction-developer-journey" style="color: #fff; text-decoration: underline;">how OpenRedaction evolved</a> from a regex library to a hybrid API</li>
           <li style="margin-bottom: 0.5rem;"><a href="/" style="color: #fff; text-decoration: underline;">Visit the homepage</a> to learn more about OpenRedaction</li>
           <li style="margin-bottom: 0.5rem;"><a href="/contact" style="color: #fff; text-decoration: underline;">Get in touch</a> if you have questions or need help</li>
           <li style="margin-bottom: 0.5rem;">Check out the <a href="https://github.com/sam247/openredaction" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline;">open-source repository</a> on GitHub</li>
+        </ul>
+      </div>
+    `,
+  },
+  'pii-detection-for-ai': {
+    title: 'PII Detection for AI: How to Safely Use User Data with LLMs',
+    date: '2025-12-05',
+    category: 'Guide',
+    excerpt: 'Learn how PII detection fits into AI workflows, where personal data typically leaks, and how to design a PII-aware architecture using a hybrid pattern-first + AI assist approach.',
+    content: `
+      <p>Large language models are incredibly good at turning messy real‑world data into something useful. They are also incredibly good at ingesting sensitive information you did not realise you were sending. If you are feeding real user data into AI systems, you already have a PII problem – the question is whether you have visibility and control.</p>
+      
+      <p>This article explains how PII detection fits into AI workflows, where personal data typically leaks, and how to design a PII‑aware architecture using a hybrid "pattern‑first + AI assist" approach like the one in OpenRedaction. For a primer on the basics of PII detection, see the article <a href="/blog/understanding-pii-detection">"Understanding PII Detection"</a> on the OpenRedaction blog.</p>
+      
+      <h2>Where PII hides in AI workflows</h2>
+      
+      <p>PII shows up everywhere once you start looking, especially around AI:</p>
+      
+      <p><strong>Inbound:</strong> user prompts, chat messages, uploaded PDFs and Word docs, CSV exports from CRMs, support tickets and email threads, call transcripts, screenshots.</p>
+      
+      <p><strong>Processing:</strong> prompt/response logging, debug traces, observability tools capturing requests and responses, intermediate queues and event streams.</p>
+      
+      <p><strong>Storage:</strong> vector databases for RAG, fine‑tuning datasets, analytics warehouses where raw prompts and responses are stored "just in case".</p>
+      
+      <p><strong>Outbound:</strong> model responses that echo user details, include copied text from uploads, or reconstruct information from context.</p>
+      
+      <p>The net effect is that a single user message can spray personal data across half a dozen systems. Without a consistent PII detection and redaction layer, those systems become shadow copies of your most sensitive data.</p>
+      
+      <h2>Threat model: what can go wrong</h2>
+      
+      <p>Before deciding how to detect PII, it helps to be clear on what you are protecting against:</p>
+      
+      <ul>
+        <li><strong>Accidental logging:</strong> prompts and responses with names, emails, IDs and access tokens end up in log management tools, ticketing systems or shared debug dashboards.</li>
+        <li><strong>Data residency and vendor risk:</strong> PII is sent to third‑party LLM APIs in other jurisdictions, sometimes against policy or contract.</li>
+        <li><strong>Model and RAG leakage:</strong> unredacted data used for fine‑tuning or retrieval‑augmented generation later shows up in responses to unrelated users.</li>
+        <li><strong>Compliance headaches:</strong> once PII is scattered across logs, vector stores and training sets, responding to deletion or subject access requests becomes painful.</li>
+      </ul>
+      
+      <p>PII detection is not a silver bullet, but it is one of the few controls you can place right at the boundary of your AI systems to reduce the blast radius of all these risks.</p>
+      
+      <h2>Pattern‑based vs AI‑based PII detection</h2>
+      
+      <p>There are two main families of approaches for detecting PII, and in practice you often want both.</p>
+      
+      <h3>Pattern‑based (regex) detection</h3>
+      
+      <p>Pattern‑based detection uses explicit rules, usually regular expressions plus validation logic, to find identifiers with predictable shapes. Typical examples include:</p>
+      
+      <ul>
+        <li>Email addresses and phone numbers</li>
+        <li>IP addresses and MAC addresses</li>
+        <li>Credit card and bank account numbers</li>
+        <li>Government ID numbers and passport numbers</li>
+        <li>Access tokens, API keys and session IDs with known formats</li>
+      </ul>
+      
+      <p>This approach is:</p>
+      
+      <ul>
+        <li><strong>Deterministic:</strong> the same input always produces the same output.</li>
+        <li><strong>Transparent:</strong> you can inspect and adjust the actual rules.</li>
+        <li><strong>Fast and cheap:</strong> runs locally, with no external calls.</li>
+      </ul>
+      
+      <p>The downside is that pattern‑based detection struggles with:</p>
+      
+      <ul>
+        <li>Names and locations</li>
+        <li>Free‑form descriptions like "my colleague John in the London office"</li>
+        <li>Domain‑specific identifiers whose formats are not well known</li>
+      </ul>
+      
+      <h3>AI / NER‑based detection</h3>
+      
+      <p>AI‑based detection uses trained models (often named entity recognition / NER models or LLMs themselves) to find entities like "Person", "Location", "Organization", "Email", "PhoneNumber" and so on directly in text.</p>
+      
+      <p>This approach is strong when:</p>
+      
+      <ul>
+        <li>Text is messy, multilingual or full of typos.</li>
+        <li>You care about entities that do not follow strict formats (names, employers, schools, addresses).</li>
+        <li>Users can paste anything into a free‑text field.</li>
+      </ul>
+      
+      <p>The trade‑offs include:</p>
+      
+      <ul>
+        <li><strong>Opacity:</strong> understanding why a model did or did not detect something is harder.</li>
+        <li><strong>Operational complexity:</strong> you have to manage latency, cost, versioning and confidence thresholds.</li>
+        <li><strong>Data flow:</strong> many AI PII detectors are cloud APIs, which may conflict with strict data residency or privacy requirements.</li>
+      </ul>
+      
+      <h3>A hybrid approach</h3>
+      
+      <p>A robust setup combines the strengths of both:</p>
+      
+      <ol>
+        <li>First, run pattern‑based detection locally to catch anything with a known shape.</li>
+        <li>Then, optionally call an AI model to find additional PII in the remaining free‑text.</li>
+        <li>Merge results and apply redaction in a consistent, predictable way.</li>
+      </ol>
+      
+      <p>This is the philosophy behind OpenRedaction's "pattern‑first with optional AI assist" design. The core library ships with a large collection of hardened regexes and does not require sending data anywhere. When you need more coverage on messy text, you can enable an AI assist layer on top.</p>
+      
+      <p>For more on the basics of pattern‑based detection and how OpenRedaction does it, see <a href="/blog/understanding-pii-detection">Understanding PII Detection</a>.</p>
+      
+      <h2>Designing a PII‑aware AI architecture</h2>
+      
+      <p>Think in terms of where to insert PII detection in your AI stack. A good mental model is four key stages.</p>
+      
+      <h3>1. Classify AI use cases by risk</h3>
+      
+      <p>Not all AI use is equal. Classify flows roughly as:</p>
+      
+      <ul>
+        <li><strong>Low‑risk:</strong> internal tools on synthetic or low‑sensitivity data, local models, no external logging.</li>
+        <li><strong>Medium‑risk:</strong> internal use with real customer data, logs in shared systems, vendor APIs within your region.</li>
+        <li><strong>High‑risk:</strong> public‑facing AI features, cross‑border API calls, long‑term storage of prompts/responses.</li>
+      </ul>
+      
+      <p>The higher the risk, the more aggressive your PII detection and redaction should be.</p>
+      
+      <h3>2. Insert PII detection at system boundaries</h3>
+      
+      <p>You typically want detection at:</p>
+      
+      <p><strong>Inbound request edges</strong></p>
+      
+      <p>Middleware in your API gateway, backend or chat server that runs PII detection/redaction on prompts before they reach your model gateway or vector ingestion code.</p>
+      
+      <p><strong>File ingestion paths</strong></p>
+      
+      <p>For uploads (PDFs, DOCX, CSV, images), run text extraction (and OCR if needed), then PII detection, then chunk/embedding. This ensures your vector database never sees raw identifiers.</p>
+      
+      <p><strong>Event and log pipelines</strong></p>
+      
+      <p>Before logs, metrics or traces leave your core infrastructure for third‑party tools, pass them through a PII filter to guarantee that observability does not become a shadow PII store.</p>
+      
+      <p>OpenRedaction is deliberately built as a text‑in/text‑out engine that slots naturally into these boundaries, whether you use it as a library or a sidecar.</p>
+      
+      <h3>3. Post‑process model outputs</h3>
+      
+      <p>It is easy to focus only on inputs, but outputs deserve similar care:</p>
+      
+      <p><strong>Echo suppression</strong></p>
+      
+      <p>LLMs can repeat back PII that was present in user prompts or documents. A post‑processing step can detect and mask those before responses are stored or shown.</p>
+      
+      <p><strong>Guardrails</strong></p>
+      
+      <p>For some products, you may want to explicitly block the model from outputting certain classes of identifiers unless there is a strong justification (for example, internal tools used only by staff).</p>
+      
+      <p>A simple pattern is:</p>
+      
+      <ol>
+        <li>Model generates a response.</li>
+        <li>Run PII detection over that response.</li>
+        <li>Mask or tokenise any detected spans before returning to the client or storing in logs.</li>
+      </ol>
+      
+      <h3>4. Choose your redaction style</h3>
+      
+      <p>Once you have spans, you still need to decide how to transform them. Common strategies:</p>
+      
+      <p><strong>Full masking</strong></p>
+      
+      <p>Replace the entire span with a generic token such as [EMAIL], [PHONE], [NAME] or [CARD]. This is usually the safest default for anything leaving your VPC or going to third‑party APIs.</p>
+      
+      <p><strong>Partial masking</strong></p>
+      
+      <p>Keep a small part of the identifier for context (for example, last 4 digits of a card) and mask the rest. This is helpful in debugging and customer support, but should be used cautiously in AI training datasets.</p>
+      
+      <p><strong>Tokenisation / pseudonymisation</strong></p>
+      
+      <p>Replace identifiers with irreversible or keyed tokens (for example, user_12345) so interactions can be linked over time without exposing raw PII. This can be useful inside analytics or internal LLMs.</p>
+      
+      <p>OpenRedaction treats redaction as a second step after detection, so you can pick whichever strategy fits a specific pipeline. You can learn more about how detection and redaction fit together in the OpenRedaction ecosystem at <a href="/">openredaction.com</a>.</p>
+      
+      <h2>How OpenRedaction fits into AI pipelines</h2>
+      
+      <p>OpenRedaction was built to be simple to drop into real‑world data flows:</p>
+      
+      <ul>
+        <li><strong>Self‑hosted and open source</strong> – You can run detection on your own infrastructure so prompts and documents never leave your environment unless you explicitly decide to use an AI assist layer.</li>
+        <li><strong>Pattern‑first detection</strong> – A broad library of regex patterns for emails, phones, IPs, payment cards, government IDs and more gives you high‑precision coverage for the most critical identifiers without any model dependencies.</li>
+        <li><strong>Optional AI assist</strong> – When you have high‑value free‑text (for example, long support conversations) and need extra coverage, you can layer on AI‑powered PII detection to find names, organizations and looser patterns.</li>
+      </ul>
+      
+      <p>Some concrete integration patterns:</p>
+      
+      <p><strong>LLM gateway middleware</strong></p>
+      
+      <p>Wrap your calls to OpenAI/Anthropic/others with a middleware that sends the request body (for example, prompt or messages) through OpenRedaction first. Only redacted content is ever sent over the network.</p>
+      
+      <p><strong>RAG ingestion</strong></p>
+      
+      <p>In your document ingestion pipeline: extract text → run OpenRedaction → chunk and embed redacted text → store in your vector DB. Retrieval then operates on redacted content by default.</p>
+      
+      <p><strong>Prompt/response logging</strong></p>
+      
+      <p>Before writing prompts and responses to logs, analytics or long‑term storage, pass them through OpenRedaction so debugging and product analytics never deal with raw PII.</p>
+      
+      <p>If you are new to OpenRedaction, the <a href="/">home page</a> has a concise overview and links to the playground so you can try detection and redaction on sample text.</p>
+      
+      <p>You can also explore more how‑to content on the <a href="/blog">blog</a>.</p>
+      
+      <h2>Practical implementation patterns</h2>
+      
+      <p>Here are three simple ways to think about integrating PII detection without adding too much friction for your team.</p>
+      
+      <p><strong>Backend middleware (Node.js / Python / Go)</strong></p>
+      
+      <p>Wrap your AI calls in a small function that:</p>
+      
+      <ol>
+        <li>Accepts a prompt or messages payload.</li>
+        <li>Passes it through OpenRedaction's detection + redaction.</li>
+        <li>Sends the cleaned prompt to the LLM API.</li>
+        <li>Optionally runs OpenRedaction again on the response before returning it.</li>
+      </ol>
+      
+      <p>Because OpenRedaction is just text‑in/text‑out, this is usually only a few lines of glue code.</p>
+      
+      <p><strong>ETL and data lake ingestion</strong></p>
+      
+      <p>For analytics or training:</p>
+      
+      <ol>
+        <li>As data is extracted from transactional systems, run a transformation step that calls OpenRedaction on free‑text fields.</li>
+        <li>Store redacted versions in your lakehouse or warehouse.</li>
+        <li>Make redacted tables the default source for analytics, RAG and fine‑tuning.</li>
+      </ol>
+      
+      <p>This avoids building models or dashboards on raw PII by accident.</p>
+      
+      <p><strong>Observability pipelines</strong></p>
+      
+      <p>In log forwarders or collectors (for example, Fluent Bit, Vector, Logstash):</p>
+      
+      <ul>
+        <li>Add a filter step that passes log messages through OpenRedaction before forwarding them to your central logging platform.</li>
+        <li>For traces and metrics containing large blobs of text (responses, payloads), selectively process those fields.</li>
+      </ul>
+      
+      <p>That way you can still have rich observability without quietly centralising all your PII in one place.</p>
+      
+      <h2>Measuring success</h2>
+      
+      <p>To know whether your PII detection and AI controls are working, define a few simple checks:</p>
+      
+      <p><strong>Technical checks</strong></p>
+      
+      <ul>
+        <li>Periodically search logs, vector DBs and analytics tables for known PII patterns (for example, test email addresses, synthetic ID numbers) and confirm they do not appear.</li>
+        <li>Track latency overhead from the PII detection layer to ensure it stays within acceptable bounds.</li>
+      </ul>
+      
+      <p><strong>Process checks</strong></p>
+      
+      <ul>
+        <li>Add regression tests that send synthetic PII through your AI endpoints and confirm that what reaches the model (and what gets logged) is redacted.</li>
+        <li>Treat detection rule updates as code, with review and CI around them.</li>
+      </ul>
+      
+      <p>Over time, you can tighten your patterns, thresholds and redaction strategies as you better understand your data and risk profile.</p>
+      
+      <h2>Where to go next</h2>
+      
+      <p>If you are designing or hardening AI features, a practical next step is:</p>
+      
+      <ol>
+        <li>Map where prompts, documents and model outputs enter and leave your system.</li>
+        <li>Pick one high‑risk boundary (for example, your LLM gateway) and add OpenRedaction as a PII filter there.</li>
+        <li>Extend from there into ingestion, logs and RAG pipelines.</li>
+      </ol>
+      
+      <p>To dive deeper into the foundations of PII detection and how regex‑based approaches work, read <a href="/blog/understanding-pii-detection">"Understanding PII Detection"</a> on the blog.</p>
+      
+      <p>For more guidance, examples and updates, explore the rest of the <a href="/blog">blog</a>.</p>
+      
+      <p>If you want to discuss bespoke use cases, integrations or get help rolling OpenRedaction out across your stack, you can reach the team via the <a href="/contact">contact page</a>.</p>
+      
+      <p>To understand pricing options and how OpenRedaction can support larger deployments or enterprise needs, see <a href="/pricing">pricing</a>.</p>
+      
+      <div style="margin-top: 3rem; padding: 1.5rem; background-color: #111827; border: 1px solid #374151; border-radius: 0.5rem;">
+        <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600; color: #fff;">Ready to get started?</h3>
+        <ul style="margin-bottom: 1rem; padding-left: 1.5rem; list-style-type: disc; color: #d1d5db;">
+          <li style="margin-bottom: 0.5rem;">Read <a href="/blog/understanding-pii-detection" style="color: #fff; text-decoration: underline;">Understanding PII Detection</a> for a primer on the basics</li>
+          <li style="margin-bottom: 0.5rem;">Learn about <a href="/blog/building-openredaction-developer-journey" style="color: #fff; text-decoration: underline;">how OpenRedaction evolved</a> from a regex library to a hybrid API</li>
+          <li style="margin-bottom: 0.5rem;"><a href="/" style="color: #fff; text-decoration: underline;">Visit the homepage</a> to learn more about OpenRedaction</li>
+          <li style="margin-bottom: 0.5rem;"><a href="/contact" style="color: #fff; text-decoration: underline;">Get in touch</a> if you have questions or need help</li>
         </ul>
       </div>
     `,
