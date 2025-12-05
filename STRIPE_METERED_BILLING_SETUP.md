@@ -72,7 +72,7 @@ STRIPE_METER_EVENT_NAME=openredaction_api_requests
 
 **Add to your `.env.local`:**
 ```env
-STRIPE_WEBHOOK_SECRET=whsec_oAr8gywKHBFoB0QUR7N4T5J5lbtwm4kX
+STRIPE_WEBHOOK_SECRET=whsec_xxxxx  # Your webhook secret from Stripe Dashboard
 ```
 
 ### 4. Record Usage in Your Backend API
