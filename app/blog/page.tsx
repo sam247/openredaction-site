@@ -1,15 +1,11 @@
+'use client';
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
-import { generatePageMetadata } from '@/lib/metadata';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = generatePageMetadata({
-  title: 'Blog - PII Detection Guides & Updates',
-  description: 'Read guides, tutorials, and updates on PII detection, privacy compliance, and OpenRedaction. Learn about GDPR, HIPAA, CCPA, and data protection.',
-  path: '/blog',
-});
+import { useSearchParams } from 'next/navigation';
+import { useMemo, Suspense } from 'react';
 
 // Blog posts data
 const blogPosts = [
@@ -41,7 +37,22 @@ const blogPosts = [
 
 const categories = ['Latest', 'Guide'];
 
-export default function Blog() {
+function BlogContent() {
+  const searchParams = useSearchParams();
+  const selectedCategory = searchParams.get('category') || 'latest';
+
+  // Filter posts based on selected category
+  const filteredPosts = useMemo(() => {
+    if (selectedCategory === 'latest') {
+      // Show all posts, sorted by date (newest first)
+      return [...blogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }
+    // Filter by category (case-insensitive)
+    return blogPosts.filter(post => 
+      post.category.toLowerCase() === selectedCategory.toLowerCase()
+    );
+  }, [selectedCategory]);
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
@@ -62,23 +73,36 @@ export default function Blog() {
               <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 sticky top-24">
                 <h2 className="text-white font-semibold mb-4">Categories</h2>
                 <nav className="space-y-2">
-                  {categories.map((category) => (
-                    <Link
-                      key={category}
-                      href={`/blog?category=${category.toLowerCase()}`}
-                      className="block text-gray-400 hover:text-white transition-colors text-sm"
-                    >
-                      {category}
-                    </Link>
-                  ))}
+                  {categories.map((category) => {
+                    const categoryLower = category.toLowerCase();
+                    const isActive = selectedCategory === categoryLower;
+                    return (
+                      <Link
+                        key={category}
+                        href={`/blog?category=${categoryLower}`}
+                        className={`block transition-colors text-sm ${
+                          isActive
+                            ? 'text-white font-semibold'
+                            : 'text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        {category}
+                      </Link>
+                    );
+                  })}
                 </nav>
               </div>
             </aside>
 
             {/* Main Content - Blog Posts */}
             <div className="flex-1">
-              <div className="grid md:grid-cols-2 gap-6">
-                {blogPosts.map((post) => (
+              {filteredPosts.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-400">No posts found in this category.</p>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 gap-6">
+                  {filteredPosts.map((post) => (
                   <Link
                     key={post.id}
                     href={`/blog/${post.slug}`}
@@ -110,8 +134,9 @@ export default function Blog() {
                       </div>
                     </div>
                   </Link>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -119,6 +144,26 @@ export default function Blog() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function Blog() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black text-white">
+        <Header />
+        <main className="pt-24 pb-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center py-12">
+              <p className="text-gray-400">Loading...</p>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    }>
+      <BlogContent />
+    </Suspense>
   );
 }
 
