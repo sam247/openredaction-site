@@ -5,8 +5,8 @@
 **Status**: ✅ Active and configured
 
 - **Endpoint URL**: `https://openredaction.com/api/webhooks/stripe`
-- **Webhook Secret**: `whsec_oAr8gywKHBFoB0QUR7N4T5J5lbtwm4kX`
-- **Environment Variable**: `STRIPE_WEBHOOK_SECRET=whsec_oAr8gywKHBFoB0QUR7N4T5J5lbtwm4kX`
+- **Webhook Secret**: `whsec_xxxxx` (stored securely in environment variables)
+- **Environment Variable**: `STRIPE_WEBHOOK_SECRET=whsec_xxxxx` (add your actual secret from Stripe Dashboard)
 
 ## Events Being Listened To
 
