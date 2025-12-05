@@ -1,0 +1,218 @@
+# Self Hosting
+
+Deploy OpenRedaction on your own infrastructure for complete control and privacy.
+
+## Why Self Host?
+
+Self-hosting OpenRedaction gives you:
+
+- **Complete privacy** - Data never leaves your infrastructure
+- **Full control** - Customize detection patterns and behavior
+- **No vendor lock-in** - Own your entire stack
+- **Compliance** - Meet strict data residency requirements
+- **Cost control** - No per-request pricing
+
+## Installation
+
+### Using Docker
+
+The easiest way to self-host is using Docker:
+
+```bash
+docker pull openredaction/api:latest
+docker run -p 3000:3000 openredaction/api:latest
+```
+
+### Using npm
+
+```bash
+npm install -g @openredaction/api
+openredaction-api
+```
+
+### Manual Installation
+
+```bash
+git clone https://github.com/sam247/openredaction
+cd openredaction
+npm install
+npm run build
+npm start
+```
+
+## Configuration
+
+### Environment Variables
+
+```bash
+# Server Configuration
+PORT=3000
+NODE_ENV=production
+
+# AI Assist (Optional)
+DEEPSEEK_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
+
+# Rate Limiting
+RATE_LIMIT_ENABLED=true
+RATE_LIMIT_MAX=1000
+RATE_LIMIT_WINDOW=60000
+```
+
+### Docker Compose
+
+```yaml
+version: '3.8'
+
+services:
+  openredaction:
+    image: openredaction/api:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      - ./config:/app/config
+```
+
+## Production Deployment
+
+### Vercel
+
+Deploy to Vercel with zero configuration:
+
+```bash
+vercel
+```
+
+### AWS Lambda
+
+Package as a Lambda function:
+
+```bash
+npm run build:lambda
+```
+
+### Kubernetes
+
+Deploy to Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openredaction
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: openredaction
+  template:
+    metadata:
+      labels:
+        app: openredaction
+    spec:
+      containers:
+      - name: openredaction
+        image: openredaction/api:latest
+        ports:
+        - containerPort: 3000
+```
+
+## Monitoring
+
+### Health Check
+
+```bash
+curl http://localhost:3000/health
+```
+
+### Metrics
+
+OpenRedaction exposes metrics at `/metrics`:
+
+```bash
+curl http://localhost:3000/metrics
+```
+
+## Security
+
+### API Keys
+
+Generate API keys for authentication:
+
+```bash
+openssl rand -hex 32
+```
+
+### Rate Limiting
+
+Configure rate limits to prevent abuse:
+
+```javascript
+{
+  rateLimit: {
+    windowMs: 60000,
+    max: 100,
+  }
+}
+```
+
+### HTTPS
+
+Always use HTTPS in production:
+
+```bash
+# Using Let's Encrypt
+certbot --nginx -d api.yourdomain.com
+```
+
+## Scaling
+
+### Horizontal Scaling
+
+Run multiple instances behind a load balancer:
+
+```bash
+# Instance 1
+PORT=3001 npm start
+
+# Instance 2
+PORT=3002 npm start
+
+# Instance 3
+PORT=3003 npm start
+```
+
+### Caching
+
+Use Redis for caching:
+
+```bash
+REDIS_URL=redis://localhost:6379 npm start
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Port already in use:**
+```bash
+# Find and kill the process
+lsof -ti:3000 | xargs kill
+```
+
+**Memory issues:**
+```bash
+# Increase Node.js memory limit
+NODE_OPTIONS="--max-old-space-size=4096" npm start
+```
+
+## Support
+
+For self-hosting support:
+
+- [GitHub Issues](https://github.com/sam247/openredaction/issues)
+- [Contact Support](https://openredaction.com/contact)
+

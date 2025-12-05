@@ -1,0 +1,96 @@
+# API Reference
+
+Complete API documentation for OpenRedaction.
+
+## Functions
+
+### `redact(text, options?)`
+
+Detects and redacts PII from text.
+
+#### Parameters
+
+- **`text`** (string, required) - The text to process
+- **`options`** (object, optional) - Configuration options
+
+#### Options
+
+```typescript
+interface RedactOptions {
+  preset?: 'gdpr' | 'hipaa' | 'ccpa' | 'default';
+  redactionMode?: 'placeholder' | 'mask' | 'remove';
+  useAI?: boolean;
+  apiKey?: string;
+  apiEndpoint?: string;
+}
+```
+
+#### Returns
+
+```typescript
+interface RedactResult {
+  redacted_text: string;
+  detections: Detection[];
+  aiUsed?: boolean;
+}
+
+interface Detection {
+  type: string;
+  text: string;
+  start: number;
+  end: number;
+  severity?: 'low' | 'medium' | 'high';
+}
+```
+
+#### Example
+
+```javascript
+import { redact } from 'openredaction';
+
+const result = await redact(
+  "Contact John at john@example.com or 555-123-4567",
+  {
+    preset: 'gdpr',
+    redactionMode: 'placeholder',
+  }
+);
+
+console.log(result.redacted_text);
+// "Contact [REDACTED] at [REDACTED] or [REDACTED]"
+```
+
+## Classes
+
+### `OpenRedaction`
+
+Advanced usage with class-based API.
+
+```javascript
+import { OpenRedaction } from 'openredaction';
+
+const detector = new OpenRedaction({
+  preset: 'gdpr',
+  redactionMode: 'placeholder',
+});
+
+const result = await detector.redact(text);
+```
+
+## Detection Types
+
+OpenRedaction can detect the following PII types:
+
+- **EMAIL** - Email addresses
+- **PHONE** - Phone numbers
+- **NAME** - Person names
+- **SSN** - Social Security Numbers
+- **CREDIT_CARD** - Credit card numbers
+- **IP_ADDRESS** - IP addresses
+- **DATE_OF_BIRTH** - Dates of birth
+- **ADDRESS** - Physical addresses
+- **PASSPORT** - Passport numbers
+- **DRIVER_LICENSE** - Driver's license numbers
+
+And many more. See the full list in the [GitHub repository](https://github.com/sam247/openredaction).
+
