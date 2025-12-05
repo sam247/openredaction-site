@@ -11,8 +11,11 @@ const meterEventName = process.env.STRIPE_METER_EVENT_NAME || 'openredaction_api
  * POST /api/stripe/record-usage
  * Body: {
  *   customerId: string, // Stripe customer ID
- *   value: number,      // Number of API requests (usually 1 per call)
+ *   value: number,      // Number of API requests (will be divided by 1000 for billing)
  * }
+ * 
+ * Note: Usage is reported in "thousands of requests" to work with tiered pricing.
+ * The value is automatically divided by 1000 before sending to Stripe.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -36,13 +39,16 @@ export async function POST(request: NextRequest) {
       timestamp: Math.floor(Date.now() / 1000), // Current Unix timestamp
       payload: {
         stripe_customer_id: customerId,
-        value: valueInThousands, // Report in thousands for tiered pricing
+        value: String(valueInThousands), // Report in thousands for tiered pricing (must be string)
       },
     });
 
+    // The Stripe SDK returns the meter event directly
+    const eventId = (meterEvent as any).id || (meterEvent as any).identifier || 'unknown';
+
     return NextResponse.json({
       success: true,
-      event_id: meterEvent.id,
+      event_id: eventId,
       customer_id: customerId,
       requests: value,
       value_reported: valueInThousands, // Value sent to Stripe (in thousands)
