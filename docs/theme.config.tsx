@@ -11,14 +11,8 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/sam247/openredaction-site/tree/main/docs',
   footer: {
-    text: 'OpenRedaction Documentation © 2025',
-  },
-  primaryHue: 142, // Green color to match brand
-  darkMode: true,
-  nextThemes: {
-    defaultTheme: 'dark',
+    component: () => <span>OpenRedaction Documentation © 2025</span>,
   },
 }
 
 export default config
-
