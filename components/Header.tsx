@@ -37,7 +37,7 @@ export default function Header() {
                 onMouseEnter={() => setResourcesOpen(true)}
                 onMouseLeave={() => setResourcesOpen(false)}
               >
-                <button className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors">
+                <button className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors cursor-pointer">
                   <span>Resources</span>
                   <ChevronDown size={16} className={resourcesOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
                 </button>
@@ -110,7 +110,7 @@ export default function Header() {
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white p-2"
+              className="text-white p-2 cursor-pointer"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

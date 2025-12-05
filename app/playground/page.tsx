@@ -335,7 +335,7 @@ export default function Playground() {
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      <main className="pt-24">
+      <main className="pt-32">
         {/* Top Bar */}
         <div className="border-b border-gray-800 bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -496,7 +496,7 @@ export default function Playground() {
               <button
                 onClick={handleRedact}
                 disabled={loading || !inputText.trim()}
-                className="w-full bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed transition-all flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl disabled:shadow-none"
+                className="w-full bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed cursor-pointer transition-all flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl disabled:shadow-none"
               >
                 {loading ? (
                   <>
@@ -526,7 +526,7 @@ export default function Playground() {
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`px-6 py-3 text-sm font-medium border-b-2 transition-all ${
+                      className={`px-6 py-3 text-sm font-medium border-b-2 transition-all cursor-pointer ${
                         activeTab === tab
                           ? 'border-white text-white bg-gray-900/30'
                           : 'border-transparent text-gray-400 hover:text-gray-300 hover:bg-gray-900/20'
@@ -551,7 +551,7 @@ export default function Playground() {
                           )}
                           <button
                             onClick={() => handleCopy(output.redacted_text)}
-                            className="flex items-center space-x-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded-md text-sm transition-colors"
+                            className="flex items-center space-x-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded-md text-sm transition-colors cursor-pointer"
                           >
                             {copied ? <Check size={16} /> : <Copy size={16} />}
                             <span>{copied ? 'Copied!' : 'Copy'}</span>
@@ -636,7 +636,7 @@ export default function Playground() {
                         <h3 className="text-sm font-semibold text-gray-400">Raw JSON Response</h3>
                         <button
                           onClick={() => handleCopy(JSON.stringify(output, null, 2))}
-                          className="flex items-center space-x-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded-md text-sm transition-colors"
+                          className="flex items-center space-x-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded-md text-sm transition-colors cursor-pointer"
                         >
                           {copied ? <Check size={16} /> : <Copy size={16} />}
                           <span>{copied ? 'Copied!' : 'Copy'}</span>

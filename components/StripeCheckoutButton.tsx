@@ -72,7 +72,7 @@ export default function StripeCheckoutButton({ priceId, onSuccess }: CheckoutBut
       <button
         onClick={handleClick}
         disabled={loading}
-        className="w-full bg-black text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-black text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
         {loading ? 'Processing...' : 'Subscribe to Pro'}
       </button>

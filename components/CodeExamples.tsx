@@ -59,7 +59,7 @@ print(r.json())`,
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium border-b-2 transition-colors ${
+            className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium border-b-2 transition-colors cursor-pointer ${
               activeTab === tab
                 ? 'border-white text-white'
                 : 'border-transparent text-gray-400 hover:text-gray-300'
@@ -77,7 +77,7 @@ print(r.json())`,
         </div>
         <button
           onClick={handleCopy}
-          className="absolute top-2 right-2 sm:top-4 sm:right-4 flex items-center space-x-1 sm:space-x-2 bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 sm:py-2 rounded-md transition-colors text-xs sm:text-sm"
+          className="absolute top-2 right-2 sm:top-4 sm:right-4 flex items-center space-x-1 sm:space-x-2 bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 sm:py-2 rounded-md transition-colors text-xs sm:text-sm cursor-pointer"
         >
           {copied ? (
             <>

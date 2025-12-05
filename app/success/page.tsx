@@ -93,7 +93,7 @@ print(r.json())`,
                     <code className="text-green-400 font-mono text-sm break-all flex-1">{apiKey}</code>
                     <button
                       onClick={handleCopyKey}
-                      className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-md transition-colors flex-shrink-0"
+                      className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-md transition-colors flex-shrink-0 cursor-pointer"
                     >
                       {copied ? (
                         <>
@@ -140,7 +140,7 @@ print(r.json())`,
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors cursor-pointer ${
                     activeTab === tab
                       ? 'border-white text-white'
                       : 'border-transparent text-gray-400 hover:text-gray-300'
@@ -158,7 +158,7 @@ print(r.json())`,
               </div>
               <button
                 onClick={() => handleCopyCode(codeExamples[activeTab])}
-                className="absolute top-4 right-4 flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded-md transition-colors text-sm"
+                className="absolute top-4 right-4 flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded-md transition-colors text-sm cursor-pointer"
               >
                 {copied ? (
                   <>
