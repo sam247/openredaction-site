@@ -38,7 +38,8 @@ export async function POST(request: NextRequest) {
       success: true,
       event_id: meterEvent.id,
       customer_id: customerId,
-      value: value,
+      requests: value,
+      value_reported: valueInThousands, // Value sent to Stripe (in thousands)
     });
   } catch (error: any) {
     console.error('Error recording usage:', error);
@@ -51,4 +52,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

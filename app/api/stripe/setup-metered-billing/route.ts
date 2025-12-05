@@ -62,7 +62,8 @@ export async function POST(request: NextRequest) {
     console.log('Created base price:', basePrice.id);
 
     // Step 4: Create metered price for API requests
-    // This uses graduated pricing: first 50k requests are free (included in base), then charge per 1000 requests
+    // Note: Usage should be reported in "thousands of requests" (divide by 1000 when recording)
+    // This allows us to use tiered pricing with £0.20 per 1000 requests
     const meteredPrice = await stripe.prices.create({
       product: product.id,
       currency: 'gbp',
@@ -75,18 +76,14 @@ export async function POST(request: NextRequest) {
       tiers_mode: 'graduated',
       tiers: [
         {
-          up_to: 50000, // First 50,000 requests included (covered by base subscription)
-          unit_amount: 0, // Free
+          up_to: 50, // First 50 "units" = 50,000 requests (since we report in thousands)
+          unit_amount: 0, // Free (covered by base subscription)
         },
         {
-          up_to: 'inf', // Everything above 50k
-          unit_amount: 20, // £0.20 per 1000 requests (20 pence per 1000)
+          up_to: 'inf', // Everything above 50 units (50k requests)
+          unit_amount: 20, // 20 pence per unit = £0.20 per 1000 requests
         },
       ],
-      transform_quantity: {
-        divide_by: 1000, // Bill per 1000 requests
-        round: 'up',
-      },
     });
 
     console.log('Created metered price:', meteredPrice.id);
