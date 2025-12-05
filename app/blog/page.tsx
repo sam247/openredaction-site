@@ -15,6 +15,14 @@ export const metadata: Metadata = generatePageMetadata({
 const blogPosts = [
   {
     id: 1,
+    title: 'Understanding PII Detection',
+    excerpt: 'Learn what PII is, why detecting it is challenging, and how pattern-based and AI-assisted approaches combine for robust redaction pipelines.',
+    date: '2025-01-15',
+    category: 'Guide',
+    slug: 'understanding-pii-detection',
+  },
+  {
+    id: 2,
     title: 'From Regex Library to Real API: Building OpenRedaction\'s Developer Journey',
     excerpt: 'How OpenRedaction evolved from a simple regex-based redaction library into a hosted API with AI-assist, billing and product-grade infrastructure.',
     date: '2025-12-04',

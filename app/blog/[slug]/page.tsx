@@ -20,8 +20,6 @@ const blogPosts: { [key: string]: any } = {
       
       <p>In this post I walk you through that journey: why we built each piece, what worked, what we learned — and how you can use the same blueprint for your own dev tools.</p>
       
-      <hr />
-      
       <h2>1. The beginning: an open-source library for privacy-first redaction</h2>
       
       <ul>
@@ -32,8 +30,6 @@ const blogPosts: { [key: string]: any } = {
       
       <p><strong>Value delivered:</strong> a lean, dependable redaction engine for anyone who needs PII-safe output — logs, disclosures, transcripts, and more.</p>
       
-      <hr />
-      
       <h2>2. The gap: real-world data isn't neat — regex wasn't enough</h2>
       
       <p>Real world isn't clean. Names are lowercase, uppercase, mixed case; people combine first/last names incorrectly; addresses vary; phone numbers have weird formats; blobs of unstructured text with noise.</p>
@@ -43,8 +39,6 @@ const blogPosts: { [key: string]: any } = {
       <p>So I asked: <em>What if we layer an AI-powered detection pass over regex?</em></p>
       
       <p>But I also wanted to stay true to the original values: privacy, transparency, and optionality.</p>
-      
-      <hr />
       
       <h2>3. The hybrid solution: regex-first + optional AI-assist</h2>
       
@@ -57,8 +51,6 @@ const blogPosts: { [key: string]: any } = {
       </ul>
       
       <p>That balance preserves trust while giving flexibility.</p>
-      
-      <hr />
       
       <h2>4. From library to product: building the API, proxy, billing</h2>
       
@@ -73,8 +65,6 @@ const blogPosts: { [key: string]: any } = {
       </ul>
       
       <p>This turned OpenRedaction from a hobby-library to a <strong>real dev-tool product</strong>.</p>
-      
-      <hr />
       
       <h2>5. What we learned (the hard and the good)</h2>
       
@@ -95,8 +85,6 @@ const blogPosts: { [key: string]: any } = {
         <li>You lose the "fully local only" claim when users choose AI mode — needs clear communication.</li>
       </ul>
       
-      <hr />
-      
       <h2>6. The result: a tool devs can trust — with flexibility</h2>
       
       <p>OpenRedaction today:</p>
@@ -111,8 +99,6 @@ const blogPosts: { [key: string]: any } = {
       
       <p>It's become a <strong>full-featured redaction platform</strong>, but with developer values and transparency intact.</p>
       
-      <hr />
-      
       <h2>7. Advice for other dev-tool creators</h2>
       
       <p>If you're building a developer library and thinking of turning it into a product:</p>
@@ -125,8 +111,6 @@ const blogPosts: { [key: string]: any } = {
         <li>Don't over-engineer early. A simple API key + rate limiting + small quota is enough to test demand.</li>
         <li>Use a hosted proxy rather than exposing vendor complexity — shield users from underlying dependencies.</li>
       </ul>
-      
-      <hr />
       
       <h2>Conclusion</h2>
       
@@ -142,6 +126,216 @@ const blogPosts: { [key: string]: any } = {
           <li style="margin-bottom: 0.5rem;"><a href="/pricing" style="color: #fff; text-decoration: underline;">View pricing and get an API key</a> for the Pro tier</li>
           <li style="margin-bottom: 0.5rem;"><a href="/playground" style="color: #fff; text-decoration: underline;">Try the playground</a> to test redaction in your browser</li>
           <li style="margin-bottom: 0.5rem;"><a href="/docs" style="color: #fff; text-decoration: underline;">Read the documentation</a> for integration guides and API details</li>
+        </ul>
+      </div>
+    `,
+  },
+  'understanding-pii-detection': {
+    title: 'Understanding PII Detection',
+    date: '2025-01-15',
+    category: 'Guide',
+    excerpt: 'Learn what PII is, why detecting it is challenging, and how pattern-based and AI-assisted approaches combine for robust redaction pipelines.',
+    content: `
+      <p>Personally identifiable information (PII) sits at the heart of modern privacy and security risk. Detecting it reliably is the first step to protecting users, complying with regulations, and enabling safer logging, analytics, and AI workflows.</p>
+      
+      <p>This article explains what PII is, why detecting it is hard in practice, and how pattern‑based and AI‑assisted approaches like <a href="/">OpenRedaction's</a> can be combined for robust redaction pipelines.</p>
+      
+      <h2>What counts as PII?</h2>
+      
+      <p>PII is any information that can directly or indirectly identify a specific person. Some identifiers are obviously sensitive, while others become identifying when combined with other attributes.</p>
+      
+      <p>Common PII categories include:</p>
+      
+      <ul>
+        <li><strong>Direct identifiers:</strong> names, email addresses, phone numbers, national IDs, credit card numbers, bank account numbers.</li>
+        <li><strong>Quasi‑identifiers:</strong> dates of birth, postcodes, job titles, demographic attributes that may identify people in combination.</li>
+        <li><strong>Contextual identifiers:</strong> IP addresses, device IDs, cookie IDs, and customer IDs that tie activity back to individuals.</li>
+      </ul>
+      
+      <p>Different regulations define and scope PII slightly differently. For example, GDPR speaks more broadly about "personal data", while sector rules like HIPAA focus on health data but list specific identifiers that must be removed or de‑identified.</p>
+      
+      <h2>Why PII detection matters</h2>
+      
+      <p>Detecting PII early lets teams prevent sensitive data from leaking into logs, analytics, and third‑party services. This reduces breach impact, simplifies incident response, and can materially reduce regulatory and contractual risk.</p>
+      
+      <p>PII detection is also a prerequisite for safe data sharing and AI adoption. Before sending text to external LLMs, analytics tools, or partners, organizations increasingly run detection and redaction pipelines to strip out identifiers while keeping data useful.</p>
+      
+      <p>Operationally, automated PII detection reduces reliance on manual review, which is slow, inconsistent, and itself a privacy risk. With robust automated detection, teams can enforce privacy controls consistently across services and environments.</p>
+      
+      <h2>Challenges in detecting PII</h2>
+      
+      <p>PII detection is more complex than scanning for obvious patterns like email addresses. Real‑world data is messy, multilingual, full of typos, abbreviations, and domain‑specific identifiers that do not follow simple formats.</p>
+      
+      <p>False negatives (missed PII) create privacy and compliance risk, while false positives (over‑flagging) can destroy data utility. For example, detecting every number as PII may protect privacy but makes logs, metrics, and analytics almost unusable.</p>
+      
+      <p>PII can also appear in unstructured content such as free‑text comments, support tickets, legal documents, audio transcripts and screenshots. Detecting PII in these channels often requires a mix of text processing, OCR, and language‑aware models.</p>
+      
+      <h2>Key approaches to PII detection</h2>
+      
+      <p>Most modern systems blend deterministic pattern‑matching with probabilistic AI or NER (named entity recognition) models. Each approach has strengths and weaknesses that matter when designing a pipeline.</p>
+      
+      <h3>Pattern‑based (regex) detection</h3>
+      
+      <p>Pattern‑based detection relies on explicit rules such as regular expressions to match emails, phone numbers, card numbers, and similar tokens. For example, card numbers can be matched with format checks plus checksum validation, and phone numbers by known country‑specific patterns.</p>
+      
+      <p>Pattern‑based detection is transparent, deterministic, and very fast, making it ideal as a first pass in logs, text streams, and structured fields. The trade‑off is that it struggles with unusual formats, obfuscated data, and context‑dependent identifiers such as names or organization‑specific IDs.</p>
+      
+      <h3>AI and NER‑based detection</h3>
+      
+      <p>NER‑based detection uses machine learning models trained to recognize entities like "Person", "Location", "Email", "PhoneNumber", and so on within text. These models can spot identifiers even when formats vary or when meaning is largely contextual, such as recognizing a person's name next to a company name in a sentence.</p>
+      
+      <p>AI models are powerful on free‑form and multilingual text, but they introduce complexity: model selection, latency, cost, confidence thresholds, and possible misclassifications. Many platforms expose these capabilities via cloud APIs for PII detection and redaction, often returning entities with types, offsets, and confidence scores.</p>
+      
+      <h3>OCR for visual content</h3>
+      
+      <p>For screenshots, scanned documents, and video frames, systems apply OCR to extract text and then run PII detection over the recognized content. This enables PII detection in UI recordings, PDFs, scanned forms, and on‑screen dashboards captured during support or testing.</p>
+      
+      <p>OCR‑based pipelines must account for recognition errors, layout, and multiple languages. Confidence thresholds and secondary validation become important to avoid both missing visible PII and over‑redacting misleading OCR artifacts.</p>
+      
+      <h2>How OpenRedaction approaches PII detection</h2>
+      
+      <p><a href="/">OpenRedaction</a> focuses on fast, transparent PII detection and redaction that can run entirely on your infrastructure. It combines a large library of hardened regex patterns with an optional AI assist layer, giving developers control over accuracy, speed, and privacy posture.</p>
+      
+      <p>By default, OpenRedaction uses regex‑based detection over text, applying a large set of tested patterns covering emails, phone numbers, IPs, payment data, IDs and more. Optionally, an AI proxy can be enabled to augment regex with additional PII spans discovered by an AI model, particularly for entity types that are hard to encode as patterns, such as person names.</p>
+      
+      <p>For more on how OpenRedaction evolved from a regex library to a hybrid API, see our <a href="/blog/building-openredaction-developer-journey">developer journey blog post</a>.</p>
+      
+      <h3>Why pattern‑first detection?</h3>
+      
+      <p>Leading with pattern‑based detection keeps the system deterministic: the same input always produces the same output, and detection logic is fully inspectable. This is especially important for regulated environments and for debugging complex pipelines where teams need to understand exactly why specific tokens were redacted.</p>
+      
+      <p>Pattern‑first detection also avoids sending data to third‑party AI services by default, which is crucial for privacy‑first workflows and strict data residency requirements. Because there are no external network calls in the default path, performance is predictable and suitable for high‑throughput systems like log processors or API gateways.</p>
+      
+      <h3>Optional AI assist</h3>
+      
+      <p>OpenRedaction's AI assist is explicitly opt‑in and layered on top of regex results. When enabled, text is sent to a hosted AI proxy that returns additional PII spans, which are then merged with the pattern‑based matches before redaction.</p>
+      
+      <p>This hybrid model allows teams to capture more subtle identifiers in free‑text content without surrendering full control to a black‑box AI. It can be particularly helpful in support tickets, chat logs, or fields where users might paste arbitrary personal information that does not follow strict formats.</p>
+      
+      <h2>Common PII types and patterns</h2>
+      
+      <p>Different domains prioritize different PII types, but a typical detection configuration covers several core categories. These often align with regulatory lists (e.g., the HIPAA "Safe Harbor" identifiers) or internal data classification schemes.</p>
+      
+      <p>Typical PII for pattern‑based detection includes:</p>
+      
+      <ul>
+        <li><strong>Contact details:</strong> email addresses, phone numbers, postal addresses (partially), IP addresses.</li>
+        <li><strong>Financial and ID numbers:</strong> credit card numbers, bank account numbers, national IDs, passport numbers.</li>
+        <li><strong>Network/application identifiers:</strong> IPs, MAC addresses, JWTs, API keys, session IDs, customer IDs when formats are known.</li>
+      </ul>
+      
+      <p>For these categories, regex and checksums can detect most instances with high precision, especially when combined with boundary checks and context rules. Names, locations, and free‑form descriptors usually require either very careful custom rules or AI‑based NER to achieve useful coverage.</p>
+      
+      <h2>Precision, recall and thresholds</h2>
+      
+      <p>Designing a PII detector always involves tuning the trade‑off between precision (few false positives) and recall (few false negatives). In protection‑first contexts like log shipping to external services, teams often prefer higher recall, accepting some over‑redaction to minimize risk.</p>
+      
+      <p>When AI models are part of the pipeline, confidence thresholds become a major tuning knob. Increasing the threshold improves precision but may miss borderline entities; lowering it catches more possible PII at the cost of more noise.</p>
+      
+      <p>A practical pattern is to:</p>
+      
+      <ul>
+        <li>Use strict, validated regex for high‑impact PII such as card numbers and IDs where false positives are costly.</li>
+        <li>Use more permissive rules or lower AI thresholds for lower‑risk tokens like generic names, especially in environments where over‑redaction is acceptable.</li>
+      </ul>
+      
+      <h2>Redaction strategies</h2>
+      
+      <p>Detection is only half the story; handling detected PII safely is the other. Redaction transforms or removes PII so that downstream systems cannot reconstruct the original identifiers, while preserving enough structure for debugging or analytics where needed.</p>
+      
+      <p>Common redaction strategies include:</p>
+      
+      <ul>
+        <li><strong>Full masking:</strong> replacing the entire span with a placeholder token such as [EMAIL] or [CARD].</li>
+        <li><strong>Partial masking:</strong> keeping some non‑sensitive characters (e.g., last 4 digits) while masking the rest.</li>
+        <li><strong>Tokenization or hashing:</strong> substituting identifiers with irreversible or keyed tokens so that records can still be linked without revealing raw PII.</li>
+      </ul>
+      
+      <p>For many teams, full masking for logs and external integrations and tokenization for internal analytics offers a balanced compromise. OpenRedaction's pattern‑based spans make it straightforward to implement consistent masking strategies at the text level before data leaves a secure boundary.</p>
+      
+      <h2>Building PII detection into your stack</h2>
+      
+      <p>PII detection is most effective when integrated into the data lifecycle rather than treated as a one‑off batch task. That means embedding detection at the edges of your system and in the pipelines that move data between services.</p>
+      
+      <p>Typical integration points include:</p>
+      
+      <ul>
+        <li><strong>Ingestion:</strong> run detection and redaction as data enters logs, data lakes, or event streams.</li>
+        <li><strong>Pre‑export:</strong> scrub PII before sending data to third‑party monitoring, analytics, or AI services.</li>
+        <li><strong>Migration and audits:</strong> scan existing databases and object stores to identify and remediate sensitive fields or misclassified tables.</li>
+      </ul>
+      
+      <p>OpenRedaction's <a href="https://github.com/sam247/openredaction" target="_blank" rel="noopener noreferrer">open‑source core</a> and simple text‑in/text‑out interface make it suitable for embedding in log forwarders, middleware, sidecars, and ETL jobs. Because detection logic is local and inspectable, it fits well into "privacy by design" architectures where teams must justify and document how they handle personal data.</p>
+      
+      <h2>Comparing detection approaches</h2>
+      
+      <p>The table below summarizes key differences between the main approaches and where OpenRedaction fits.</p>
+      
+      <table style="width: 100%; border-collapse: collapse; margin: 2rem 0;">
+        <thead>
+          <tr style="border-bottom: 2px solid #374151;">
+            <th style="text-align: left; padding: 0.75rem; color: #fff; font-weight: 600;">Aspect</th>
+            <th style="text-align: left; padding: 0.75rem; color: #fff; font-weight: 600;">Pattern‑based (regex)</th>
+            <th style="text-align: left; padding: 0.75rem; color: #fff; font-weight: 600;">AI / NER‑based detection</th>
+            <th style="text-align: left; padding: 0.75rem; color: #fff; font-weight: 600;">Hybrid (OpenRedaction style)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #374151;">
+            <td style="padding: 0.75rem; color: #d1d5db;">Transparency</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Fully inspectable, deterministic rules</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Opaque model internals</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Clear base rules plus optional model spans</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #374151;">
+            <td style="padding: 0.75rem; color: #d1d5db;">Performance</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Very fast, low CPU, no network</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Higher latency, often network‑bound</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Fast baseline, optional slower extra coverage</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #374151;">
+            <td style="padding: 0.75rem; color: #d1d5db;">Strengths</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Structured IDs, emails, phones, cards</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Names, context‑dependent entities</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Strong formats plus better coverage of free‑text</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #374151;">
+            <td style="padding: 0.75rem; color: #d1d5db;">Data residency/privacy</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Easy to keep fully local</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Often cloud‑hosted APIs</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Local by default, opt‑in remote assist</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #374151;">
+            <td style="padding: 0.75rem; color: #d1d5db;">Tuning</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Edit rules and patterns directly</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Adjust thresholds, retrain models</td>
+            <td style="padding: 0.75rem; color: #d1d5db;">Adjust patterns and assist configuration</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h2>Good practices when implementing PII detection</h2>
+      
+      <p>Several practical practices help teams get more value from PII detection while avoiding unnecessary friction.</p>
+      
+      <p>Recommended steps include:</p>
+      
+      <ul>
+        <li>Map data flows so you know where PII enters, moves, and leaves your systems, then prioritize high‑risk paths for detection.</li>
+        <li>Start with well‑defined, high‑impact PII types (emails, phone numbers, card numbers, IDs) and expand coverage iteratively.</li>
+        <li>Add detection to CI, integration tests, or staging pipelines to ensure new features do not accidentally leak PII into logs or external tools.</li>
+        <li>Periodically review patterns, thresholds, and redaction behavior as regulations, products, and data types evolve.</li>
+      </ul>
+      
+      <p>Finally, treat PII detection as one building block in a broader privacy strategy that includes encryption, access controls, retention limits, and training. Combining strong PII detection with sane defaults across the stack allows teams to move quickly while still respecting user privacy and regulatory obligations.</p>
+      
+      <div style="margin-top: 3rem; padding: 1.5rem; background-color: #111827; border: 1px solid #374151; border-radius: 0.5rem;">
+        <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600; color: #fff;">Ready to get started?</h3>
+        <ul style="margin-bottom: 1rem; padding-left: 1.5rem; list-style-type: disc; color: #d1d5db;">
+          <li style="margin-bottom: 0.5rem;">Read about <a href="/blog/building-openredaction-developer-journey" style="color: #fff; text-decoration: underline;">how OpenRedaction evolved</a> from a regex library to a hybrid API</li>
+          <li style="margin-bottom: 0.5rem;"><a href="/" style="color: #fff; text-decoration: underline;">Visit the homepage</a> to learn more about OpenRedaction</li>
+          <li style="margin-bottom: 0.5rem;"><a href="/contact" style="color: #fff; text-decoration: underline;">Get in touch</a> if you have questions or need help</li>
+          <li style="margin-bottom: 0.5rem;">Check out the <a href="https://github.com/sam247/openredaction" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline;">open-source repository</a> on GitHub</li>
         </ul>
       </div>
     `,
