@@ -25,12 +25,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Convert individual requests to "thousands of requests" for tiered pricing
+    // This allows us to use £0.20 per 1000 requests pricing
+    const valueInThousands = value / 1000;
+
     // Record the meter event
+    // Timestamp is required by Stripe API - use current time
     const meterEvent = await stripe.billing.meterEvents.create({
       event_name: meterEventName,
+      timestamp: Math.floor(Date.now() / 1000), // Current Unix timestamp
       payload: {
         stripe_customer_id: customerId,
-        value: value,
+        value: valueInThousands, // Report in thousands for tiered pricing
       },
     });
 
