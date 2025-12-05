@@ -308,7 +308,7 @@ x-api-key: YOUR_API_KEY_HERE (optional)`}
                         <h4 className="text-lg font-semibold text-white mb-2">Free Tier</h4>
                         <ul className="list-disc list-inside text-gray-300 space-y-1">
                           <li>IP-based rate limiting (fair-use limits)</li>
-                          <li>Anonymous usage (no API key required)</li>
+                          <li>Anonymous usage (API key optional for higher limits)</li>
                           <li>Lower priority during high traffic</li>
                         </ul>
                       </div>

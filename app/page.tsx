@@ -5,6 +5,7 @@ import TestimonialCard from '@/components/TestimonialCard';
 import FAQAccordion from '@/components/FAQAccordion';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
+import { Rocket, Search, CheckCircle2, Shield, Package, BarChart3, Lock, Target, Zap, Home as HomeIcon, Eye, DollarSign, Key, Trash2, Brain } from 'lucide-react';
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Open Source PII Detection & Redaction | OpenRedaction',
@@ -189,7 +190,7 @@ export default function Home() {
           >
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">🚀</span>
+                <Rocket className="text-white" size={24} />
                 <div>
                   <p className="text-white font-semibold group-hover:text-green-400 transition-colors">
                     New: Read how OpenRedaction evolved into a hybrid AI-assisted redaction API
@@ -211,15 +212,15 @@ export default function Home() {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 lg:col-span-2">
-              <div className="text-3xl mb-4">🔍</div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <Search className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Regex-Based Redaction</h3>
               <p className="text-gray-400">
                 Transparent, deterministic detection using 500+ tested regex patterns for detecting names, emails, SSNs, phone numbers, and more. Fast, reliable, and fully auditable.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">✅</div>
+              <CheckCircle2 className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Comply with GDPR Instantly</h3>
               <p className="text-gray-400">
                 Automatically detect and redact PII to meet GDPR, HIPAA, and CCPA requirements. 
@@ -227,21 +228,21 @@ export default function Home() {
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🛡️</div>
+              <Shield className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Protect Customer Data Automatically</h3>
               <p className="text-gray-400">
                 Real-time PII detection ensures sensitive information never leaves your system unprotected.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">📦</div>
+              <Package className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Simple npm Install</h3>
               <p className="text-gray-400">
                 Install via npm and use directly in your application. Self-host for complete control.
               </p>
             </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 lg:col-span-2">
-              <div className="text-3xl mb-4">📊</div>
+            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
+              <BarChart3 className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Self-Hosted Control</h3>
               <p className="text-gray-400">
                 When self-hosted, you control all logging and data handling. Track PII detections 
@@ -249,34 +250,12 @@ export default function Home() {
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🔒</div>
+              <Lock className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Zero Data Retention</h3>
               <p className="text-gray-400">
                 When self-hosted, your data is processed in-memory and never stored. No persistent databases. 
                 You maintain complete control over your data.
               </p>
-            </div>
-            <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 lg:col-span-3">
-              <div className="text-3xl mb-4">🤖</div>
-              <h3 className="text-xl font-semibold mb-2">Hosted AI Assist (Optional)</h3>
-              <ul className="space-y-2 text-gray-400 text-sm mt-3">
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">•</span>
-                  <span>Regex-only by default — no setup needed</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">•</span>
-                  <span>Toggle AI assist to catch extra PII in free text</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">•</span>
-                  <span>No accounts, no API keys, no storage</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">•</span>
-                  <span>Fully open source + self-hostable</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -291,42 +270,42 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🎯</div>
+              <Target className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Deterministic & Transparent</h3>
               <p className="text-gray-400">
                 Same input always produces the same output. Patterns are visible and testable - no black box AI.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">⚡</div>
+              <Zap className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Fast Processing</h3>
               <p className="text-gray-400">
                 Processes in milliseconds with no external API calls. No waiting for third-party AI services.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🏠</div>
+              <HomeIcon className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Runs Locally</h3>
               <p className="text-gray-400">
                 No data leaves your environment. Process everything on your infrastructure for maximum privacy.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🔒</div>
+              <Lock className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Privacy-Preserving</h3>
               <p className="text-gray-400">
                 No third-party AI models. No data sent to external services. Complete control over your data.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🔍</div>
+              <Eye className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Easy to Audit</h3>
               <p className="text-gray-400">
                 Patterns are visible and testable. Perfect for compliance reviews and security audits.
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">💰</div>
+              <DollarSign className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Predictable Costs</h3>
               <p className="text-gray-400">
                 No per-token pricing. Self-hosted version has zero variable costs. Predictable and affordable.
@@ -650,7 +629,7 @@ console.log(result.redacted_text);`}
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">🔐</div>
+              <Key className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Self-Hosted Control</h3>
               <p className="text-gray-400">
                 Self-hosted deployments give you complete control. Processes text in memory, never stores raw input. 
@@ -658,7 +637,7 @@ console.log(result.redacted_text);`}
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">⚡</div>
+              <Zap className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Deploy Anywhere</h3>
               <p className="text-gray-400">
                 Open-source library works with Node.js and can be integrated into any application. 
@@ -666,7 +645,7 @@ console.log(result.redacted_text);`}
               </p>
             </div>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-              <div className="text-3xl mb-4">📊</div>
+              <BarChart3 className="text-white mb-4" size={32} />
               <h3 className="text-xl font-semibold mb-2">Self-Hosted Logging</h3>
               <p className="text-gray-400">
                 When self-hosted, you manage all logging. Complete detection logs with entity types, positions, and timestamps. 
@@ -1210,21 +1189,21 @@ console.log(result.redacted_text);`}
             <h2 className="text-2xl font-semibold mb-6 text-center">Security & Privacy</h2>
             <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl mb-3">🔒</div>
+                <Lock className="text-white mb-3 mx-auto" size={32} />
                 <h3 className="text-lg font-semibold mb-2">Stateless Processing</h3>
                 <p className="text-gray-400 text-sm">
                   All processing happens in memory. No persistent storage of your data.
                 </p>
               </div>
               <div className="text-center">
-                <div className="text-3xl mb-3">🗑️</div>
+                <Trash2 className="text-white mb-3 mx-auto" size={32} />
                 <h3 className="text-lg font-semibold mb-2">No Raw Text Stored</h3>
                 <p className="text-gray-400 text-sm">
                   Your input text is processed and immediately discarded. We don&apos;t log or store it.
                 </p>
               </div>
               <div className="text-center">
-                <div className="text-3xl mb-3">🔐</div>
+                <Brain className="text-white mb-3 mx-auto" size={32} />
                 <h3 className="text-lg font-semibold mb-2">Optional AI-Assist</h3>
                 <p className="text-gray-400 text-sm">
                   AI assist is optional via external provider. Regex-only mode works completely offline.

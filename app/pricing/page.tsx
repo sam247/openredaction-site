@@ -22,7 +22,7 @@ export default function Pricing() {
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      <main className="pt-24 pb-20">
+      <main className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -195,7 +195,7 @@ export default function Pricing() {
                   <h3 className="text-xl font-semibold mb-3">Free Tier</h3>
                   <ul className="list-disc list-inside text-gray-300 space-y-2">
                     <li>IP-based rate limiting (fair-use limits apply)</li>
-                    <li>Anonymous usage — no API key required</li>
+                    <li>Anonymous usage — API key optional for higher limits</li>
                     <li>Lower priority during high traffic periods</li>
                     <li>Usage information not provided in response headers</li>
                   </ul>
