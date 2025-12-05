@@ -21,24 +21,24 @@ export default function Home() {
       {/* Hero Section */}
       <main className="pt-24 pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
+          <div className="text-center">
             {/* Badge */}
             <div className="inline-flex items-center space-x-2 bg-gray-900 px-4 py-2 rounded-full mb-8 mt-8">
               <span className="text-sm text-gray-300">500+ Tested Patterns • Fast & Deterministic</span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight max-w-5xl mx-auto">
               Open-source PII redaction, regex-first.
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-3xl mx-auto">
               Library + regex = free. AI-assist API = paid with key.
             </p>
 
             {/* Tier Explanation */}
-            <div className="mb-10 max-w-3xl mx-auto">
+            <div className="mb-10 max-w-5xl mx-auto">
               <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 text-left">
                   <div>
@@ -76,8 +76,8 @@ export default function Home() {
             </div>
 
             {/* Demo Section */}
-            <div className="mt-20 bg-gray-900 rounded-lg p-8 border border-gray-800">
-              <div className="text-left max-w-2xl mx-auto">
+            <div className="mt-20 bg-gray-900 rounded-lg p-8 border border-gray-800 max-w-4xl mx-auto">
+              <div className="text-left">
                 <h2 className="text-2xl font-semibold mb-4">Try it out</h2>
                 <div className="bg-black rounded-lg p-4 border border-gray-800 font-mono text-sm">
                   <div className="text-gray-400 mb-2">Input:</div>
