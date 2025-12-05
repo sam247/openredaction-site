@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 import CodeExamples from '@/components/CodeExamples';
+import StripeCheckoutButton from '@/components/StripeCheckoutButton';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
@@ -13,7 +14,9 @@ export const metadata: Metadata = generatePageMetadata({
 });
 
 export default function Pricing() {
-  const stripeCheckoutUrl = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_URL || '#';
+  // For metered billing, we use the base price ID
+  // The checkout session will automatically include both base + metered prices
+  const basePriceId = process.env.NEXT_PUBLIC_STRIPE_BASE_PRICE_ID || '';
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -88,7 +91,11 @@ export default function Pricing() {
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start">
                   <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
-                  <span className="text-white">50,000 AI-assist requests/month</span>
+                  <span className="text-white">50,000 AI-assist requests/month included</span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
+                  <span className="text-white">Overage: £0.20 per 1,000 requests above 50k</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-green-400 mr-3 mt-1 flex-shrink-0" size={20} />
@@ -104,12 +111,13 @@ export default function Pricing() {
                 </li>
               </ul>
 
-              <a
-                href={stripeCheckoutUrl}
-                className="block w-full bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors text-center"
-              >
-                Get API Key
-              </a>
+              {basePriceId ? (
+                <StripeCheckoutButton priceId={basePriceId} />
+              ) : (
+                <div className="bg-gray-800 text-gray-400 px-6 py-3 rounded-md text-center text-sm">
+                  Stripe pricing not configured. Please set NEXT_PUBLIC_STRIPE_BASE_PRICE_ID.
+                </div>
+              )}
             </div>
           </div>
 
@@ -195,7 +203,8 @@ export default function Pricing() {
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Pro Tier</h3>
                   <ul className="list-disc list-inside text-gray-300 space-y-2">
-                    <li><strong>50,000 AI-assist requests per month</strong></li>
+                    <li><strong>50,000 AI-assist requests per month included</strong> in base subscription</li>
+                    <li><strong>Overage billing:</strong> £0.20 per 1,000 requests above 50,000 (billed monthly)</li>
                     <li>API key required for authentication</li>
                     <li>Priority rate limiting</li>
                     <li>Usage tracked and provided in response headers:
