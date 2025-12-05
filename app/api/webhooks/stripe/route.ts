@@ -30,28 +30,58 @@ export async function POST(request: NextRequest) {
 
   // Handle the event
   switch (event.type) {
+    case 'checkout.session.completed':
+      const session = event.data.object as Stripe.Checkout.Session;
+      // When checkout completes, you can:
+      // 1. Get the customer ID: session.customer
+      // 2. Get the subscription ID: session.subscription
+      // 3. Generate and store API key for the customer
+      console.log('Checkout completed:', {
+        session_id: session.id,
+        customer_id: session.customer,
+        subscription_id: session.subscription,
+      });
+      // TODO: Generate API key and store customer_id -> API key mapping
+      break;
+
     case 'customer.subscription.created':
     case 'customer.subscription.updated':
       const subscription = event.data.object as Stripe.Subscription;
       // Update user's API key to paid tier
       // In production, you'd update the database here
-      console.log('Subscription updated:', subscription.id);
+      console.log('Subscription updated:', {
+        subscription_id: subscription.id,
+        customer_id: subscription.customer,
+        status: subscription.status,
+      });
       break;
 
     case 'customer.subscription.deleted':
       const deletedSubscription = event.data.object as Stripe.Subscription;
       // Downgrade user's API key to free tier
-      console.log('Subscription deleted:', deletedSubscription.id);
+      console.log('Subscription deleted:', {
+        subscription_id: deletedSubscription.id,
+        customer_id: deletedSubscription.customer,
+      });
       break;
 
     case 'invoice.payment_succeeded':
       const invoice = event.data.object as Stripe.Invoice;
-      console.log('Payment succeeded:', invoice.id);
+      console.log('Payment succeeded:', {
+        invoice_id: invoice.id,
+        customer_id: invoice.customer,
+        amount_paid: invoice.amount_paid,
+        // For metered billing, invoice.line_items will show usage charges
+      });
       break;
 
     case 'invoice.payment_failed':
       const failedInvoice = event.data.object as Stripe.Invoice;
-      console.log('Payment failed:', failedInvoice.id);
+      console.log('Payment failed:', {
+        invoice_id: failedInvoice.id,
+        customer_id: failedInvoice.customer,
+      });
+      // TODO: Notify customer, potentially suspend API access
       break;
 
     default:

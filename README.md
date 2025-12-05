@@ -39,8 +39,11 @@ cp .env.example .env.local
 Edit `.env.local` and add your Stripe keys:
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Your Stripe publishable key (starts with `pk_`)
 - `STRIPE_SECRET_KEY` - Your Stripe secret key (starts with `sk_`)
-- `NEXT_PUBLIC_STRIPE_PRICE_ID` - Your Stripe price ID (from Stripe Dashboard, create a product and price)
-- `STRIPE_WEBHOOK_SECRET` - Your Stripe webhook secret (from Stripe Dashboard, starts with `whsec_`)
+- `NEXT_PUBLIC_STRIPE_BASE_PRICE_ID` - Base subscription price ID (for metered billing)
+- `NEXT_PUBLIC_STRIPE_METERED_PRICE_ID` - Metered usage price ID (for metered billing)
+- `STRIPE_METER_ID` - Meter ID for tracking usage
+- `STRIPE_METER_EVENT_NAME` - Meter event name (default: `openredaction_api_requests`)
+- `STRIPE_WEBHOOK_SECRET` - Your Stripe webhook secret (starts with `whsec_`)
 
 4. Run the development server:
 ```bash
@@ -75,9 +78,11 @@ openredaction-site/
 1. Create a Stripe account at [stripe.com](https://stripe.com)
 2. Create a product and price in the Stripe Dashboard
 3. Add the price ID to your environment variables
-4. Set up a webhook endpoint in Stripe Dashboard:
-   - URL: `https://your-domain.com/api/webhooks/stripe`
-   - Events to listen for:
+4. Webhook endpoint is configured:
+   - URL: `https://openredaction.com/api/webhooks/stripe`
+   - Webhook Secret: `whsec_oAr8gywKHBFoB0QUR7N4T5J5lbtwm4kX`
+   - Events configured:
+     - `checkout.session.completed`
      - `customer.subscription.created`
      - `customer.subscription.updated`
      - `customer.subscription.deleted`
@@ -114,7 +119,10 @@ The site can be deployed to any platform that supports Next.js:
 |----------|-------------|----------|
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key (starts with `pk_`) | Yes (for payments) |
 | `STRIPE_SECRET_KEY` | Stripe secret key (starts with `sk_`) | Yes (for payments) |
-| `NEXT_PUBLIC_STRIPE_PRICE_ID` | Stripe price ID (from product/price in dashboard) | Yes (for payments) |
+| `NEXT_PUBLIC_STRIPE_BASE_PRICE_ID` | Base subscription price ID (for metered billing) | Yes (for metered billing) |
+| `NEXT_PUBLIC_STRIPE_METERED_PRICE_ID` | Metered usage price ID (for metered billing) | Yes (for metered billing) |
+| `STRIPE_METER_ID` | Meter ID for tracking API usage | Yes (for metered billing) |
+| `STRIPE_METER_EVENT_NAME` | Meter event name (default: `openredaction_api_requests`) | Yes (for metered billing) |
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook secret (starts with `whsec_`) | Yes (for webhooks) |
 | `NEXT_PUBLIC_API_URL` | OpenRedaction API URL | No (defaults to production) |
 | `NEXT_PUBLIC_APP_URL` | Your app URL | No (for redirects) |
