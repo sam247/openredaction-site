@@ -11,11 +11,8 @@ const meterEventName = process.env.STRIPE_METER_EVENT_NAME || 'openredaction_api
  * POST /api/stripe/record-usage
  * Body: {
  *   customerId: string, // Stripe customer ID
- *   value: number,      // Number of API requests (will be divided by 1000 for billing)
+ *   value: number,      // Number of API requests (usually 1 per call)
  * }
- * 
- * Note: Usage is reported in "thousands of requests" to work with tiered pricing.
- * The value is automatically divided by 1000 before sending to Stripe.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -28,30 +25,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Convert individual requests to "thousands of requests" for tiered pricing
-    // This allows us to use £0.20 per 1000 requests pricing
-    const valueInThousands = value / 1000;
+    // Convert value to thousands for tiered pricing (e.g., 75000 requests -> 75)
+    const valueInThousands = Math.ceil(value / 1000);
 
     // Record the meter event
-    // Timestamp is required by Stripe API - use current time
+    // Timestamp is required by Stripe API
     const meterEvent = await stripe.billing.meterEvents.create({
       event_name: meterEventName,
-      timestamp: Math.floor(Date.now() / 1000), // Current Unix timestamp
+      timestamp: Math.floor(Date.now() / 1000), // Current Unix timestamp in seconds
       payload: {
         stripe_customer_id: customerId,
-        value: String(valueInThousands), // Report in thousands for tiered pricing (must be string)
+        value: String(valueInThousands), // Stripe expects value as a string
       },
     });
 
-    // The Stripe SDK returns the meter event directly
-    const eventId = (meterEvent as any).id || (meterEvent as any).identifier || 'unknown';
-
     return NextResponse.json({
       success: true,
-      event_id: eventId,
+      event_id: meterEvent.identifier, // Use identifier for MeterEvent
       customer_id: customerId,
-      requests: value,
-      value_reported: valueInThousands, // Value sent to Stripe (in thousands)
+      value: value,
+      value_reported_to_stripe: valueInThousands,
     });
   } catch (error: any) {
     console.error('Error recording usage:', error);
