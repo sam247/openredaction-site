@@ -25,9 +25,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Convert value to thousands for tiered pricing (e.g., 75000 requests -> 75)
-    const valueInThousands = Math.ceil(value / 1000);
-
     // Record the meter event
     // Timestamp is required by Stripe API
     const meterEvent = await stripe.billing.meterEvents.create({
@@ -35,16 +32,15 @@ export async function POST(request: NextRequest) {
       timestamp: Math.floor(Date.now() / 1000), // Current Unix timestamp in seconds
       payload: {
         stripe_customer_id: customerId,
-        value: String(valueInThousands), // Stripe expects value as a string
+        value: String(value), // Stripe expects value as a string
       },
     });
 
     return NextResponse.json({
       success: true,
-      event_id: meterEvent.identifier, // Use identifier for MeterEvent
+      event_id: meterEvent.identifier || 'unknown',
       customer_id: customerId,
       value: value,
-      value_reported_to_stripe: valueInThousands,
     });
   } catch (error: any) {
     console.error('Error recording usage:', error);

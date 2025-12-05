@@ -335,7 +335,7 @@ export default function Playground() {
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      <main className="pt-32">
+      <main className="pt-24">
         {/* Top Bar */}
         <div className="border-b border-gray-800 bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -356,7 +356,7 @@ export default function Playground() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
           <div className="flex flex-col lg:flex-row h-auto lg:h-[calc(100vh-200px)] border border-gray-800 rounded-lg overflow-hidden bg-black">
             {/* Left Side - Input */}
             <div className="flex-1 lg:border-r border-b lg:border-b-0 border-gray-800 flex flex-col bg-black">
