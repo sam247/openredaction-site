@@ -60,7 +60,7 @@ STRIPE_METER_EVENT_NAME=openredaction_api_requests
 **Webhook is configured!**
 
 - **Endpoint URL**: `https://openredaction.com/api/webhooks/stripe`
-- **Webhook Secret**: `whsec_oAr8gywKHBFoB0QUR7N4T5J5lbtwm4kX`
+- **Webhook Secret**: Set `STRIPE_WEBHOOK_SECRET` in environment variables (get from Stripe Dashboard)
 
 **Events configured:**
 - `checkout.session.completed` - When a customer completes checkout

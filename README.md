@@ -80,7 +80,7 @@ openredaction-site/
 3. Add the price ID to your environment variables
 4. Webhook endpoint is configured:
    - URL: `https://openredaction.com/api/webhooks/stripe`
-   - Webhook Secret: `whsec_oAr8gywKHBFoB0QUR7N4T5J5lbtwm4kX`
+   - Webhook Secret: Set `STRIPE_WEBHOOK_SECRET` in environment variables
    - Events configured:
      - `checkout.session.completed`
      - `customer.subscription.created`
