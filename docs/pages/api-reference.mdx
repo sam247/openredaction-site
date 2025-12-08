@@ -1,6 +1,392 @@
 # API Reference
 
-Complete API documentation for OpenRedaction.
+Complete API documentation for OpenRedaction, including both the npm library and hosted API.
+
+## Table of Contents
+
+- [Hosted API](#hosted-api)
+  - [API Endpoints](#api-endpoints)
+  - [Authentication](#authentication)
+  - [Request Format](#request-format)
+  - [Response Format](#response-format)
+  - [Error Handling](#error-handling)
+  - [Rate Limits](#rate-limits)
+  - [Limits and Quotas](#limits-and-quotas)
+  - [API Versioning](#api-versioning)
+- [npm Library](#npm-library)
+  - [Functions](#functions)
+  - [Classes](#classes)
+  - [Detection Types](#detection-types)
+
+## Hosted API
+
+The OpenRedaction hosted API provides AI-powered PII detection as a service. For regex-only detection, use the [npm library](#npm-library).
+
+### OpenAPI Specification
+
+We provide a complete OpenAPI 3.0 specification for the hosted API:
+
+- **[Download OpenAPI YAML](/docs/openapi.yaml)** - Machine-readable API specification
+- **[View in Swagger UI](https://editor.swagger.io/?url=https://openredaction.com/docs/openapi.yaml)** - Interactive API explorer
+- **Import into Postman** - Use the OpenAPI spec to generate a Postman collection
+- **Generate Client SDKs** - Use tools like [openapi-generator](https://openapi-generator.tech/) to generate client libraries
+
+The OpenAPI spec includes:
+- Complete endpoint documentation
+- Request/response schemas
+- Error response formats
+- Authentication details
+- Rate limiting information
+
+### API Endpoints
+
+**Production Base URL**: `https://openredaction-api.onrender.com`
+
+**Current Version**: `v1` (path-based versioning)
+
+All API endpoints are prefixed with the version number. The current production endpoint is:
+
+```
+POST https://openredaction-api.onrender.com/v1/ai-detect
+```
+
+**Note**: Future versions (e.g., `v2`) will be available at `/v2/ai-detect` when released. We maintain backward compatibility and provide at least 6 months notice before deprecating any version.
+
+### Authentication
+
+API keys are optional for free tier usage (IP-based rate limiting). For Pro tier access with higher limits, include your API key in the `x-api-key` header.
+
+**Free Tier**:
+- No API key required
+- IP-based rate limiting
+- Fair-use limits apply
+
+**Pro Tier**:
+- API key required in `x-api-key` header
+- 50,000 AI-assist requests per month
+- Priority rate limiting
+- Usage tracked via response headers
+
+To get an API key:
+1. Visit the [pricing page](https://openredaction.com/pricing)
+2. Subscribe to the Pro tier (£9/month)
+3. Check your email for your API key
+4. Include the key in the `x-api-key` header
+
+### Request Format
+
+**Endpoint**: `POST /v1/ai-detect`
+
+**Headers**:
+```
+Content-Type: application/json
+x-api-key: YOUR_API_KEY_HERE (optional, required for Pro tier)
+```
+
+**Request Body**:
+```json
+{
+  "text": "Your text to analyze for PII"
+}
+```
+
+**Example Request**:
+```bash
+curl -X POST https://openredaction-api.onrender.com/v1/ai-detect \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_API_KEY_HERE" \
+  -d '{
+    "text": "Contact John Doe at john@example.com or call 555-123-4567"
+  }'
+```
+
+### Response Format
+
+**Success Response** (200 OK):
+
+**Headers**:
+- `X-Usage-Count`: Current usage count for this billing period
+- `X-Usage-Limit`: Monthly usage limit
+- `X-Usage-Reset`: ISO 8601 timestamp when usage resets
+
+**Body**:
+```json
+{
+  "entities": [
+    {
+      "type": "PERSON",
+      "value": "John Doe",
+      "start": 8,
+      "end": 16
+    },
+    {
+      "type": "EMAIL",
+      "value": "john@example.com",
+      "start": 21,
+      "end": 37
+    },
+    {
+      "type": "PHONE",
+      "value": "555-123-4567",
+      "start": 41,
+      "end": 53
+    }
+  ],
+  "aiUsed": true
+}
+```
+
+**Entity Types**:
+- `PERSON` - Person names
+- `EMAIL` - Email addresses
+- `PHONE` - Phone numbers
+- `IP_ADDRESS` - IP addresses
+- `CREDIT_CARD` - Credit card numbers
+- `SSN` - Social Security Numbers
+- `DATE_OF_BIRTH` - Dates of birth
+- `ADDRESS` - Physical addresses
+- `PASSPORT` - Passport numbers
+- `DRIVER_LICENSE` - Driver's license numbers
+- `ORGANIZATION` - Organization names
+- `LOCATION` - Location names
+
+### Error Handling
+
+The API uses standard HTTP status codes and returns error details in JSON format.
+
+#### 400 Bad Request
+
+Returned when the request is malformed or invalid.
+
+**Example - Missing text field**:
+```json
+{
+  "code": "BAD_REQUEST",
+  "message": "Missing required field: text"
+}
+```
+
+**Example - Text too long**:
+```json
+{
+  "code": "TEXT_TOO_LONG",
+  "message": "Input text exceeds maximum length of 50,000 characters"
+}
+```
+
+**Example - Invalid JSON**:
+```json
+{
+  "code": "BAD_REQUEST",
+  "message": "Invalid JSON in request body"
+}
+```
+
+#### 401 Unauthorized
+
+Returned when the API key is invalid or missing (for Pro tier requests).
+
+**Example**:
+```json
+{
+  "code": "INVALID_KEY",
+  "message": "Invalid or missing API key",
+  "details": "Check your API key or subscribe to Pro tier"
+}
+```
+
+**Response Headers**: None
+
+#### 429 Rate Limit Exceeded
+
+Returned when the rate limit has been exceeded.
+
+**Example**:
+```json
+{
+  "code": "RATE_LIMIT",
+  "message": "Rate limit exceeded",
+  "details": "You have exceeded your monthly request limit. Please wait until the next billing period or upgrade your plan."
+}
+```
+
+**Response Headers**:
+- `Retry-After`: Number of seconds to wait before retrying (e.g., `3600` for 1 hour)
+- `X-RateLimit-Limit`: Request limit per time window
+- `X-RateLimit-Remaining`: Remaining requests in current window (0 when limit exceeded)
+- `X-RateLimit-Reset`: Unix timestamp when rate limit resets
+
+**What happens after limit reached**:
+- Free tier: IP-based limits reset daily. You'll receive a 429 response with `Retry-After` header indicating when to retry.
+- Pro tier: Monthly limits reset at the start of each billing cycle. You'll receive a 429 response until the next billing period begins.
+
+**Best Practices**:
+- Implement exponential backoff when receiving 429 responses
+- Respect the `Retry-After` header value
+- Monitor usage via response headers (`X-Usage-Count`, `X-Usage-Limit`)
+- Queue requests if you're approaching your limit
+
+#### 500 Internal Server Error
+
+Returned when an unexpected server error occurs.
+
+**Example**:
+```json
+{
+  "code": "INTERNAL_ERROR",
+  "message": "An internal server error occurred",
+  "details": "Please try again later or contact support if the issue persists"
+}
+```
+
+**Best Practices**:
+- Implement retry logic with exponential backoff
+- Log error details for debugging
+- Contact support if errors persist
+
+#### 503 Service Unavailable
+
+Returned when the service is temporarily unavailable (e.g., during maintenance).
+
+**Example**:
+```json
+{
+  "code": "SERVICE_UNAVAILABLE",
+  "message": "Service temporarily unavailable",
+  "details": "The service is currently undergoing maintenance. Please try again later."
+}
+```
+
+**Response Headers**:
+- `Retry-After`: Number of seconds to wait before retrying
+
+### Rate Limits
+
+#### Free Tier
+
+- **Limiting Method**: IP-based
+- **Limits**: Fair-use limits (varies based on traffic)
+- **Reset**: Daily
+- **Behavior**: Lower priority during high traffic periods
+- **API Key**: Not required
+
+#### Pro Tier
+
+- **Limiting Method**: API key-based
+- **Limits**: 50,000 AI-assist requests per month
+- **Reset**: Monthly (at start of billing cycle)
+- **Behavior**: Priority rate limiting
+- **API Key**: Required in `x-api-key` header
+- **Tracking**: Usage tracked via response headers
+
+**Response Headers** (Pro tier only):
+- `X-Usage-Count`: Current usage count
+- `X-Usage-Limit`: Monthly limit (50,000)
+- `X-Usage-Reset`: ISO 8601 timestamp when usage resets
+
+### Limits and Quotas
+
+#### Payload Size Limits
+
+- **Maximum text length**: 50,000 characters
+- **Maximum request body size**: ~200KB (JSON)
+- **Behavior when exceeded**: Returns `400 Bad Request` with `TEXT_TOO_LONG` error code
+
+**Recommendations for large text processing**:
+- Split large documents into chunks of 50,000 characters or less
+- Process chunks sequentially or in parallel
+- Merge results client-side if needed
+
+#### Character Encoding
+
+- **Supported**: UTF-8
+- **Unsupported characters**: May cause parsing errors
+
+#### Request Rate Limits
+
+See [Rate Limits](#rate-limits) section above.
+
+### API Versioning
+
+OpenRedaction uses **path-based versioning** for the hosted API.
+
+**Current Version**: `v1`
+
+**Version Format**: `/v1/ai-detect`, `/v2/ai-detect`, etc.
+
+**Versioning Policy**:
+- New versions are released when breaking changes are necessary
+- We maintain backward compatibility within a major version
+- Deprecated versions receive at least 6 months notice before removal
+- Minor updates (bug fixes, new features) are backward compatible
+
+**Backward Compatibility Commitments**:
+- Response format changes will only occur in new major versions
+- New optional fields may be added to responses without version bump
+- Breaking changes require a new major version
+
+**Deprecation Policy**:
+- Deprecated versions are announced at least 6 months in advance
+- Deprecated versions remain available during the notice period
+- Migration guides are provided for major version upgrades
+
+**How to specify version**:
+Include the version in the URL path:
+```
+POST https://openredaction-api.onrender.com/v1/ai-detect
+```
+
+**Future versions**:
+When `v2` is released, it will be available at `/v2/ai-detect`. Both `v1` and `v2` will be supported during the transition period.
+
+### Testing and Validation
+
+#### Input Validation
+
+The API performs the following validation:
+
+- **Text field**: Required, must be a non-empty string
+- **Text length**: Maximum 50,000 characters
+- **Content-Type**: Must be `application/json`
+- **JSON format**: Must be valid JSON
+
+#### Output Guarantees
+
+- **Response format**: Consistent JSON structure
+- **Entity positions**: `start` and `end` are 0-indexed character positions
+- **Entity types**: Standardized type names (see [Response Format](#response-format))
+- **Ordering**: Entities are returned in order of appearance in the text
+
+#### Testing Strategies
+
+**Unit Tests**:
+- Test with known PII patterns (emails, phones, etc.)
+- Test edge cases (empty strings, very long text, special characters)
+- Test error handling (invalid keys, rate limits, etc.)
+
+**Integration Tests**:
+- Test end-to-end workflows
+- Test rate limiting behavior
+- Test error recovery and retry logic
+
+**Example Test Cases**:
+```javascript
+// Valid input
+const validRequest = {
+  text: "Contact john@example.com"
+};
+
+// Edge cases
+const edgeCases = [
+  { text: "" }, // Empty string (should return 400)
+  { text: "a".repeat(50001) }, // Too long (should return 400)
+  { text: "No PII here" }, // No PII detected (should return 200 with empty entities)
+];
+```
+
+## npm Library
+
+The OpenRedaction npm library provides regex-first PII detection that runs entirely on your infrastructure.
 
 ## Functions
 

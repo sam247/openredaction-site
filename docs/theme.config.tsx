@@ -1,8 +1,9 @@
 import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
+import Logo from './components/Logo'
 
 const config: DocsThemeConfig = {
-  logo: <span>OpenRedaction Docs</span>,
+  logo: <Logo />,
   project: {
     link: 'https://github.com/sam247/openredaction',
   },

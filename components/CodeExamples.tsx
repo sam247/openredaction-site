@@ -12,11 +12,11 @@ export default function CodeExamples({ apiKey = 'YOUR_API_KEY_HERE' }: CodeExamp
   const [copied, setCopied] = useState(false);
 
   const codeExamples = {
-    curl: `curl -X POST https://openredaction-api.onrender.com/ai-detect \\
+    curl: `curl -X POST https://openredaction-api.onrender.com/v1/ai-detect \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: ${apiKey}" \\
   -d '{"text": "John Smith lives at 10 Downing Street"}'`,
-    node: `const res = await fetch("https://openredaction-api.onrender.com/ai-detect", {
+    node: `const res = await fetch("https://openredaction-api.onrender.com/v1/ai-detect", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -32,7 +32,7 @@ console.log(data);`,
     python: `import requests
 
 r = requests.post(
-    "https://openredaction-api.onrender.com/ai-detect",
+    "https://openredaction-api.onrender.com/v1/ai-detect",
     headers={
         "Content-Type": "application/json",
         "x-api-key": "${apiKey}"

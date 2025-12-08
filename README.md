@@ -134,7 +134,7 @@ The site can be deployed to any platform that supports Next.js:
 The site integrates with the OpenRedaction hosted API for AI-assist functionality:
 
 - **Base URL**: `https://openredaction-api.onrender.com`
-- **AI Detect Endpoint**: `POST /ai-detect`
+- **AI Detect Endpoint**: `POST /v1/ai-detect`
 - **Rate Limits**:
   - **Free Tier**: IP-based limits (fair-use, anonymous)
   - **Pro Tier**: 50,000 AI-assist requests/month with API key
@@ -144,7 +144,7 @@ The site integrates with the OpenRedaction hosted API for AI-assist functionalit
 To use the hosted API with an API key:
 
 ```javascript
-const response = await fetch('https://openredaction-api.onrender.com/ai-detect', {
+const response = await fetch('https://openredaction-api.onrender.com/v1/ai-detect', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

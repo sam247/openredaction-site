@@ -157,7 +157,7 @@ export default function Playground() {
             headers['x-api-key'] = apiKey.trim();
           }
           
-          const aiResponse = await fetch('https://openredaction-api.onrender.com/ai-detect', {
+          const aiResponse = await fetch('https://openredaction-api.onrender.com/v1/ai-detect', {
             method: 'POST',
             headers,
             body: JSON.stringify({ 

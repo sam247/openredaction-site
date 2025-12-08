@@ -57,7 +57,7 @@ function BlogContent() {
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      <main className="pt-24 pb-20">
+      <main className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
@@ -152,7 +152,7 @@ export default function Blog() {
     <Suspense fallback={
       <div className="min-h-screen bg-black text-white">
         <Header />
-        <main className="pt-24 pb-20">
+        <main className="pt-32 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center py-12">
               <p className="text-gray-400">Loading...</p>

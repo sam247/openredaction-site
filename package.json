@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run docs:export && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs:export": "cd docs && npm ci && npm run export && rm -rf ../public/docs && mkdir -p ../public && cp -R out/docs ../public/docs"
   },
   "dependencies": {
     "@openredaction/openredaction": "^1.0.0",

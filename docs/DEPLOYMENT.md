@@ -1,31 +1,17 @@
 # Deployment Guide
 
-This documentation site is set up to deploy to `docs.openredaction.com` on Vercel.
+This documentation site is bundled and served from `https://openredaction.com/docs` (no subdomain). The docs are statically exported and copied into the main app's `public/docs` folder during the root build.
 
 ## Vercel Deployment Setup
 
-### Option 1: Deploy from /docs subdirectory (Recommended)
+### Path-based deployment (current setup)
 
-1. In Vercel dashboard, create a new project
-2. Connect your GitHub repository
-3. Configure the project:
-   - **Root Directory**: Set to `docs`
-   - **Framework Preset**: Next.js
-   - **Build Command**: `npm run build` (runs automatically in docs directory)
-   - **Output Directory**: `.next` (default)
-   - **Install Command**: `npm install` (runs automatically in docs directory)
+The root project `npm run build` now runs `npm run docs:export`, which:
+1. Installs docs dependencies (`npm ci` inside `/docs`)
+2. Builds and exports the Nextra site with `basePath: /docs`
+3. Copies the static export from `docs/out/docs` into the root `public/docs`
 
-4. Set environment variables if needed (none required for basic setup)
-
-5. Deploy!
-
-### Option 2: Deploy as separate repository
-
-If you prefer to have the docs in a separate repository:
-
-1. Create a new repository (e.g., `openredaction-docs`)
-2. Copy the contents of `/docs` to the new repository
-3. Deploy normally to Vercel
+With the `app/docs` route removed, the main Next.js app serves the static docs at `/docs`.
 
 ## Local Development
 
@@ -42,20 +28,21 @@ Visit http://localhost:3000 to view the documentation.
 ```bash
 cd docs
 npm run build
-npm start
+npm run export
 ```
 
-## Custom Domain
-
-In Vercel:
-1. Go to Project Settings → Domains
-2. Add `docs.openredaction.com`
-3. Configure DNS records as instructed by Vercel
+To verify the exported site locally:
+```bash
+cd docs
+npm run export
+npx serve out
+```
+Then open http://localhost:3000/docs (because of `basePath: /docs`).
 
 ## Notes
 
-- The docs site uses Next.js 14 and Nextra 3
+- The docs site uses Next.js 14 and Nextra 3 with `basePath: /docs`
 - All documentation pages are in `/docs/pages/` as `.mdx` files
 - The theme configuration is in `/docs/theme.config.tsx`
-- Navigation is automatically generated from `_meta.json` files
+- Navigation is automatically generated from `_meta.ts` files
 
