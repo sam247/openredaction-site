@@ -27,9 +27,6 @@ export default function Header() {
               <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
                 Pricing
               </Link>
-              <Link href="/docs" className="text-gray-300 hover:text-white transition-colors">
-                Docs
-              </Link>
               
               {/* Resources Dropdown */}
               <div 
@@ -133,13 +130,6 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Pricing
-            </Link>
-            <Link
-              href="/docs"
-              className="block text-gray-300 hover:text-white transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Docs
             </Link>
             <Link
               href="/blog"
