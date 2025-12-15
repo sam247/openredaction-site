@@ -30,7 +30,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/docs" prefetch={false} className="text-gray-400 hover:text-white transition-colors">
                   Documentation
                 </Link>
               </li>

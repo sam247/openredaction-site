@@ -196,6 +196,7 @@ print(r.json())`,
 
             <Link
               href="/docs"
+              prefetch={false}
               className="bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-gray-700 transition-colors group flex flex-col"
             >
               <div className="flex items-center space-x-4 mb-4">
@@ -215,7 +216,7 @@ print(r.json())`,
           <div className="mt-8 text-center">
             <p className="text-gray-400 mb-4">
               Need help? Check out our{' '}
-              <Link href="/docs" className="text-white hover:text-gray-300 underline">
+              <Link href="/docs" prefetch={false} className="text-white hover:text-gray-300 underline">
                 documentation
               </Link>{' '}
               or{' '}

@@ -255,7 +255,7 @@ export default function Pricing() {
                 <h3 className="text-xl font-semibold mb-2">Can I self-host everything?</h3>
                 <p className="text-gray-400">
                   Yes! The entire system is open source. You can run it on your own server or infrastructure, with or without AI assist. See our{' '}
-                  <Link href="/docs" className="text-white hover:text-gray-300 underline">
+                  <Link href="/docs" prefetch={false} className="text-white hover:text-gray-300 underline">
                     documentation
                   </Link>{' '}
                   for self-hosting instructions.

@@ -102,6 +102,7 @@ export default function Changelog() {
             </p>
             <Link
               href="/docs"
+              prefetch={false}
               className="inline-block text-white hover:text-gray-300 underline"
             >
               View Documentation →

@@ -61,6 +61,7 @@ export default function Contact() {
                 </p>
                 <Link
                   href="/docs"
+                  prefetch={false}
                   className="text-white hover:text-gray-300 underline text-sm"
                 >
                   View Docs →

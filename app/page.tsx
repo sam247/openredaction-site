@@ -994,6 +994,7 @@ console.log(result.redacted_text);`}
                 </a>
                 <Link
                   href="/docs"
+                  prefetch={false}
                   className="bg-gray-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-700 transition-colors border border-gray-700"
                 >
                   Read Documentation
@@ -1093,6 +1094,7 @@ console.log(result.redacted_text);`}
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
                     href="/docs"
+                    prefetch={false}
                     className="bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors text-center"
                   >
                     View Documentation

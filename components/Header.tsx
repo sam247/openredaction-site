@@ -45,6 +45,7 @@ export default function Header() {
                       <div className="space-y-1">
                         <Link 
                           href="/docs" 
+                          prefetch={false}
                           className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-900 transition-colors group"
                           onClick={() => setResourcesOpen(false)}
                         >
