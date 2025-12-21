@@ -7,7 +7,7 @@ interface LogoProps {
 export default function Logo({ className = '' }: LogoProps) {
   return (
     <img
-      src="/docs_logo.png"
+      src="/docs/docs_logo.png"
       alt="OpenRedaction"
       className={`object-contain flex-shrink-0 ${className}`}
       style={{ 
