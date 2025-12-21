@@ -83,7 +83,7 @@ export default function HealthcareUseCase() {
           <div className="bg-gray-900 rounded-lg p-6 border border-gray-800 mb-8">
             <h2 className="text-2xl font-semibold mb-4">Get Started</h2>
             <p className="text-gray-300 mb-4">
-              Start protecting patient data today with OpenRedaction's open-source library.
+              Start protecting patient data today with OpenRedaction&apos;s open-source library.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link

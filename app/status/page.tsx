@@ -88,7 +88,7 @@ export default function Status() {
           <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
             <h3 className="text-xl font-semibold mb-4">Need Help?</h3>
             <p className="text-gray-300 mb-4">
-              If you're experiencing issues, please check our documentation or contact support.
+              If you&apos;re experiencing issues, please check our documentation or contact support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
