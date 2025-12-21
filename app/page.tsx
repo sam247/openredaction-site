@@ -33,29 +33,9 @@ export default function Home() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
               Library + regex = free. AI-assist API = paid with key.
             </p>
-
-            {/* Tier Explanation */}
-            <div className="mb-10 max-w-5xl mx-auto">
-              <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Free Tier</h3>
-                    <p className="text-sm text-gray-400">
-                      Open-source library with regex-only redaction. Use locally, self-host, or try the playground. AI assist available with fair-use limits (IP-based).
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Pro API</h3>
-                    <p className="text-sm text-gray-400">
-                      £9/month for 50,000 AI-assist requests. Get an API key for backend use with priority rate limiting and higher limits.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -855,9 +835,10 @@ console.log(result.redacted_text);`}
         </div>
 
         {/* FAQ Section */}
-        <div className="mt-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mt-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
           <FAQAccordion
+            columns={2}
             items={[
               {
                 question: 'Do you store my data?',

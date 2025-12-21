@@ -87,25 +87,52 @@ export function generatePageMetadata({
   description,
   path = '',
   noIndex = false,
+  image,
 }: {
   title: string;
   description: string;
   path?: string;
   noIndex?: boolean;
+  image?: string;
 }): Metadata {
   const url = `${siteUrl}${path}`;
+  const ogImage = image || `${siteUrl}/og-image.png`;
+
+  // Ensure description is within SEO limits (155-160 chars recommended)
+  const truncatedDescription = description.length > 160 
+    ? description.substring(0, 157) + '...' 
+    : description;
+
+  // Ensure title is within SEO limits (50-60 chars recommended)
+  const truncatedTitle = title.length > 60 
+    ? title.substring(0, 57) + '...' 
+    : title;
 
   return {
-    title,
-    description,
+    title: truncatedTitle,
+    description: truncatedDescription,
     openGraph: {
-      title,
-      description,
+      type: 'website',
+      locale: 'en_US',
       url,
+      siteName,
+      title: truncatedTitle,
+      description: truncatedDescription,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: truncatedTitle,
+        },
+      ],
     },
     twitter: {
-      title,
-      description,
+      card: 'summary_large_image',
+      title: truncatedTitle,
+      description: truncatedDescription,
+      images: [ogImage],
+      creator: '@openredaction',
     },
     alternates: {
       canonical: url,

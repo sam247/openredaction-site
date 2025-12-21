@@ -226,46 +226,50 @@ export default function Pricing() {
           </div>
 
           {/* FAQ */}
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">What is the difference between Free and Pro?</h3>
-                <p className="text-gray-400">
-                  Free = anonymous AI assist with IP-based limits + self-hosted regex. Pro = dedicated API key with higher monthly AI limits (50,000 requests/month) and priority rate limiting.
-                </p>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">What is the difference between Free and Pro?</h3>
+                  <p className="text-gray-400">
+                    Free = anonymous AI assist with IP-based limits + self-hosted regex. Pro = dedicated API key with higher monthly AI limits (50,000 requests/month) and priority rate limiting.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Do you store my data?</h3>
+                  <p className="text-gray-400">
+                    No, the hosted API is stateless and does not store raw text in databases. Minimal metadata may be logged for rate limiting and abuse prevention. See our{' '}
+                    <Link href="/privacy" className="text-white hover:text-gray-300 underline">
+                      Privacy Policy
+                    </Link>{' '}
+                    for details.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Is AI required?</h3>
+                  <p className="text-gray-400">
+                    No. Regex-only use via the library is fully local and free. AI assist is optional via the hosted API for better detection on messy or unstructured text.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Do you store my data?</h3>
-                <p className="text-gray-400">
-                  No, the hosted API is stateless and does not store raw text in databases. Minimal metadata may be logged for rate limiting and abuse prevention. See our{' '}
-                  <Link href="/privacy" className="text-white hover:text-gray-300 underline">
-                    Privacy Policy
-                  </Link>{' '}
-                  for details.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Is AI required?</h3>
-                <p className="text-gray-400">
-                  No. Regex-only use via the library is fully local and free. AI assist is optional via the hosted API for better detection on messy or unstructured text.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Can I self-host everything?</h3>
-                <p className="text-gray-400">
-                  Yes! The entire system is open source. You can run it on your own server or infrastructure, with or without AI assist. See our{' '}
-                  <Link href="/docs" prefetch={false} className="text-white hover:text-gray-300 underline">
-                    documentation
-                  </Link>{' '}
-                  for self-hosting instructions.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">How do I use an API key?</h3>
-                <p className="text-gray-400">
-                  After subscribing to Pro, you&apos;ll receive an API key. Include it in the <code className="bg-gray-800 px-1 py-0.5 rounded">x-api-key</code> header when calling the hosted API. You can also use it in the playground by entering it in the API key field.
-                </p>
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Can I self-host everything?</h3>
+                  <p className="text-gray-400">
+                    Yes! The entire system is open source. You can run it on your own server or infrastructure, with or without AI assist. See our{' '}
+                    <Link href="/docs" prefetch={false} className="text-white hover:text-gray-300 underline">
+                      documentation
+                    </Link>{' '}
+                    for self-hosting instructions.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">How do I use an API key?</h3>
+                  <p className="text-gray-400">
+                    After subscribing to Pro, you&apos;ll receive an API key. Include it in the <code className="bg-gray-800 px-1 py-0.5 rounded">x-api-key</code> header when calling the hosted API. You can also use it in the playground by entering it in the API key field.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

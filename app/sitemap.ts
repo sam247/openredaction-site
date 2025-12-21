@@ -11,6 +11,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/blog',
     '/contact',
     '/pricing',
+    '/about',
+    '/careers',
+    '/security',
+    '/privacy',
+    '/terms',
+    '/changelog',
+    '/status',
+    '/use-cases/healthcare',
+    '/use-cases/legal',
+    '/use-cases/finance',
+    '/use-cases/education',
   ];
 
   // Blog posts - dynamically generated from blogPosts data
