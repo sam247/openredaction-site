@@ -17,7 +17,7 @@ export default function EducationUseCase() {
       <Header />
 
       <main className="pt-24 pb-32">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/"
             className="inline-flex items-center text-gray-400 hover:text-white transition-colors mb-8"

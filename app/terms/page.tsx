@@ -16,7 +16,7 @@ export default function Terms() {
       <Header />
 
       <main className="pt-24 pb-32">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-8">Terms of Service</h1>
           
           <div className="prose prose-invert max-w-none">

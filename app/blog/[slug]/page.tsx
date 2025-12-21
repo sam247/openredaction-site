@@ -675,7 +675,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       <Header />
       
       <main className="pt-32 pb-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
             className="inline-flex items-center text-gray-400 hover:text-white transition-colors mb-8"

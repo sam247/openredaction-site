@@ -835,7 +835,7 @@ console.log(result.redacted_text);`}
         </div>
 
         {/* FAQ Section */}
-        <div className="mt-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
           <FAQAccordion
             columns={2}
@@ -923,7 +923,7 @@ console.log(result.redacted_text);`}
         </div>
 
         {/* Developer CTA Section */}
-        <div className="mt-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-gray-900 to-black rounded-lg p-8 md:p-12 border border-gray-800">
             <div className="text-center mb-6">
               <h2 className="text-3xl font-bold mb-4">Using Node or another backend?</h2>
@@ -1140,7 +1140,7 @@ console.log(result.redacted_text);`}
 
         {/* Final CTA */}
         <div className="mt-32 bg-gradient-to-r from-gray-900 to-black py-20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Get Started?
             </h2>

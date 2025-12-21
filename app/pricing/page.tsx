@@ -122,7 +122,7 @@ export default function Pricing() {
           </div>
 
           {/* Comparison Table */}
-          <div className="max-w-4xl mx-auto mb-16">
+          <div className="max-w-7xl mx-auto mb-16">
             <h2 className="text-3xl font-bold text-center mb-8">Free vs Pro Comparison</h2>
             <div className="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
               <div className="overflow-x-auto -mx-4 sm:mx-0">
@@ -169,7 +169,7 @@ export default function Pricing() {
           </div>
 
           {/* Privacy Note */}
-          <div className="max-w-3xl mx-auto mb-16">
+          <div className="max-w-7xl mx-auto mb-16">
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <h3 className="text-xl font-semibold mb-3">Privacy & Usage</h3>
               <p className="text-gray-300 mb-3">
@@ -182,12 +182,12 @@ export default function Pricing() {
           </div>
 
           {/* Code Examples */}
-          <div className="max-w-3xl mx-auto mb-16">
+          <div className="max-w-7xl mx-auto mb-16">
             <CodeExamples />
           </div>
 
           {/* Rate Limits */}
-          <div className="max-w-3xl mx-auto mb-16">
+          <div className="max-w-7xl mx-auto mb-16">
             <h2 className="text-3xl font-bold text-center mb-8">Rate Limits & Usage</h2>
             <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
               <div className="space-y-6">
@@ -226,7 +226,7 @@ export default function Pricing() {
           </div>
 
           {/* FAQ */}
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-8">
