@@ -22,7 +22,7 @@ export default function Pricing() {
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      <main className="pt-32 pb-20">
+      <main className="pt-[148px] pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">

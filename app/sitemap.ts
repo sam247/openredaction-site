@@ -28,7 +28,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPostSlugs = getAllBlogPostSlugs();
   const blogPostRoutes = blogPostSlugs.map(slug => `/blog/${slug}`);
 
-  const allRoutes = [...routes, ...blogPostRoutes];
+  // Documentation pages
+  const docRoutes = [
+    '/docs',
+    '/docs/getting-started',
+    '/docs/api-reference',
+    '/docs/tutorials',
+    '/docs/examples',
+    '/docs/self-hosting',
+    '/docs/security',
+    '/docs/changelog',
+  ];
+
+  const allRoutes = [...routes, ...blogPostRoutes, ...docRoutes];
 
   return allRoutes.map((route) => ({
     url: `${baseUrl}${route}`,

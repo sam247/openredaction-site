@@ -674,7 +674,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     <div className="min-h-screen bg-black text-white">
       <Header />
       
-      <main className="pt-32 pb-20">
+      <main className="pt-[148px] pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
