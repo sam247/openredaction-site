@@ -40,7 +40,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/docs/changelog',
   ];
 
-  const allRoutes = [...routes, ...blogPostRoutes, ...docRoutes];
+  // SEO landing pages
+  const seoLandingPages = [
+    '/nodejs-redaction',
+    '/pii-detection',
+    '/gdpr-redaction',
+    '/hipaa-redaction',
+  ];
+
+  const allRoutes = [...routes, ...blogPostRoutes, ...docRoutes, ...seoLandingPages];
 
   return allRoutes.map((route) => ({
     url: `${baseUrl}${route}`,

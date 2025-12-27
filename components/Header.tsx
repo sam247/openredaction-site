@@ -40,7 +40,11 @@ export default function Header() {
                 </button>
                 
                 {resourcesOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-96 bg-gray-950 border border-gray-800 rounded-lg shadow-2xl overflow-hidden">
+                  <div 
+                    className="absolute top-full left-0 mt-1 w-96 bg-gray-950 border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
+                    onMouseEnter={() => setResourcesOpen(true)}
+                    onMouseLeave={() => setResourcesOpen(false)}
+                  >
                     <div className="p-1">
                       <div className="space-y-1">
                         <Link 

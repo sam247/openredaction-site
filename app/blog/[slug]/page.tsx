@@ -125,6 +125,7 @@ const blogPosts: { [key: string]: any } = {
         <ul style="margin-bottom: 1rem; padding-left: 1.5rem; list-style-type: disc; color: #d1d5db;">
           <li style="margin-bottom: 0.5rem;">Learn about <a href="/blog/pii-detection-for-ai" style="color: #fff; text-decoration: underline;">PII Detection for AI</a> and how to safely use user data with LLMs</li>
           <li style="margin-bottom: 0.5rem;">Read <a href="/blog/understanding-pii-detection" style="color: #fff; text-decoration: underline;">Understanding PII Detection</a> for a primer on the basics</li>
+          <li style="margin-bottom: 0.5rem;">Check out <a href="/nodejs-redaction" style="color: #fff; text-decoration: underline;">Node.js Redaction</a> for integration guides</li>
           <li style="margin-bottom: 0.5rem;"><a href="/pricing" style="color: #fff; text-decoration: underline;">View pricing and get an API key</a> for the Pro tier</li>
           <li style="margin-bottom: 0.5rem;"><a href="/playground" style="color: #fff; text-decoration: underline;">Try the playground</a> to test redaction in your browser</li>
           <li style="margin-bottom: 0.5rem;"><a href="/docs" style="color: #fff; text-decoration: underline;">Read the documentation</a> for integration guides and API details</li>
@@ -140,7 +141,7 @@ const blogPosts: { [key: string]: any } = {
     content: `
       <p>Personally identifiable information (PII) sits at the heart of modern privacy and security risk. Detecting it reliably is the first step to protecting users, complying with regulations, and enabling safer logging, analytics, and AI workflows.</p>
       
-      <p>This article explains what PII is, why detecting it is hard in practice, and how pattern‑based and AI‑assisted approaches like <a href="/">OpenRedaction's</a> can be combined for robust redaction pipelines.</p>
+      <p>This article explains what PII is, why detecting it is hard in practice, and how pattern‑based and AI‑assisted approaches like <a href="/">OpenRedaction's</a> can be combined for robust redaction pipelines. For a practical guide on implementing PII detection, see our <a href="/pii-detection">PII Detection guide</a>.</p>
       
       <h2>What counts as PII?</h2>
       
@@ -154,7 +155,7 @@ const blogPosts: { [key: string]: any } = {
         <li><strong>Contextual identifiers:</strong> IP addresses, device IDs, cookie IDs, and customer IDs that tie activity back to individuals.</li>
       </ul>
       
-      <p>Different regulations define and scope PII slightly differently. For example, GDPR speaks more broadly about "personal data", while sector rules like HIPAA focus on health data but list specific identifiers that must be removed or de‑identified.</p>
+      <p>Different regulations define and scope PII slightly differently. For example, GDPR speaks more broadly about "personal data" (see our <a href="/gdpr-redaction">GDPR Redaction guide</a>), while sector rules like HIPAA focus on health data but list specific identifiers that must be removed or de‑identified (see our <a href="/hipaa-redaction">HIPAA Redaction guide</a>).</p>
       
       <h2>Why PII detection matters</h2>
       
@@ -200,7 +201,7 @@ const blogPosts: { [key: string]: any } = {
       
       <p>By default, OpenRedaction uses regex‑based detection over text, applying a large set of tested patterns covering emails, phone numbers, IPs, payment data, IDs and more. Optionally, an AI proxy can be enabled to augment regex with additional PII spans discovered by an AI model, particularly for entity types that are hard to encode as patterns, such as person names.</p>
       
-      <p>For more on how OpenRedaction evolved from a regex library to a hybrid API, see our <a href="/blog/building-openredaction-developer-journey">developer journey blog post</a>.</p>
+      <p>For more on how OpenRedaction evolved from a regex library to a hybrid API, see our <a href="/blog/building-openredaction-developer-journey">developer journey blog post</a>. To integrate PII detection into your Node.js applications, check out our <a href="/nodejs-redaction">Node.js Redaction guide</a>.</p>
       
       <h3>Why pattern‑first detection?</h3>
       
@@ -351,7 +352,7 @@ const blogPosts: { [key: string]: any } = {
     content: `
       <p>Large language models are incredibly good at turning messy real‑world data into something useful. They are also incredibly good at ingesting sensitive information you did not realise you were sending. If you are feeding real user data into AI systems, you already have a PII problem – the question is whether you have visibility and control.</p>
       
-      <p>This article explains how PII detection fits into AI workflows, where personal data typically leaks, and how to design a PII‑aware architecture using a hybrid "pattern‑first + AI assist" approach like the one in OpenRedaction. For a primer on the basics of PII detection, see the article <a href="/blog/understanding-pii-detection">"Understanding PII Detection"</a> on the OpenRedaction blog.</p>
+      <p>This article explains how PII detection fits into AI workflows, where personal data typically leaks, and how to design a PII‑aware architecture using a hybrid "pattern‑first + AI assist" approach like the one in OpenRedaction. For a primer on the basics of PII detection, see the article <a href="/blog/understanding-pii-detection">"Understanding PII Detection"</a> on the OpenRedaction blog, or check out our <a href="/pii-detection">PII Detection guide</a> for practical implementation details.</p>
       
       <h2>Where PII hides in AI workflows</h2>
       
