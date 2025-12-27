@@ -14,22 +14,6 @@ const config: DocsThemeConfig = {
   footer: {
     component: () => <span>OpenRedaction Documentation © 2025</span>,
   },
-  useNextSeoProps() {
-    return {
-      titleTemplate: '%s | OpenRedaction',
-      defaultTitle: 'OpenRedaction Documentation - PII Detection & Redaction',
-      description: 'Complete documentation for OpenRedaction, an open-source PII detection and redaction library with 500+ regex patterns and optional AI assist.',
-      openGraph: {
-        siteName: 'OpenRedaction',
-        type: 'website',
-        locale: 'en_US',
-      },
-      twitter: {
-        cardType: 'summary_large_image',
-        site: '@openredaction',
-      },
-    }
-  },
 }
 
 export default config
