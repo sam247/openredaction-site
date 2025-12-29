@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run docs:export && next build",
+    "build": "npm run copy-openredaction && npm run docs:export && next build",
     "start": "next start",
     "lint": "next lint",
-    "docs:export": "cd docs && npm ci && npm run build && rm -rf ../public/docs && mkdir -p ../public && cp -R out ../public/docs"
+    "docs:export": "cd docs && npm ci && npm run build && rm -rf ../public/docs && mkdir -p ../public && cp -R out ../public/docs",
+    "copy-openredaction": "mkdir -p public/lib && cp node_modules/openredaction/dist/index.js public/lib/openredaction.js"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^2.4.0",

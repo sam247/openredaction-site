@@ -19,13 +19,9 @@ const nextConfig = {
         path: false,
         crypto: false,
       };
-      
-      // Prefer CommonJS build (main) over ESM (module) to avoid chunk resolution issues
-      config.resolve.mainFields = ['main', 'module'];
     }
     
-    // Mark openredaction as external - it will be loaded at runtime
-    // The package needs to be available in node_modules for runtime loading
+    // Mark openredaction as external - it will be loaded from /lib/openredaction.js at runtime
     config.externals = config.externals || [];
     if (Array.isArray(config.externals)) {
       config.externals.push('openredaction');

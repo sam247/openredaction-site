@@ -42,21 +42,37 @@ export default function Playground() {
   const [usageInfo, setUsageInfo] = useState<UsageInfo>({ count: null, limit: null, reset: null });
   const detectorRef = useRef<any>(null);
   const [libraryLoaded, setLibraryLoaded] = useState(false);
+  const openredactionModuleRef = useRef<any>(null); // Cache the loaded module
 
-  // Lazy load OpenRedaction library only on client side using dynamic import
+  // Lazy load OpenRedaction library only on client side
   useEffect(() => {
     if (typeof window !== 'undefined' && !libraryLoaded) {
-      // Use dynamic import that won't be analyzed during build
       const loadLibrary = async () => {
         try {
-          // Use a function that returns the import to prevent build-time analysis
-          const openredactionModule = await (async () => {
-            // Import will use the CommonJS build via webpack alias
-            const mod = await import('openredaction');
-            // Handle both ESM and CommonJS exports
-            return mod.default || mod;
-          })();
-          const { OpenRedaction } = openredactionModule;
+          // Load the CommonJS build from public folder using fetch and eval
+          // Cache the module to avoid reloading
+          if (!openredactionModuleRef.current) {
+            const response = await fetch('/lib/openredaction.js');
+            const code = await response.text();
+            
+            // Create a module-like environment
+            const module = { exports: {} };
+            const exports = module.exports;
+            
+            // Wrap the code in a function that provides module/exports
+            const fn = new Function('module', 'exports', 'require', code);
+            fn(module, exports, () => {});
+            
+            openredactionModuleRef.current = module.exports;
+          }
+          
+          // Get OpenRedaction from the cached module
+          const { OpenRedaction } = openredactionModuleRef.current as any;
+          
+          if (!OpenRedaction) {
+            throw new Error('OpenRedaction not found in module exports');
+          }
+          
           const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
             : 'gdpr';
@@ -80,10 +96,25 @@ export default function Playground() {
     if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
       const updateDetector = async () => {
         try {
-          const openredactionModule = await (async () => {
-            return await import('openredaction');
-          })();
-          const { OpenRedaction } = openredactionModule;
+          // Use cached module if available
+          if (!openredactionModuleRef.current) {
+            const response = await fetch('/lib/openredaction.js');
+            const code = await response.text();
+            
+            const module = { exports: {} };
+            const exports = module.exports;
+            const fn = new Function('module', 'exports', 'require', code);
+            fn(module, exports, () => {});
+            
+            openredactionModuleRef.current = module.exports;
+          }
+          
+          const { OpenRedaction } = openredactionModuleRef.current as any;
+          
+          if (!OpenRedaction) {
+            throw new Error('OpenRedaction not found in module exports');
+          }
+          
           const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
             : 'gdpr';
