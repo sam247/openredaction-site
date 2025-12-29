@@ -48,9 +48,20 @@ export default function Playground() {
     if (typeof window !== 'undefined' && !libraryLoaded) {
       const loadLibrary = async () => {
         try {
-          // Load the CommonJS version at runtime to avoid ESM chunk issues
-          const openredaction = await new Function('return import("openredaction")')();
-          const { OpenRedaction } = openredaction;
+          // Load the CommonJS build from public folder at runtime
+          const response = await fetch('/lib/openredaction.js');
+          const code = await response.text();
+
+          // Create a module-like environment
+          const moduleObj = { exports: {} };
+          const exports = moduleObj.exports;
+
+          // Wrap the code in a function that provides module/exports
+          const fn = new Function('module', 'exports', 'require', code);
+          fn(moduleObj, exports, () => {});
+
+          // Get OpenRedaction from the loaded module
+          const { OpenRedaction } = moduleObj.exports as any;
 
           const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa')
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
@@ -75,8 +86,15 @@ export default function Playground() {
     if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
       const updateDetector = async () => {
         try {
-          const openredaction = await new Function('return import("openredaction")')();
-          const { OpenRedaction } = openredaction;
+          const response = await fetch('/lib/openredaction.js');
+          const code = await response.text();
+
+          const moduleObj = { exports: {} };
+          const exports = moduleObj.exports;
+          const fn = new Function('module', 'exports', 'require', code);
+          fn(moduleObj, exports, () => {});
+
+          const { OpenRedaction } = moduleObj.exports as any;
 
           const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa')
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
