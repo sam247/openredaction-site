@@ -56,14 +56,14 @@ export default function Playground() {
             const code = await response.text();
             
             // Create a module-like environment
-            const module = { exports: {} };
-            const exports = module.exports;
+            const moduleObj = { exports: {} };
+            const exports = moduleObj.exports;
             
             // Wrap the code in a function that provides module/exports
             const fn = new Function('module', 'exports', 'require', code);
-            fn(module, exports, () => {});
+            fn(moduleObj, exports, () => {});
             
-            openredactionModuleRef.current = module.exports;
+            openredactionModuleRef.current = moduleObj.exports;
           }
           
           // Get OpenRedaction from the cached module
@@ -101,12 +101,12 @@ export default function Playground() {
             const response = await fetch('/lib/openredaction.js');
             const code = await response.text();
             
-            const module = { exports: {} };
-            const exports = module.exports;
+            const moduleObj = { exports: {} };
+            const exports = moduleObj.exports;
             const fn = new Function('module', 'exports', 'require', code);
-            fn(module, exports, () => {});
+            fn(moduleObj, exports, () => {});
             
-            openredactionModuleRef.current = module.exports;
+            openredactionModuleRef.current = moduleObj.exports;
           }
           
           const { OpenRedaction } = openredactionModuleRef.current as any;
