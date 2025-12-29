@@ -71,6 +71,7 @@ export default function Playground() {
             includeSSN: true,
             includeCreditCards: true,
             redactionMode: 'placeholder' as any,
+            caseInsensitive: true, // Enable case-insensitive matching
           } as any);
           setLibraryLoaded(true);
         } catch (err) {
@@ -109,6 +110,7 @@ export default function Playground() {
             includeSSN: true,
             includeCreditCards: true,
             redactionMode: 'placeholder' as any,
+            caseInsensitive: true, // Enable case-insensitive matching
           } as any);
         } catch (err) {
           console.error('Failed to update detector:', err);
