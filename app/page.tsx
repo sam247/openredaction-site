@@ -28,8 +28,8 @@ export default function Home() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight max-w-5xl mx-auto">
-              Open-source PII redaction, regex-first.
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight max-w-7xl mx-auto">
+              Open-source, Automated PII Redaction.<br className="hidden md:block" /> AI Assisted PII Detection, Regex first.
             </h1>
 
             {/* Subtitle */}
@@ -56,7 +56,7 @@ export default function Home() {
             </div>
 
             {/* Demo Section */}
-            <div className="mt-20 bg-gray-900 rounded-lg p-8 border border-gray-800 max-w-4xl mx-auto">
+            <div className="mt-20 bg-gray-900 rounded-lg p-8 border border-gray-800 max-w-7xl mx-auto">
               <div className="text-left">
                 <h2 className="text-2xl font-semibold mb-4">Try it out</h2>
                 <div className="bg-black rounded-lg p-4 border border-gray-800 font-mono text-sm">
