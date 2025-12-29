@@ -25,7 +25,7 @@ export default function FinanceUseCase() {
             ← Back to Home
           </Link>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Finance</h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight max-w-7xl mx-auto">Finance</h1>
           <p className="text-xl text-gray-300 mb-12">
             Secure financial documents and customer communications
           </p>

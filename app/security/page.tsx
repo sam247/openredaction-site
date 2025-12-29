@@ -18,7 +18,7 @@ export default function Security() {
 
       <main className="pt-[116px] pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">Security</h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight max-w-7xl mx-auto">Security</h1>
           
           <div className="prose prose-invert max-w-none space-y-8">
             <p className="text-xl text-gray-300">

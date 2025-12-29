@@ -25,7 +25,7 @@ export default function LegalUseCase() {
             ← Back to Home
           </Link>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Legal</h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight max-w-7xl mx-auto">Legal</h1>
           <p className="text-xl text-gray-300 mb-12">
             Redact sensitive information from legal documents
           </p>

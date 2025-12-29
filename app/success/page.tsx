@@ -83,7 +83,7 @@ print(r.json())`,
             <div className="inline-flex items-center justify-center w-20 h-20 bg-green-900/20 rounded-full mb-6">
               <Check className="text-green-400" size={48} />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Thank You!</h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight max-w-7xl mx-auto">Thank You!</h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Your subscription to OpenRedaction Pro is active. {apiKey ? 'Your API key is ready to use.' : 'Check your email for your API key.'}
             </p>

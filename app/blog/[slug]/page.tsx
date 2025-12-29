@@ -694,7 +694,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               </span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight max-w-7xl mx-auto">{post.title}</h1>
             
             <div className="flex items-center text-gray-400 text-sm mb-8">
               <Calendar size={16} className="mr-2" />

@@ -48,7 +48,7 @@ export default function Changelog() {
       <main className="pt-[116px] pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Changelog</h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight max-w-7xl mx-auto">Changelog</h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Track updates, new features, and improvements to OpenRedaction
             </p>
