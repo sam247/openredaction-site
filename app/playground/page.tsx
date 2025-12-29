@@ -50,8 +50,13 @@ export default function Playground() {
       const loadLibrary = async () => {
         try {
           // Use a function that returns the import to prevent build-time analysis
+          // The package is external, so it will be loaded from node_modules at runtime
           const openredactionModule = await (async () => {
-            return await import('openredaction');
+            // Dynamic import will work at runtime since package is in node_modules
+            // @ts-ignore - TypeScript doesn't know about external packages at build time
+            const mod = await import('openredaction');
+            // Handle both ESM and CommonJS exports
+            return mod.default || mod;
           })();
           const { OpenRedaction } = openredactionModule;
           const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 

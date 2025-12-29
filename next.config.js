@@ -19,10 +19,13 @@ const nextConfig = {
         path: false,
         crypto: false,
       };
+      
+      // Prefer CommonJS build over ESM to avoid chunk resolution issues
+      config.resolve.mainFields = ['main', 'module'];
     }
     
     // Mark openredaction as external to prevent build-time analysis
-    // It's only loaded client-side via dynamic imports
+    // It will be loaded at runtime via dynamic import/require
     config.externals = config.externals || [];
     if (Array.isArray(config.externals)) {
       config.externals.push('openredaction');
