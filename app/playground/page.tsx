@@ -84,8 +84,8 @@ export default function Playground() {
             customPatterns: [
               {
                 type: 'NAME_LOWERCASE',
-                regex: /\b[a-z][a-z'’.\-]+\s+[a-z][a-z'’.\-]+\b/gi,
-                priority: 55, // Higher priority than default NAME (50)
+                regex: /\b[a-z][a-z]{2,}\s+[a-z][a-z]{2,}\b/gi,
+                priority: 45, // Lower priority than default NAME (50)
                 placeholder: '[NAME_{n}]',
                 description: 'Lowercase name detection',
                 severity: 'high'
@@ -134,8 +134,8 @@ export default function Playground() {
             customPatterns: [
               {
                 type: 'NAME_LOWERCASE',
-                regex: /\b[a-z][a-z'’.\-]+\s+[a-z][a-z'’.\-]+\b/gi,
-                priority: 55, // Higher priority than default NAME (50)
+                regex: /\b[a-z][a-z]{2,}\s+[a-z][a-z]{2,}\b/gi,
+                priority: 45, // Lower priority than default NAME (50)
                 placeholder: '[NAME_{n}]',
                 description: 'Lowercase name detection',
                 severity: 'high'
