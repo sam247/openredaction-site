@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+const resendApiKey = process.env.RESEND_API_KEY;
+const TO_EMAIL = 'sampettiford@googlemail.com';
+// Use environment variable if set, otherwise fallback to a default
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'noreply@openredaction.com';
+
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,19 +20,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create email transporter
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: process.env.EMAIL_USER, // Your Gmail address
-        pass: process.env.EMAIL_APP_PASSWORD, // App-specific password
-      },
-    });
+    if (!resend) {
+      console.error('Resend client not initialized - RESEND_API_KEY is missing');
+      return NextResponse.json(
+        { error: 'Email service not configured' },
+        { status: 500 }
+      );
+    }
 
     // Email content
-    const emailContent = `
+    const textContent = `
 New Contact Form Submission from OpenRedaction
 
 From: ${name} <${email}>
@@ -41,16 +45,16 @@ Sent from OpenRedaction contact form
 Timestamp: ${new Date().toISOString()}
     `.trim();
 
-    // Send email
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: 'sampettiford@googlemail.com',
-      subject: `OpenRedaction Contact Form: ${name} - ${interest || 'General Inquiry'}`,
-      text: emailContent,
+    // Send email via Resend
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [TO_EMAIL],
       replyTo: email,
+      subject: `OpenRedaction Contact Form: ${name} - ${interest || 'General Inquiry'}`,
+      text: textContent,
     });
 
-    console.log('Contact form email sent successfully:', { name, email, interest });
+    console.log('Contact form email sent successfully:', { name, email, interest, result });
 
     return NextResponse.json({ success: true });
   } catch (error) {
