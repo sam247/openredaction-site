@@ -50,10 +50,10 @@ export default function Playground() {
       const loadLibrary = async () => {
         try {
           // Use a function that returns the import to prevent build-time analysis
-          const module = await (async () => {
+          const openredactionModule = await (async () => {
             return await import('openredaction');
           })();
-          const { OpenRedaction } = module;
+          const { OpenRedaction } = openredactionModule;
           const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
             : 'gdpr';
@@ -76,10 +76,10 @@ export default function Playground() {
     if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
       const updateDetector = async () => {
         try {
-          const module = await (async () => {
+          const openredactionModule = await (async () => {
             return await import('openredaction');
           })();
-          const { OpenRedaction } = module;
+          const { OpenRedaction } = openredactionModule;
           const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
             : 'gdpr';
