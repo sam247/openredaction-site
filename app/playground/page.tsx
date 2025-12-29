@@ -71,7 +71,16 @@ export default function Playground() {
             includeSSN: true,
             includeCreditCards: true,
             redactionMode: 'placeholder' as any,
-            caseInsensitive: true, // Enable case-insensitive matching
+            customPatterns: [
+              {
+                type: 'NAME_CASE_INSENSITIVE',
+                regex: /\b(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Professor|Sir|Madam|Lady|Lord|Rev|Father|Sister|Brother)\.?\s+)?((?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,})(?:\s+(?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,}|[a-z][a-z'’.\-]+)){1,3})(?:\s+(?:Jr|Sr|II|III|IV|PhD|MD|Esq|DDS|DVM|MBA|CPA)\.?)?\b/gi,
+                priority: 45, // Slightly lower than default NAME priority (50)
+                placeholder: '[NAME_{n}]',
+                description: 'Case-insensitive name detection',
+                severity: 'high'
+              }
+            ]
           } as any);
           setLibraryLoaded(true);
         } catch (err) {
@@ -110,7 +119,16 @@ export default function Playground() {
             includeSSN: true,
             includeCreditCards: true,
             redactionMode: 'placeholder' as any,
-            caseInsensitive: true, // Enable case-insensitive matching
+            customPatterns: [
+              {
+                type: 'NAME_CASE_INSENSITIVE',
+                regex: /\b(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Professor|Sir|Madam|Lady|Lord|Rev|Father|Sister|Brother)\.?\s+)?((?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,})(?:\s+(?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,}|[a-z][a-z'’.\-]+)){1,3})(?:\s+(?:Jr|Sr|II|III|IV|PhD|MD|Esq|DDS|DVM|MBA|CPA)\.?)?\b/gi,
+                priority: 45, // Slightly lower than default NAME priority (50)
+                placeholder: '[NAME_{n}]',
+                description: 'Case-insensitive name detection',
+                severity: 'high'
+              }
+            ]
           } as any);
         } catch (err) {
           console.error('Failed to update detector:', err);
