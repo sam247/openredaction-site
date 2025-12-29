@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resendApiKey = process.env.RESEND_API_KEY;
-const TO_EMAIL = 'sampettiford@googlemail.com';
+const TO_EMAIL = 'support@openredaction.com';
 // Use environment variable if set, otherwise fallback to a default
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'noreply@openredaction.com';
 
