@@ -45,7 +45,7 @@ export default function Playground() {
   // Lazy load OpenRedaction library only on client side
   useEffect(() => {
     if (typeof window !== 'undefined' && !libraryLoaded) {
-      import('@openredaction/openredaction').then((module) => {
+      import('openredaction').then((module) => {
         const { OpenRedaction } = module;
         const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
           ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
@@ -53,6 +53,7 @@ export default function Playground() {
         detectorRef.current = new OpenRedaction({
           preset: presetValue,
           redactionMode: 'placeholder' as any,
+          includePhones: true, // Explicitly enable phone detection
         } as any);
         setLibraryLoaded(true);
       }).catch((err) => {
@@ -64,7 +65,7 @@ export default function Playground() {
   // Update detector when preset changes
   useEffect(() => {
     if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
-      import('@openredaction/openredaction').then((module) => {
+      import('openredaction').then((module) => {
         const { OpenRedaction } = module;
         const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
           ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
@@ -72,6 +73,7 @@ export default function Playground() {
         detectorRef.current = new OpenRedaction({
           preset: presetValue,
           redactionMode: 'placeholder' as any,
+          includePhones: true, // Explicitly enable phone detection
         } as any);
       });
     }
