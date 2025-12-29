@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import { analytics } from '@/lib/analytics';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
@@ -25,6 +26,10 @@ export default function StripeCheckoutButton({ priceId, onSuccess }: CheckoutBut
   const handleClick = async () => {
     setLoading(true);
     setError(null);
+
+    // Track checkout initiation
+    const sourcePage = typeof window !== 'undefined' ? window.location.pathname : 'unknown';
+    analytics.checkoutInitiated(priceId, 'pro', sourcePage);
 
     try {
       // Create checkout session

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Send, Check } from 'lucide-react';
+import { analytics } from '@/lib/analytics';
 
 interface ContactFormData {
   name: string;
@@ -28,25 +29,39 @@ export default function ContactForm() {
     e.preventDefault();
     setSubmitting(true);
 
-    // TODO: Replace with actual form submission service (Formspree, Resend, etc.)
-    // For now, simulate submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setSubmitted(true);
-    setSubmitting(false);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        useCase: '',
-        interest: '',
-        message: '',
-      });
-    }, 3000);
+    // Track form submission
+    analytics.formSubmit('contact', {
+      hasCompany: !!formData.company.trim(),
+      hasUseCase: !!formData.useCase.trim(),
+      interestType: formData.interest,
+    });
+
+    try {
+      // TODO: Replace with actual form submission service (Formspree, Resend, etc.)
+      // For now, simulate submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setSubmitted(true);
+      setSubmitting(false);
+      analytics.formSubmitSuccess('contact');
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          useCase: '',
+          interest: '',
+          message: '',
+        });
+      }, 3000);
+    } catch (error) {
+      setSubmitting(false);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      analytics.formSubmitError('contact', errorMessage);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

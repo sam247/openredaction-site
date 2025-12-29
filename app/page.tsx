@@ -3,6 +3,8 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import TestimonialCard from '@/components/TestimonialCard';
 import FAQAccordion from '@/components/FAQAccordion';
+import HomepageCTAs from '@/components/HomepageCTAs';
+import DemoCTA from '@/components/DemoCTA';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 import { Rocket, Search, CheckCircle2, Shield, Package, BarChart3, Lock, Target, Zap, Home as HomeIcon, Eye, DollarSign, Key, Trash2, Brain } from 'lucide-react';
@@ -39,20 +41,7 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <Link
-                href="/playground"
-                className="bg-white text-black px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-colors w-full sm:w-auto"
-              >
-                Try Playground
-              </Link>
-              <a
-                href="https://github.com/sam247/openredaction"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-900 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-800 transition-colors border border-gray-800 w-full sm:w-auto"
-              >
-                View on GitHub
-              </a>
+              <HomepageCTAs />
             </div>
 
             {/* Demo Section */}
@@ -72,12 +61,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mt-6 text-center">
-                  <Link
-                    href="/playground"
-                    className="inline-block bg-white text-black px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors"
-                  >
-                    Open Playground →
-                  </Link>
+                  <DemoCTA />
                 </div>
               </div>
             </div>

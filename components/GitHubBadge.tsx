@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Github } from 'lucide-react';
+import { analytics } from '@/lib/analytics';
 
 interface GitHubBadgeProps {
   repo: string; // e.g., "sam247/openredaction"
@@ -34,6 +35,7 @@ export default function GitHubBadge({ repo, showStars = true, className = '' }: 
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 border border-gray-800 rounded-md px-3 py-2 transition-colors ${className}`}
+      onClick={() => analytics.externalLinkClick('github', 'header', 'GitHub Badge')}
     >
       <Github size={18} />
       <span className="text-sm font-medium">GitHub</span>

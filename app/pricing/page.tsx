@@ -6,6 +6,7 @@ import CodeExamples from '@/components/CodeExamples';
 import StripeCheckoutButton from '@/components/StripeCheckoutButton';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
+import PricingPageTracker from '@/components/PricingPageTracker';
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Pricing - Free & Pro API Tiers | OpenRedaction',
@@ -21,6 +22,7 @@ export default function Pricing() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
+      <PricingPageTracker />
       
       <main className="pt-[148px] pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

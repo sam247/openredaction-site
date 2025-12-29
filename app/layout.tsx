@@ -3,6 +3,7 @@ import "./globals.css";
 import { defaultMetadata } from "@/lib/metadata";
 import { StructuredData } from "@/components/StructuredData";
 import { Analytics } from "@vercel/analytics/next";
+import PageViewTracker from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StructuredData />
+        <PageViewTracker />
         {children}
         <Analytics />
       </body>

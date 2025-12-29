@@ -5,6 +5,7 @@ import { Calendar, ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { generatePageMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
+import BlogPostTracker from '@/components/BlogPostTracker';
 
 // Blog posts data
 const blogPosts: { [key: string]: any } = {
@@ -674,6 +675,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
+      <BlogPostTracker slug={params.slug} title={post.title} />
       
       <main className="pt-[148px] pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

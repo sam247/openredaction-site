@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Check, ArrowRight, Key, Code, Play, Copy, CheckCircle } from 'lucide-react';
+import { analytics } from '@/lib/analytics';
 
 export default function Success() {
   const [apiKey, setApiKey] = useState<string | null>(null);
@@ -15,8 +16,14 @@ export default function Success() {
     // Check for API key in URL query params
     const params = new URLSearchParams(window.location.search);
     const key = params.get('api_key');
+    const priceId = params.get('price_id') || '';
     if (key) {
       setApiKey(key);
+    }
+    
+    // Track checkout success
+    if (priceId) {
+      analytics.checkoutSuccess(priceId, 'pro');
     }
   }, []);
 

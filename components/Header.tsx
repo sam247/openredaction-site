@@ -1,14 +1,27 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, FileText, Code, Github, BookOpen } from 'lucide-react';
 import Logo from './Logo';
 import GitHubBadge from './GitHubBadge';
+import { analytics } from '@/lib/analytics';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
+
+  // Track dropdown open
+  useEffect(() => {
+    if (resourcesOpen) {
+      analytics.navDropdownOpen();
+    }
+  }, [resourcesOpen]);
+
+  // Track mobile menu toggle
+  useEffect(() => {
+    analytics.mobileMenuToggle(mobileMenuOpen);
+  }, [mobileMenuOpen]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-900">
@@ -21,10 +34,18 @@ export default function Header() {
 
             {/* Desktop Navigation - Left Aligned */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link href="/playground" className="text-gray-300 hover:text-white transition-colors">
+              <Link 
+                href="/playground" 
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => analytics.navClick('/playground', 'header')}
+              >
                 Playground
               </Link>
-              <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
+              <Link 
+                href="/pricing" 
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => analytics.navClick('/pricing', 'header')}
+              >
                 Pricing
               </Link>
               
@@ -51,7 +72,10 @@ export default function Header() {
                           href="/docs" 
                           prefetch={false}
                           className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-900 transition-colors group"
-                          onClick={() => setResourcesOpen(false)}
+                          onClick={() => {
+                            setResourcesOpen(false);
+                            analytics.navClick('/docs', 'header');
+                          }}
                         >
                           <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center group-hover:bg-gray-800 transition-colors">
                             <FileText size={20} className="text-gray-300" />
@@ -66,7 +90,10 @@ export default function Header() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-900 transition-colors group"
-                          onClick={() => setResourcesOpen(false)}
+                          onClick={() => {
+                            setResourcesOpen(false);
+                            analytics.externalLinkClick('github', 'header', 'GitHub');
+                          }}
                         >
                           <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center group-hover:bg-gray-800 transition-colors">
                             <Github size={20} className="text-gray-300" />
@@ -79,7 +106,10 @@ export default function Header() {
                         <Link 
                           href="/blog" 
                           className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-900 transition-colors group"
-                          onClick={() => setResourcesOpen(false)}
+                          onClick={() => {
+                            setResourcesOpen(false);
+                            analytics.navClick('/blog', 'header');
+                          }}
                         >
                           <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center group-hover:bg-gray-800 transition-colors">
                             <BookOpen size={20} className="text-gray-300" />
@@ -103,6 +133,7 @@ export default function Header() {
             <Link
               href="/playground"
               className="bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors"
+              onClick={() => analytics.ctaClick('header')}
             >
               Get Started
             </Link>
@@ -125,21 +156,30 @@ export default function Header() {
             <Link
               href="/playground"
               className="block text-gray-300 hover:text-white transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                analytics.navClick('/playground', 'mobile');
+              }}
             >
               Playground
             </Link>
             <Link
               href="/pricing"
               className="block text-gray-300 hover:text-white transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                analytics.navClick('/pricing', 'mobile');
+              }}
             >
               Pricing
             </Link>
             <Link
               href="/blog"
               className="block text-gray-300 hover:text-white transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                analytics.navClick('/blog', 'mobile');
+              }}
             >
               Blog
             </Link>
@@ -148,14 +188,20 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className="block text-gray-300 hover:text-white transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                analytics.externalLinkClick('github', 'mobile', 'GitHub');
+              }}
             >
               GitHub
             </a>
             <Link
               href="/playground"
               className="block bg-white text-black px-4 py-2 rounded-md font-medium text-center hover:bg-gray-100 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                analytics.ctaClick('mobile');
+              }}
             >
               Get Started
             </Link>

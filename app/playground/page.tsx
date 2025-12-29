@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Loader2, Copy, Check, ArrowRight } from 'lucide-react';
+import { analytics } from '@/lib/analytics';
 
 interface Detection {
   type: string;
@@ -42,6 +43,15 @@ export default function Playground() {
   const [usageInfo, setUsageInfo] = useState<UsageInfo>({ count: null, limit: null, reset: null });
   const detectorRef = useRef<any>(null);
   const [libraryLoaded, setLibraryLoaded] = useState(false);
+  const pageViewTracked = useRef(false);
+
+  // Track page view on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !pageViewTracked.current) {
+      analytics.playgroundPageView(false);
+      pageViewTracked.current = true;
+    }
+  }, []);
 
   // Lazy load OpenRedaction library only on client side
   useEffect(() => {
@@ -83,9 +93,11 @@ export default function Playground() {
             ]
           } as any);
           setLibraryLoaded(true);
+          analytics.playgroundPageView(true);
         } catch (err) {
           console.error('Failed to load OpenRedaction library:', err);
           setError('Failed to load OpenRedaction library. Please refresh the page and try again.');
+          analytics.playgroundError('library_load', 'regex');
         }
       };
       loadLibrary();
@@ -170,10 +182,12 @@ export default function Playground() {
 
   const handleTextPreset = (presetName: string) => {
     setInputText(textPresets[presetName as keyof typeof textPresets]);
+    analytics.playgroundPresetChange(presetName, 'text');
   };
 
   const handleApiPreset = (presetName: string) => {
     setSelectedPreset(presetName);
+    analytics.playgroundPresetChange(presetName, 'api');
   };
 
   const handleRedact = async () => {
@@ -186,11 +200,13 @@ export default function Playground() {
     const maxLength = useAI ? MAX_INPUT_AI : MAX_INPUT_REGEX;
     if (inputText.length > maxLength) {
       setError(`Text too long — please reduce input to ${maxLength.toLocaleString()} characters. Current: ${inputText.length.toLocaleString()} characters.`);
+      analytics.playgroundError('text_too_long', useAI ? 'ai' : 'regex');
       return;
     }
 
     if (!libraryLoaded || !detectorRef.current) {
       setError('Library is still loading. Please wait a moment and try again.');
+      analytics.playgroundError('library_load', useAI ? 'ai' : 'regex');
       return;
     }
 
@@ -250,18 +266,22 @@ export default function Playground() {
             
             if (aiResponse.status === 401 && errorCode === 'INVALID_KEY') {
               setError('Invalid API key. Please check your key or upgrade.');
+              analytics.playgroundError('invalid_key', 'ai', errorCode);
               setLoading(false);
               return;
             } else if (aiResponse.status === 429 && errorCode === 'RATE_LIMIT') {
               setError('Rate limit reached. Try again later or upgrade to a Pro key.');
+              analytics.playgroundError('rate_limit', 'ai', errorCode);
               setLoading(false);
               return;
             } else if (aiResponse.status === 400 && errorCode === 'TEXT_TOO_LONG') {
               setError('Text too long. Please shorten your input.');
+              analytics.playgroundError('text_too_long', 'ai', errorCode);
               setLoading(false);
               return;
             } else {
               setError(`AI detection failed: ${errorData.message || 'Unknown error'}`);
+              analytics.playgroundError('api_error', 'ai', errorCode || 'unknown');
               setLoading(false);
               return;
             }
@@ -337,6 +357,7 @@ export default function Playground() {
         } catch (aiError) {
           console.error('AI detection failed:', aiError);
           setError('AI detection failed. Continuing with regex-only results.');
+          analytics.playgroundError('api_error', 'ai', 'network_error');
           // Continue with regex-only results if AI fails
         }
       }
@@ -372,9 +393,20 @@ export default function Playground() {
       };
       
       setOutput(transformedData);
+      
+      // Track successful redaction
+      analytics.playgroundRedact({
+        mode: useAI ? 'ai' : 'regex',
+        inputLength: inputText.length,
+        detectionCount: transformedData.detections.length,
+        preset: selectedPreset || 'none',
+        hasApiKey: !!apiKey.trim(),
+        success: true,
+      });
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'An error occurred while redacting text';
       setError(errorMessage);
+      analytics.playgroundError('other', useAI ? 'ai' : 'regex');
     } finally {
       setLoading(false);
     }
@@ -384,6 +416,11 @@ export default function Playground() {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    
+    // Track copy action
+    if (output) {
+      analytics.playgroundCopy(activeTab, output.detections.length);
+    }
   };
 
   const getRedactedDisplay = (redactedText: string, detections: Detection[]) => {
@@ -478,7 +515,10 @@ export default function Playground() {
                   <input
                     type="checkbox"
                     checked={useAI}
-                    onChange={(e) => setUseAI(e.target.checked)}
+                    onChange={(e) => {
+                      setUseAI(e.target.checked);
+                      analytics.playgroundAiToggle(e.target.checked);
+                    }}
                     className="mt-1 w-4 h-4 rounded bg-gray-800 border-gray-700"
                   />
                   <div className="ml-3 flex-1">
@@ -586,7 +626,10 @@ export default function Playground() {
                   {(['redacted', 'entities', 'json'] as const).map((tab) => (
                     <button
                       key={tab}
-                      onClick={() => setActiveTab(tab)}
+                      onClick={() => {
+                        setActiveTab(tab);
+                        analytics.playgroundTabChange(tab);
+                      }}
                       className={`px-6 py-3 text-sm font-medium border-b-2 transition-all cursor-pointer ${
                         activeTab === tab
                           ? 'border-white text-white bg-gray-900/30'
