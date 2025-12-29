@@ -37,14 +37,31 @@ export default function ContactForm() {
     });
 
     try {
-      // TODO: Replace with actual form submission service (Formspree, Resend, etc.)
-      // For now, simulate submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // Submit to our API route
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          useCase: formData.useCase,
+          interest: formData.interest,
+          message: formData.message,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to send message');
+      }
+
       setSubmitted(true);
       setSubmitting(false);
       analytics.formSubmitSuccess('contact');
-      
+
       // Reset form after 3 seconds
       setTimeout(() => {
         setSubmitted(false);
