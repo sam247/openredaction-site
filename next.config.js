@@ -20,15 +20,7 @@ const nextConfig = {
         crypto: false,
       };
     }
-    
-    // Mark openredaction as external - it will be loaded from /lib/openredaction.js at runtime
-    config.externals = config.externals || [];
-    if (Array.isArray(config.externals)) {
-      config.externals.push('openredaction');
-    } else {
-      config.externals = [config.externals, 'openredaction'];
-    }
-    
+
     return config;
   },
 }

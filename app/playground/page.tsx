@@ -42,38 +42,17 @@ export default function Playground() {
   const [usageInfo, setUsageInfo] = useState<UsageInfo>({ count: null, limit: null, reset: null });
   const detectorRef = useRef<any>(null);
   const [libraryLoaded, setLibraryLoaded] = useState(false);
-  const openredactionModuleRef = useRef<any>(null); // Cache the loaded module
 
   // Lazy load OpenRedaction library only on client side
   useEffect(() => {
     if (typeof window !== 'undefined' && !libraryLoaded) {
       const loadLibrary = async () => {
         try {
-          // Load the CommonJS build from public folder using fetch and eval
-          // Cache the module to avoid reloading
-          if (!openredactionModuleRef.current) {
-            const response = await fetch('/lib/openredaction.js');
-            const code = await response.text();
-            
-            // Create a module-like environment
-            const moduleObj = { exports: {} };
-            const exports = moduleObj.exports;
-            
-            // Wrap the code in a function that provides module/exports
-            const fn = new Function('module', 'exports', 'require', code);
-            fn(moduleObj, exports, () => {});
-            
-            openredactionModuleRef.current = moduleObj.exports;
-          }
-          
-          // Get OpenRedaction from the cached module
-          const { OpenRedaction } = openredactionModuleRef.current as any;
-          
-          if (!OpenRedaction) {
-            throw new Error('OpenRedaction not found in module exports');
-          }
-          
-          const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
+          // Load the CommonJS version at runtime to avoid ESM chunk issues
+          const openredaction = await new Function('return import("openredaction")')();
+          const { OpenRedaction } = openredaction;
+
+          const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa')
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
             : 'gdpr';
           detectorRef.current = new OpenRedaction({
@@ -96,40 +75,25 @@ export default function Playground() {
     if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
       const updateDetector = async () => {
         try {
-          // Use cached module if available
-          if (!openredactionModuleRef.current) {
-            const response = await fetch('/lib/openredaction.js');
-            const code = await response.text();
-            
-            const moduleObj = { exports: {} };
-            const exports = moduleObj.exports;
-            const fn = new Function('module', 'exports', 'require', code);
-            fn(moduleObj, exports, () => {});
-            
-            openredactionModuleRef.current = moduleObj.exports;
-          }
-          
-          const { OpenRedaction } = openredactionModuleRef.current as any;
-          
-          if (!OpenRedaction) {
-            throw new Error('OpenRedaction not found in module exports');
-          }
-          
-          const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
+          const openredaction = await new Function('return import("openredaction")')();
+          const { OpenRedaction } = openredaction;
+
+          const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa')
             ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
             : 'gdpr';
+
           detectorRef.current = new OpenRedaction({
             preset: presetValue,
             redactionMode: 'placeholder' as any,
             includePhones: true, // Explicitly enable phone detection
           } as any);
         } catch (err) {
-          console.error('Failed to update OpenRedaction detector:', err);
+          console.error('Failed to update detector:', err);
         }
       };
       updateDetector();
     }
-  }, [selectedPreset, libraryLoaded]);
+  }, [selectedPreset]);
 
   // API presets: gdpr, hipaa, ccpa, finance, education, transportation
   const apiPresets = {
