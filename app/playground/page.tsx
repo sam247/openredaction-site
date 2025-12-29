@@ -50,10 +50,8 @@ export default function Playground() {
       const loadLibrary = async () => {
         try {
           // Use a function that returns the import to prevent build-time analysis
-          // The package is external, so it will be loaded from node_modules at runtime
           const openredactionModule = await (async () => {
-            // Dynamic import will work at runtime since package is in node_modules
-            // @ts-ignore - TypeScript doesn't know about external packages at build time
+            // Import will use the CommonJS build via webpack alias
             const mod = await import('openredaction');
             // Handle both ESM and CommonJS exports
             return mod.default || mod;
@@ -70,6 +68,7 @@ export default function Playground() {
           setLibraryLoaded(true);
         } catch (err) {
           console.error('Failed to load OpenRedaction library:', err);
+          setError('Failed to load OpenRedaction library. Please refresh the page and try again.');
         }
       };
       loadLibrary();
