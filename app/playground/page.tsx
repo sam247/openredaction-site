@@ -82,14 +82,8 @@ export default function Playground() {
             includeCreditCards: true,
             redactionMode: 'placeholder' as any,
             customPatterns: [
-              {
-                type: 'NAME_LOWERCASE',
-                regex: /\b[a-z][a-z]{2,}\s+[a-z][a-z]{2,}\b/gi,
-                priority: 45, // Lower priority than default NAME (50)
-                placeholder: '[NAME_{n}]',
-                description: 'Lowercase name detection',
-                severity: 'high'
-              }
+              // Note: Keeping original regex behavior for demonstration purposes
+              // AI detection of lowercase names would be implemented in openredaction-api repo
             ]
           } as any);
           setLibraryLoaded(true);
@@ -132,14 +126,8 @@ export default function Playground() {
             includeCreditCards: true,
             redactionMode: 'placeholder' as any,
             customPatterns: [
-              {
-                type: 'NAME_LOWERCASE',
-                regex: /\b[a-z][a-z]{2,}\s+[a-z][a-z]{2,}\b/gi,
-                priority: 45, // Lower priority than default NAME (50)
-                placeholder: '[NAME_{n}]',
-                description: 'Lowercase name detection',
-                severity: 'high'
-              }
+              // Note: Keeping original regex behavior for demonstration purposes
+              // AI detection of lowercase names would be implemented in openredaction-api repo
             ]
           } as any);
         } catch (err) {
