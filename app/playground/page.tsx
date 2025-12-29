@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -42,40 +43,56 @@ export default function Playground() {
   const detectorRef = useRef<any>(null);
   const [libraryLoaded, setLibraryLoaded] = useState(false);
 
-  // Lazy load OpenRedaction library only on client side
+  // Lazy load OpenRedaction library only on client side using dynamic import
   useEffect(() => {
     if (typeof window !== 'undefined' && !libraryLoaded) {
-      import('openredaction').then((module) => {
-        const { OpenRedaction } = module;
-        const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
-          ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
-          : 'gdpr';
-        detectorRef.current = new OpenRedaction({
-          preset: presetValue,
-          redactionMode: 'placeholder' as any,
-          includePhones: true, // Explicitly enable phone detection
-        } as any);
-        setLibraryLoaded(true);
-      }).catch((err) => {
-        console.error('Failed to load OpenRedaction library:', err);
-      });
+      // Use dynamic import that won't be analyzed during build
+      const loadLibrary = async () => {
+        try {
+          // Use a function that returns the import to prevent build-time analysis
+          const module = await (async () => {
+            return await import('openredaction');
+          })();
+          const { OpenRedaction } = module;
+          const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
+            ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
+            : 'gdpr';
+          detectorRef.current = new OpenRedaction({
+            preset: presetValue,
+            redactionMode: 'placeholder' as any,
+            includePhones: true, // Explicitly enable phone detection
+          } as any);
+          setLibraryLoaded(true);
+        } catch (err) {
+          console.error('Failed to load OpenRedaction library:', err);
+        }
+      };
+      loadLibrary();
     }
   }, [selectedPreset, libraryLoaded]);
 
   // Update detector when preset changes
   useEffect(() => {
     if (libraryLoaded && detectorRef.current && typeof window !== 'undefined') {
-      import('openredaction').then((module) => {
-        const { OpenRedaction } = module;
-        const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
-          ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
-          : 'gdpr';
-        detectorRef.current = new OpenRedaction({
-          preset: presetValue,
-          redactionMode: 'placeholder' as any,
-          includePhones: true, // Explicitly enable phone detection
-        } as any);
-      });
+      const updateDetector = async () => {
+        try {
+          const module = await (async () => {
+            return await import('openredaction');
+          })();
+          const { OpenRedaction } = module;
+          const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa') 
+            ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
+            : 'gdpr';
+          detectorRef.current = new OpenRedaction({
+            preset: presetValue,
+            redactionMode: 'placeholder' as any,
+            includePhones: true, // Explicitly enable phone detection
+          } as any);
+        } catch (err) {
+          console.error('Failed to update OpenRedaction detector:', err);
+        }
+      };
+      updateDetector();
     }
   }, [selectedPreset, libraryLoaded]);
 

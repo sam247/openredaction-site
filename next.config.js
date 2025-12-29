@@ -6,6 +6,8 @@ const nextConfig = {
   images: {
     unoptimized: false,
   },
+  // Transpile the openredaction package to handle ESM chunks
+  transpilePackages: ['openredaction'],
   webpack: (config, { isServer }) => {
     // Ignore Node.js modules that aren't available in the browser
     if (!isServer) {
@@ -18,6 +20,16 @@ const nextConfig = {
         crypto: false,
       };
     }
+    
+    // Mark openredaction as external to prevent build-time analysis
+    // It's only loaded client-side via dynamic imports
+    config.externals = config.externals || [];
+    if (Array.isArray(config.externals)) {
+      config.externals.push('openredaction');
+    } else {
+      config.externals = [config.externals, 'openredaction'];
+    }
+    
     return config;
   },
 }
