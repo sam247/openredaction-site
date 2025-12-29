@@ -75,12 +75,7 @@ export default function Playground() {
           console.log('OpenRedaction loaded:', !!OpenRedaction);
 
           detectorRef.current = new OpenRedaction({
-            includeNames: true,
-            includeEmails: true,
-            includePhones: true,
-            includeAddresses: true,
-            includeSSN: true,
-            includeCreditCards: true,
+            preset: 'gdpr' as any,
             redactionMode: 'placeholder' as any,
             customPatterns: [
               // Note: Keeping original regex behavior for demonstration purposes
@@ -88,12 +83,7 @@ export default function Playground() {
             ]
           } as any);
           console.log('Detector created with config:', {
-            includeNames: true,
-            includeEmails: true,
-            includePhones: true,
-            includeAddresses: true,
-            includeSSN: true,
-            includeCreditCards: true,
+            preset: 'gdpr',
             redactionMode: 'placeholder',
             customPatterns: []
           });
@@ -130,12 +120,7 @@ export default function Playground() {
             : 'gdpr';
 
           detectorRef.current = new OpenRedaction({
-            includeNames: true,
-            includeEmails: true,
-            includePhones: true,
-            includeAddresses: true,
-            includeSSN: true,
-            includeCreditCards: true,
+            preset: 'gdpr' as any,
             redactionMode: 'placeholder' as any,
             customPatterns: [
               // Note: Keeping original regex behavior for demonstration purposes
