@@ -73,11 +73,11 @@ export default function Playground() {
             redactionMode: 'placeholder' as any,
             customPatterns: [
               {
-                type: 'NAME_CASE_INSENSITIVE',
-                regex: /\b(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Professor|Sir|Madam|Lady|Lord|Rev|Father|Sister|Brother)\.?\s+)?((?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,})(?:\s+(?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,}|[a-z][a-z'’.\-]+)){1,3})(?:\s+(?:Jr|Sr|II|III|IV|PhD|MD|Esq|DDS|DVM|MBA|CPA)\.?)?\b/gi,
-                priority: 45, // Slightly lower than default NAME priority (50)
+                type: 'NAME_LOWERCASE',
+                regex: /\b[a-z][a-z'’.\-]+\s+[a-z][a-z'’.\-]+\b/gi,
+                priority: 55, // Higher priority than default NAME (50)
                 placeholder: '[NAME_{n}]',
-                description: 'Case-insensitive name detection',
+                description: 'Lowercase name detection',
                 severity: 'high'
               }
             ]
@@ -121,11 +121,11 @@ export default function Playground() {
             redactionMode: 'placeholder' as any,
             customPatterns: [
               {
-                type: 'NAME_CASE_INSENSITIVE',
-                regex: /\b(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Professor|Sir|Madam|Lady|Lord|Rev|Father|Sister|Brother)\.?\s+)?((?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,})(?:\s+(?:[A-Za-z][a-z'’.\-]+|[A-Z]{2,}|[a-z][a-z'’.\-]+)){1,3})(?:\s+(?:Jr|Sr|II|III|IV|PhD|MD|Esq|DDS|DVM|MBA|CPA)\.?)?\b/gi,
-                priority: 45, // Slightly lower than default NAME priority (50)
+                type: 'NAME_LOWERCASE',
+                regex: /\b[a-z][a-z'’.\-]+\s+[a-z][a-z'’.\-]+\b/gi,
+                priority: 55, // Higher priority than default NAME (50)
                 placeholder: '[NAME_{n}]',
-                description: 'Case-insensitive name detection',
+                description: 'Lowercase name detection',
                 severity: 'high'
               }
             ]
