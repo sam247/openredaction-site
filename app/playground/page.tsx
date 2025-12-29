@@ -37,7 +37,7 @@ export default function Playground() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'redacted' | 'entities' | 'json'>('redacted');
   const [copied, setCopied] = useState(false);
-  const [selectedPreset, setSelectedPreset] = useState<string>('');
+  const [selectedPreset, setSelectedPreset] = useState<string>('gdpr');
   const [useAI, setUseAI] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [usageInfo, setUsageInfo] = useState<UsageInfo>({ count: null, limit: null, reset: null });
@@ -75,7 +75,7 @@ export default function Playground() {
           console.log('OpenRedaction loaded:', !!OpenRedaction);
 
           detectorRef.current = new OpenRedaction({
-            preset: 'gdpr' as any,
+            preset: selectedPreset as any,
             redactionMode: 'placeholder' as any,
             customPatterns: [
               // Note: Keeping original regex behavior for demonstration purposes
@@ -83,7 +83,7 @@ export default function Playground() {
             ]
           } as any);
           console.log('Detector created with config:', {
-            preset: 'gdpr',
+            preset: selectedPreset,
             redactionMode: 'placeholder',
             customPatterns: []
           });
@@ -120,7 +120,7 @@ export default function Playground() {
             : 'gdpr';
 
           detectorRef.current = new OpenRedaction({
-            preset: 'gdpr' as any,
+            preset: presetValue as any,
             redactionMode: 'placeholder' as any,
             customPatterns: [
               // Note: Keeping original regex behavior for demonstration purposes
