@@ -72,6 +72,7 @@ export default function Playground() {
 
           // Get OpenRedaction from the loaded module
           const { OpenRedaction } = moduleObj.exports as any;
+          console.log('OpenRedaction loaded:', !!OpenRedaction);
 
           detectorRef.current = new OpenRedaction({
             includeNames: true,
@@ -86,6 +87,17 @@ export default function Playground() {
               // AI detection of lowercase names would be implemented in openredaction-api repo
             ]
           } as any);
+          console.log('Detector created with config:', {
+            includeNames: true,
+            includeEmails: true,
+            includePhones: true,
+            includeAddresses: true,
+            includeSSN: true,
+            includeCreditCards: true,
+            redactionMode: 'placeholder',
+            customPatterns: []
+          });
+          console.log('Detector has detect method:', !!detectorRef.current?.detect);
           setLibraryLoaded(true);
           analytics.playgroundPageView(true);
         } catch (err) {
@@ -206,9 +218,11 @@ export default function Playground() {
       // First, run regex detection
       const regexResult = await detectorRef.current.detect(inputText);
       console.log('Regex result:', regexResult);
+      console.log('Regex result detections array:', regexResult.detections);
 
       let allDetections = [...(regexResult.detections || [])];
       console.log('Initial detections:', allDetections);
+      console.log('Number of detections:', allDetections.length);
       
       // If AI is enabled, call the AI endpoint and merge results
       if (useAI) {
