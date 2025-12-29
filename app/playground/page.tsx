@@ -175,9 +175,9 @@ export default function Playground() {
 
     try {
       // First, run regex detection
-      const regexResult = detectorRef.current.detect(inputText);
+      const regexResult = await detectorRef.current.detect(inputText);
       console.log('Regex result:', regexResult);
-      
+
       let allDetections = [...(regexResult.detections || [])];
       console.log('Initial detections:', allDetections);
       
