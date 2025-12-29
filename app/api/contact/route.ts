@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
 
-const resendApiKey = process.env.RESEND_API_KEY;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_REPO = process.env.GITHUB_REPO || 'sam247/openredaction-site';
 const TO_EMAIL = 'sampettiford@googlemail.com';
-// Use environment variable if set, otherwise fallback to a default
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'noreply@openredaction.com';
-
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,47 +16,77 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!resend) {
-      console.error('Resend client not initialized - RESEND_API_KEY is missing');
+    if (!GITHUB_TOKEN) {
+      console.error('GitHub token not configured');
       return NextResponse.json(
-        { error: 'Email service not configured' },
+        { error: 'Form service not configured' },
         { status: 500 }
       );
     }
 
-    // Email content
-    const textContent = `
-New Contact Form Submission from OpenRedaction
+    // Create GitHub issue with form data
+    const issueTitle = `Contact Form: ${name} - ${interest || 'General Inquiry'}`;
 
-From: ${name} <${email}>
-Company: ${company || 'Not provided'}
-Use Case/Industry: ${useCase || 'Not provided'}
-Interest: ${interest || 'Not specified'}
+    const issueBody = `
+## Contact Form Submission
 
-Message:
+**From:** ${name} <${email}>
+**Company:** ${company || 'Not provided'}
+**Use Case/Industry:** ${useCase || 'Not provided'}
+**Interest:** ${interest || 'Not specified'}
+
+### Message:
 ${message}
 
 ---
-Sent from OpenRedaction contact form
-Timestamp: ${new Date().toISOString()}
+**Submitted:** ${new Date().toISOString()}
+**Source:** OpenRedaction Contact Form
     `.trim();
 
-    // Send email via Resend
-    const result = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [TO_EMAIL],
-      replyTo: email,
-      subject: `OpenRedaction Contact Form: ${name} - ${interest || 'General Inquiry'}`,
-      text: textContent,
+    // Create GitHub issue
+    const issueResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/issues`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: issueTitle,
+        body: issueBody,
+        labels: ['contact-form', 'auto-generated'],
+      }),
     });
 
-    console.log('Contact form email sent successfully:', { name, email, interest, result });
+    if (!issueResponse.ok) {
+      const errorData = await issueResponse.json();
+      console.error('GitHub issue creation failed:', errorData);
+      return NextResponse.json(
+        { error: 'Failed to submit form' },
+        { status: 500 }
+      );
+    }
 
-    return NextResponse.json({ success: true });
+    const issueData = await issueResponse.json();
+    console.log('Contact form issue created successfully:', {
+      issueNumber: issueData.number,
+      issueUrl: issueData.html_url,
+      name,
+      email,
+      interest
+    });
+
+    // TODO: Add email notification here when Resend is available again
+    // For now, GitHub will send notifications to repo watchers
+
+    return NextResponse.json({
+      success: true,
+      issueUrl: issueData.html_url
+    });
   } catch (error) {
     console.error('Contact form error:', error);
     return NextResponse.json(
-      { error: 'Failed to send message. Please try again.' },
+      { error: 'Failed to submit form. Please try again.' },
       { status: 500 }
     );
   }

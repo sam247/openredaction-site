@@ -124,8 +124,8 @@ The site can be deployed to any platform that supports Next.js:
 | `STRIPE_METER_ID` | Meter ID for tracking API usage | Yes (for metered billing) |
 | `STRIPE_METER_EVENT_NAME` | Meter event name (default: `openredaction_api_requests`) | Yes (for metered billing) |
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook secret (starts with `whsec_`) | Yes (for webhooks) |
-| `RESEND_API_KEY` | Resend API key for contact form emails | Yes (for contact form) |
-| `RESEND_FROM_EMAIL` | From email address (must be verified in Resend) | No (defaults to noreply@openredaction.com) |
+| `GITHUB_TOKEN` | GitHub personal access token for contact form submissions | Yes (for contact form) |
+| `GITHUB_REPO` | GitHub repository for form submissions (format: owner/repo) | No (defaults to sam247/openredaction-site) |
 | `NEXT_PUBLIC_API_URL` | OpenRedaction API URL | No (defaults to production) |
 | `NEXT_PUBLIC_APP_URL` | Your app URL | No (for redirects) |
 
