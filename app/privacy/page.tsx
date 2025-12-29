@@ -102,7 +102,7 @@ export default function Privacy() {
                 OpenRedaction uses the following third-party services:
               </p>
               <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
-                <li><strong>AI Model Provider:</strong> When AI assist is enabled, your text is sent to our hosted proxy, which forwards it to our AI model provider (DeepSeek) strictly for entity detection. The model provider processes your text but does not store it. We do not share your data with the model provider for training or other purposes.</li>
+                <li><strong>AI Detection Service:</strong> When AI assist is enabled, your text is sent to our hosted proxy, which forwards it to our AI detection service strictly for entity detection. The service processes your text but does not store it. We do not share your data with the service for training or other purposes.</li>
                 <li><strong>Stripe:</strong> For Pro tier subscriptions, we use Stripe to process payments. Stripe collects and processes payment information (credit card details, billing address) according to their privacy policy. We do not store full credit card numbers on our servers.</li>
                 <li><strong>Email Service:</strong> We use an email service provider to send API keys and service notifications. Email addresses are used solely for service-related communications and are not shared with third parties for marketing purposes.</li>
               </ul>
