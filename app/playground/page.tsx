@@ -63,13 +63,14 @@ export default function Playground() {
           // Get OpenRedaction from the loaded module
           const { OpenRedaction } = moduleObj.exports as any;
 
-          const presetValue = (selectedPreset === 'gdpr' || selectedPreset === 'hipaa' || selectedPreset === 'ccpa')
-            ? selectedPreset as 'gdpr' | 'hipaa' | 'ccpa'
-            : 'gdpr';
           detectorRef.current = new OpenRedaction({
-            preset: presetValue,
+            includeNames: true,
+            includeEmails: true,
+            includePhones: true,
+            includeAddresses: true,
+            includeSSN: true,
+            includeCreditCards: true,
             redactionMode: 'placeholder' as any,
-            includePhones: true, // Explicitly enable phone detection
           } as any);
           setLibraryLoaded(true);
         } catch (err) {
@@ -101,9 +102,13 @@ export default function Playground() {
             : 'gdpr';
 
           detectorRef.current = new OpenRedaction({
-            preset: presetValue,
+            includeNames: true,
+            includeEmails: true,
+            includePhones: true,
+            includeAddresses: true,
+            includeSSN: true,
+            includeCreditCards: true,
             redactionMode: 'placeholder' as any,
-            includePhones: true, // Explicitly enable phone detection
           } as any);
         } catch (err) {
           console.error('Failed to update detector:', err);
