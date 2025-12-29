@@ -659,33 +659,7 @@ export default function Playground() {
               <div className="flex-1 flex items-center justify-center text-gray-500">
                 <div className="text-center max-w-md px-4">
                   <p className="text-lg mb-2">Ready to redact</p>
-                  <p className="text-sm mb-6">Enter text on the left and click &quot;Detect & Redact PII&quot;</p>
-                  <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 mt-4">
-                    <p className="text-white font-semibold mb-2">Want to use this in your app?</p>
-                    <p className="text-sm text-gray-400 mb-4">
-                      Use the open-source library locally, or call our hosted API with an API key.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <a
-                        href="https://github.com/sam247/openredaction"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors text-sm"
-                      >
-                        <span>Install Library</span>
-                        <ArrowRight size={16} />
-                      </a>
-                      <a
-                        href="https://github.com/sam247/openredaction-api"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-md font-medium hover:bg-gray-700 transition-colors text-sm border border-gray-700"
-                      >
-                        <span>View API Docs</span>
-                        <ArrowRight size={16} />
-                      </a>
-                    </div>
-                  </div>
+                  <p className="text-sm">Enter text on the left and click &quot;Detect & Redact PII&quot;</p>
                 </div>
               </div>
             )}
@@ -693,8 +667,131 @@ export default function Playground() {
           </div>
         </div>
 
+        {/* Playground Guide Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16">
+          <div className="bg-gray-900 border border-gray-800 rounded-lg p-8">
+            <h2 className="text-2xl font-semibold mb-6">How to Use the Playground</h2>
+            
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="text-lg font-semibold mb-3 text-white">Getting Started</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span>Paste or type text containing PII (emails, phone numbers, names, etc.) in the input field</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span>Select an API preset (GDPR, HIPAA, CCPA) or use the default settings</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span>Optionally enable AI Assist for better detection on unstructured text</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span>Click &quot;Detect & Redact PII&quot; to process your text</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span>View results in three tabs: Redacted Text, Detected Entities, or JSON Diff</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-3 text-white">Limits & Restrictions</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span><strong>Regex-only mode:</strong> {MAX_INPUT_REGEX.toLocaleString()} characters per request</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span><strong>AI-assist mode:</strong> {MAX_INPUT_AI.toLocaleString()} characters per request</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span><strong>Free tier:</strong> IP-based rate limiting (approximately 200 AI-assist requests per day)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span><strong>Pro tier:</strong> 50,000 AI-assist requests per month with API key</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    <span>No data is logged or stored - all processing happens in real-time</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-800 pt-6">
+              <h3 className="text-lg font-semibold mb-4 text-white">What Gets Detected?</h3>
+              <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-300">
+                <div>
+                  <h4 className="font-semibold text-white mb-2">Contact Information</h4>
+                  <ul className="space-y-1">
+                    <li>• Email addresses</li>
+                    <li>• Phone numbers</li>
+                    <li>• Physical addresses</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white mb-2">Identity & Financial</h4>
+                  <ul className="space-y-1">
+                    <li>• Names (first, last, full)</li>
+                    <li>• Social Security Numbers</li>
+                    <li>• Credit card numbers</li>
+                    <li>• Bank account numbers</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white mb-2">Other Identifiers</h4>
+                  <ul className="space-y-1">
+                    <li>• IP addresses</li>
+                    <li>• Passport numbers</li>
+                    <li>• Driver&apos;s license numbers</li>
+                    <li>• Date of birth</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-800 pt-6 mt-6">
+              <h3 className="text-lg font-semibold mb-4 text-white">Want to Use This in Your Application?</h3>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="https://github.com/sam247/openredaction"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center space-x-2 bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
+                >
+                  <span>Install Library</span>
+                  <ArrowRight size={18} />
+                </a>
+                <a
+                  href="/docs"
+                  className="inline-flex items-center justify-center space-x-2 bg-gray-800 text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
+                >
+                  <span>View Documentation</span>
+                  <ArrowRight size={18} />
+                </a>
+                <a
+                  href="/pricing"
+                  className="inline-flex items-center justify-center space-x-2 bg-gray-800 text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
+                >
+                  <span>Get API Key</span>
+                  <ArrowRight size={18} />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </main>
 
+      <div className="pb-16"></div>
       <Footer />
     </div>
   );
