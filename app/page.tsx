@@ -28,7 +28,7 @@ export default function Home() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight max-w-7xl mx-auto">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight max-w-7xl mx-auto">
               Open-source, Automated PII Redaction.<br className="hidden md:block" /> AI Assisted PII Detection, Regex first.
             </h1>
 
